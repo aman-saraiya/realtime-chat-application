@@ -1,8 +1,9 @@
 import React from 'react';
+import Login from './auth/Login';
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div><Login /></div>
   )
 }
 
