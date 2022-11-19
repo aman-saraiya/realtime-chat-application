@@ -10,7 +10,7 @@ const Login = () => {
     setPasswordVisible((prevState) => !prevState);
   };
   return (
-    <div className="container" >
+    <div>
       <form>
         <div className="form-group">
           <input
