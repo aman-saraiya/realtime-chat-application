@@ -1,48 +1,46 @@
-import React, {useState} from 'react'
-import { Button } from 'antd'
-import { toast } from 'react-toastify'
+import { Button } from "antd";
+import React, { useState } from "react";
+import { auth } from "../../firebase";
+import { sendSignInLinkToEmail } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
-  const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    profilePicture: "",
-  })
+  const [email, setEmail] = useState("");
 
-  const validateUserDetails = () => {
-
-  }
-  const handleInputChange = (event) => {
-    setUser((prevState) => ({
-      prevState,
-      [event.target.name]: event.target.value,
-    }))
-    console.log(event);
-  } 
-  const handleRegistration = (event)=>{
-    toast.success("User Registered Successfully", {})    
-    console.log(event);
-  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const config = {
+      url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+      handleCodeInApp: true,
+    };
+    try {
+      await sendSignInLinkToEmail(auth, email, config);
+      toast.success(
+        `Sign-In link is sent to ${email}. Click the link to complete your registration.`
+      );
+      window.localStorage.setItem("SignInEmail", email);
+    } catch (error) {
+      toast.error("Unexpected error occurred. Please retry!");
+      console.log(error);
+    }
+    setEmail("");
+  };
   return (
     <div>
-      <form>
-        <div className='form-group'>
-          <input type="text" className='form-control' name="firstName" onChange={handleInputChange} placeholder="First Name" />
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="Email"
+          />
+          <Button onClick={handleSubmit}>Register</Button>
         </div>
-        <div className='form-group'>
-          <input type="text" className='form-control' name="lastName" onChange={handleInputChange} placeholder="Last Name" />
-        </div>
-        <div className='form-group'>
-          <input type="email" className='form-control' name="email" onChange={handleInputChange} placeholder="Email" />
-        </div>
-        <div className='form-group'>
-          <input type="file" className='form-control' name="profilePicture" onChange={handleInputChange}/>
-        </div>
-        <Button onClick={handleRegistration}>Register</Button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
