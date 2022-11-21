@@ -18,7 +18,7 @@ const Register = () => {
       toast.success(
         `Sign-In link is sent to ${email}. Click the link to complete your registration.`
       );
-      window.localStorage.setItem("SignInEmail", email);
+      window.localStorage.setItem("emailForRegistration", email);
     } catch (error) {
       toast.error("Unexpected error occurred. Please retry!");
       console.log(error);

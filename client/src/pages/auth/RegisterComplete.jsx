@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Button } from "antd";
 import { toast } from "react-toastify";
+import { createOrUpdateUser } from "../../utils/auth";
+import { useEffect } from "react";
+import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { signInWithEmailLink, updatePassword } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const RegisterComplete = () => {
   const [user, setUser] = useState({
@@ -8,26 +13,59 @@ const RegisterComplete = () => {
     lastName: "",
     email: "",
     profilePicture: "",
+    password: "",
   });
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
 
+  useEffect(() => {
+    setUser((prevState) => ({
+      ...prevState,
+      email: window.localStorage.getItem("emailForRegistration"),
+    }));
+  }, []);
+
+  const handlePasswordVisiblility = () => {
+    setPasswordVisible((prevState) => !prevState);
+  };
   const handleInputChange = (event) => {
     setUser((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
-    console.log(event);
   };
   const validateUserDetails = () => {
-    if (!user.firstName || !user.lastName || !user.email) {
-      toast.error("Please provide all the required details.");
+    if (!user.firstName || !user.lastName || !user.email || !user.password) {
+      toast.error("Please provide all the required details");
+      return false;
+    } else if (user.password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return false;
     }
+    return true;
   };
-  const handleRegistration = (event) => {
+  const handleRegistration = async (event) => {
     event.preventDefault();
+    const isValidated = validateUserDetails();
+    if (!isValidated) return;
 
-    validateUserDetails();
+    try {
+      const result = await signInWithEmailLink(
+        auth,
+        user.email,
+        window.location.href
+      );
+      if (result.user.emailVerified) {
+        window.localStorage.removeItem("emailForRegistration");
+        let registeredUser = auth.currentUser;
+        await updatePassword(registeredUser, user.password);
+        const idTokenResult = await registeredUser.getIdTokenResult();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
+    }
   };
   const uploadImageToCloudinary = () => {};
   return (
@@ -54,11 +92,32 @@ const RegisterComplete = () => {
         <div className="form-group">
           <input
             type="email"
+            value={user.email}
             className="form-control"
             name="email"
             onChange={handleInputChange}
             placeholder="Email"
+            disabled
           />
+        </div>
+        <div className="form-group">
+          <div className="input-group">
+            <input
+              type={passwordVisible ? "text" : "password"}
+              name="password"
+              value={user.password}
+              className="form-control"
+              onChange={handleInputChange}
+              placeholder="Password"
+            />
+            <Button
+              className="input-group-text"
+              onClick={handlePasswordVisiblility}
+              disabled={!user.password}
+            >
+              {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+            </Button>
+          </div>
         </div>
         <div className="form-group">
           <input
@@ -68,7 +127,9 @@ const RegisterComplete = () => {
             onChange={handleInputChange}
           />
         </div>
-        <Button onClick={handleRegistration}>Register</Button>
+        <Button type="submit" onClick={handleRegistration}>
+          Register
+        </Button>
       </form>
     </div>
   );
