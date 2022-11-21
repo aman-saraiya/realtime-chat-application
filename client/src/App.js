@@ -5,6 +5,7 @@ import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
 import { ToastContainer } from "react-toastify";
 import RegisterComplete from "./pages/auth/RegisterComplete";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/register/complete" element={<RegisterComplete />}></Route>
+        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
       </Routes>
     </>
   );

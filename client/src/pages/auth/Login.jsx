@@ -23,6 +23,7 @@ const Login = () => {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
+      console.log(user);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
