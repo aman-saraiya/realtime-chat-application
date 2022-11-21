@@ -4,7 +4,11 @@ import { toast } from "react-toastify";
 import { createOrUpdateUser } from "../../utils/auth";
 import { useEffect } from "react";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
-import { signInWithEmailLink, updatePassword } from "firebase/auth";
+import {
+  signInWithEmailLink,
+  updatePassword,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "../../firebase";
 
 const RegisterComplete = () => {
@@ -60,6 +64,9 @@ const RegisterComplete = () => {
         window.localStorage.removeItem("emailForRegistration");
         let registeredUser = auth.currentUser;
         await updatePassword(registeredUser, user.password);
+        await updateProfile(registeredUser, {
+          displayName: `${user.firstName} ${user.lastName}`,
+        });
         const idTokenResult = await registeredUser.getIdTokenResult();
       }
     } catch (error) {
