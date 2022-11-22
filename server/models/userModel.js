@@ -11,12 +11,8 @@ const userSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
-    password: {
-      type: String,
-      required: true,
-    },
     profilePicture: {
-      type: URL,
+      type: String,
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },

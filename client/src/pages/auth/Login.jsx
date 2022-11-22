@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import {
   EyeOutlined,
@@ -8,11 +9,13 @@ import {
 import { toast } from "react-toastify";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "../../firebase";
+import { createOrUpdateUser } from "../../utils/auth";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
+  const navigate = useNavigate();
   const handlePasswordVisiblility = () => {
     setPasswordVisible((prevState) => !prevState);
   };
@@ -23,7 +26,14 @@ const Login = () => {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
-      console.log(user);
+      const response = await createOrUpdateUser(idTokenResult.token);
+      const loggedInUser = {
+        name: response.data.name,
+        email: response.data.email,
+        profilePicture: response.data.profilePicture,
+      };
+      window.localStorage.setItem("user", JSON.stringify(loggedInUser));
+      navigate("/chats");
     } catch (error) {
       console.log(error);
       toast.error(error.message);

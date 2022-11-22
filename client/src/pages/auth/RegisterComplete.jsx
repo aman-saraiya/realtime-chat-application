@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { toast } from "react-toastify";
 import { createOrUpdateUser } from "../../utils/auth";
@@ -19,6 +20,7 @@ const RegisterComplete = () => {
     profilePicture: "",
     password: "",
   });
+  const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -68,6 +70,14 @@ const RegisterComplete = () => {
           displayName: `${user.firstName} ${user.lastName}`,
         });
         const idTokenResult = await registeredUser.getIdTokenResult();
+        const response = await createOrUpdateUser(idTokenResult.token);
+        const loggedInUser = {
+          name: response.data.name,
+          email: response.data.email,
+          profilePicture: response.data.profilePicture,
+        };
+        window.localStorage.setItem("user", JSON.stringify(loggedInUser));
+        navigate("/chats");
       }
     } catch (error) {
       console.log(error);
