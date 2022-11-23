@@ -15,10 +15,10 @@ const {
 } = require("../controllers/chatControllers");
 
 router.get("/chat/:userId", authCheck, fetchChats);
-router.post("/chat/:userId", authCheck, createOrFetchPersonalChat);
+router.post("/chat", authCheck, createOrFetchPersonalChat);
 router.post("/chat/group/create", authCheck, createGroupChat);
-router.put("/chat/group/addUser/", authCheck, addUserToGroup);
-router.put("/chat/group/removeUser/", authCheck, removeUserFromGroup);
-router.put("/chat/group/renameGroup/", authCheck, renameGroup);
+router.put("/chat/group/addUser", authCheck, addUserToGroup);
+router.put("/chat/group/removeUser", authCheck, removeUserFromGroup);
+router.put("/chat/group/renameGroup", authCheck, renameGroup);
 
 module.exports = router;
