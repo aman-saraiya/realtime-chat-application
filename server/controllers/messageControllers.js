@@ -12,14 +12,16 @@ const sendMessage = async (req, res) => {
     content: content,
   };
   try {
-    const message = await new Message(newMessage).save();
+    var message = await new Message(newMessage).save();
     message = await message.populate("sender");
     message = await message.populate("chat");
     message = await message.populate({
       path: "chat.users",
     });
-
-    await Chat.findByIdAndUpdate(chatId, { latestMessage: message });
+    // console.log(message);
+    await Chat.findByIdAndUpdate(chatId, {
+      latestMessage: message,
+    });
     res.json(message);
   } catch (error) {
     res.status(400);

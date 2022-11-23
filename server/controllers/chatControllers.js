@@ -7,13 +7,13 @@ const fetchChats = async (req, res) => {
     res.status(400);
   }
   try {
-    const chats = Chat.find({ users: { $elemMatch: { $eq: userId } } })
+    const chats = await Chat.find({ users: { $elemMatch: { $eq: userId } } })
       .populate("users")
       .populate("latestMessage")
       .populate("groupAdmin")
       .sort({ updatedAt: -1 });
 
-    chats.populate({
+    await chats.populate({
       path: "latestMessage.sender",
     });
     res.status(200).json(chats);
