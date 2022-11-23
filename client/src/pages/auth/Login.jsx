@@ -31,6 +31,7 @@ const Login = () => {
         name: response.data.name,
         email: response.data.email,
         profilePicture: response.data.profilePicture,
+        token: idTokenResult.token,
         _id: response.data._id,
       };
       window.localStorage.setItem("user", JSON.stringify(loggedInUser));

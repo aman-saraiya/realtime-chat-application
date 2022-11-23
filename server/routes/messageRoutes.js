@@ -12,3 +12,5 @@ const {
 
 router.get("/message/:chatId", authCheck, fetchMessages);
 router.post("/message", authCheck, sendMessage);
+
+module.exports = router;
