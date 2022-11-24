@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import Chats from "./pages/Chats";
+import ProtectedRoute from "./components/routes/ProtectedRoute";
 
 const App = () => {
   return (
@@ -18,7 +19,14 @@ const App = () => {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/register/complete" element={<RegisterComplete />}></Route>
         <Route path="/forgot-password" element={<ForgotPassword />}></Route>
-        <Route path="/chats" element={<Chats />}></Route>
+        <Route
+          path="/chats"
+          element={
+            <ProtectedRoute>
+              <Chats />
+            </ProtectedRoute>
+          }
+        ></Route>
       </Routes>
     </>
   );
