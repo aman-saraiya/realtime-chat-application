@@ -17,8 +17,8 @@ const {
 router.get("/chat/:userId", authCheck, fetchChats);
 router.post("/chat", authCheck, createOrFetchPersonalChat);
 router.post("/chat/group/create", authCheck, createGroupChat);
-router.put("/chat/group/addUser", authCheck, addUserToGroup);
-router.put("/chat/group/removeUser", authCheck, removeUserFromGroup);
-router.put("/chat/group/renameGroup", authCheck, renameGroup);
+router.put("/chat/group/add-user", authCheck, addUserToGroup);
+router.put("/chat/group/remove-user", authCheck, removeUserFromGroup);
+router.put("/chat/group/rename-group", authCheck, renameGroup);
 
 module.exports = router;

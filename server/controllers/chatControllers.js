@@ -4,7 +4,8 @@ const fetchChats = async (req, res) => {
   const { userId } = req.params;
   if (!userId) {
     console.log("UserId param not sent with the request.");
-    res.status(400);
+    res.status(400).send();
+    return;
   }
   try {
     const chats = await Chat.find({ users: { $elemMatch: { $eq: userId } } })
@@ -28,6 +29,7 @@ const createOrFetchPersonalChat = async (req, res) => {
   if (!fromUser || !toUser) {
     console.log("Chat users information missing");
     res.sendStatus(400);
+    return;
   }
 
   const chat = await Chat.findOne({
@@ -64,10 +66,133 @@ const createOrFetchPersonalChat = async (req, res) => {
     }
   }
 };
-const createGroupChat = async (req, res) => {};
-const addUserToGroup = async (req, res) => {};
-const removeUserFromGroup = async (req, res) => {};
-const renameGroup = async (req, res) => {};
+const createGroupChat = async (req, res) => {
+  const { users, groupAdmin, chatName } = req.body;
+  if (!users || !groupAdmin || !chatName) {
+    res.status(400).send({ message: "Please fill all the fields" });
+    return;
+  }
+  if (users.length < 1) {
+    res.status(400).send({ message: "Group must have atleast 2 members." });
+  }
+  users.push(groupAdmin);
+  try {
+    const groupChat = await new Chat({
+      isGroupChat: true,
+      users: users,
+      groupAdmin: groupAdmin,
+      chatName: chatName,
+    }).save();
+    // console.log(groupChat);
+    var fullGroupChat = await groupChat.populate("users");
+    fullGroupChat = await fullGroupChat.populate("groupAdmin");
+    console.log(fullGroupChat);
+    res.status(200).json(fullGroupChat);
+  } catch (error) {
+    console.log(error.message);
+    res.sendStatus(400);
+  }
+};
+const addUserToGroup = async (req, res) => {
+  const { newUser, loggedInUser, groupChatId } = req.body;
+  console.log(newUser, loggedInUser, groupChatId);
+  if (!newUser || !loggedInUser || !groupChatId) {
+    console.log("Please pass all the details");
+    res.sendStatus(400);
+    return;
+  }
+  try {
+    const chat = await Chat.findById(groupChatId);
+    if (chat.groupAdmin == loggedInUser) {
+      if (chat.users.includes(newUser)) {
+        console.log("User already present in group.");
+        res.sendStatus(400);
+        return;
+      } else {
+        const updatedChat = await Chat.findByIdAndUpdate(
+          groupChatId,
+          {
+            $push: { users: newUser },
+          },
+          { new: true }
+        )
+          .populate("users")
+          .populate("groupAdmin")
+          .exec();
+        res.json(updatedChat);
+        console.log(updatedChat);
+      }
+    } else {
+      console.log("Only group admin can add or remove members.");
+      res.sendStatus(400);
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.sendStatus(400);
+  }
+};
+const removeUserFromGroup = async (req, res) => {
+  const { removeUser, loggedInUser, groupChatId } = req.body;
+  // console.log(removedUser, loggedInUser, groupChatId);
+  if (!removeUser || !loggedInUser || !groupChatId) {
+    console.log("Please pass all the details");
+    res.sendStatus(400);
+    return;
+  }
+  try {
+    const chat = await Chat.findById(groupChatId);
+    if (chat.groupAdmin == loggedInUser) {
+      if (!chat.users.includes(removeUser)) {
+        console.log("User not present in group.");
+        res.sendStatus(400);
+      } else {
+        const updatedChat = await Chat.findByIdAndUpdate(
+          groupChatId,
+          {
+            $pull: { users: removeUser },
+          },
+          { new: true }
+        )
+          .populate("users")
+          .populate("groupAdmin")
+          .exec();
+        res.json(updatedChat);
+      }
+    } else {
+      console.log("Only group admin can add or remove members.");
+      res.sendStatus(400);
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.sendStatus(400);
+  }
+};
+const renameGroup = async (req, res) => {
+  const { newName, groupChatId } = req.body;
+  if (!newName || !groupChatId) {
+    console.log("Please pass all the details");
+    res.sendStatus(400);
+    return;
+  }
+  try {
+    const updatedChat = await Chat.findByIdAndUpdate(
+      groupChatId,
+      {
+        chatName: newName,
+      },
+      { new: true }
+    )
+      .populate("users")
+      .populate("groupAdmin")
+      .exec();
+    console.log(updatedChat);
+
+    res.json(updatedChat);
+  } catch (error) {
+    console.log(error.message);
+    res.sendStatus(400);
+  }
+};
 
 module.exports = {
   fetchChats,
