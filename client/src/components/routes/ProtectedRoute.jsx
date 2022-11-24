@@ -1,7 +1,7 @@
 import React from "react";
 import LoadingToRedirect from "./LoadingToRedirect";
 const ProtectedRoute = ({ children }) => {
-  const user = JSON.parse(window.localStorage.getItem(user));
+  const user = JSON.parse(window.localStorage.getItem("user"));
   return user && user.token ? children : <LoadingToRedirect />;
 };
 
