@@ -31,5 +31,17 @@ const currentUser = async (req, res) => {
   res.json(user);
 };
 
-const fetchUsers = async (req, res) => {};
+const fetchUsers = async (req, res) => {
+  const { userId } = req.params;
+  const filter = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+  const users = await User.find(filter).find({ _id: { $ne: userId } });
+  res.json(users);
+};
 module.exports = { createOrUpdateUser, currentUser, fetchUsers };
