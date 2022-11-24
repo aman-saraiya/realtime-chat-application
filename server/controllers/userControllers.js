@@ -30,4 +30,6 @@ const currentUser = async (req, res) => {
   const user = await User.findOne({ email: email });
   res.json(user);
 };
-module.exports = { createOrUpdateUser, currentUser };
+
+const fetchUsers = async (req, res) => {};
+module.exports = { createOrUpdateUser, currentUser, fetchUsers };
