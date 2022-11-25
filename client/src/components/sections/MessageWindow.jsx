@@ -1,19 +1,21 @@
 import React, { useState } from "react";
+import { ChatsState } from "../context/ChatsProvider";
 import Search from "../forms/Search";
 import SendMessage from "../forms/SendMessage";
 import MessageDisplay from "../message/MessageDisplay";
 import MessageHeader from "../navbar/MessageHeader";
 
 const MessageWindow = ({}) => {
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
-  const handleSendMessage = () => {};
-  return (
+  const { selectedChat } = ChatsState();
+  console.log(selectedChat);
+  return selectedChat ? (
     <>
       <MessageHeader />
       <MessageDisplay />
       <SendMessage />
     </>
+  ) : (
+    <></>
   );
 };
 

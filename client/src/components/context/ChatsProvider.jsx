@@ -3,7 +3,7 @@ import React, { useContext, useState, createContext, useEffect } from "react";
 const ChatsContext = createContext();
 
 const ChatsProvider = ({ children }) => {
-  const [selectedChat, setSelectedChat] = useState({ x: "X" });
+  const [selectedChat, setSelectedChat] = useState();
   const [isScreenSmall, setIsScreenSmall] = useState(false);
   const updateScreenSize = () => {
     setIsScreenSmall(window.innerWidth < 768);
