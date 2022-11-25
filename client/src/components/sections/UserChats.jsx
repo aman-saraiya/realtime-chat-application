@@ -1,13 +1,15 @@
 import React from "react";
+import ChatsHeader from "../navbar/ChatsHeader";
 import Search from "../forms/Search";
-import { Button } from "antd";
+import ChatsList from "../chat/ChatsList";
+
 const UserChats = () => {
   return (
-    <div className="d-inline">
-      UserChats
+    <>
+      <ChatsHeader />
       <Search />
-      <Button>+ New Group Chat</Button>
-    </div>
+      <ChatsList />
+    </>
   );
 };
 

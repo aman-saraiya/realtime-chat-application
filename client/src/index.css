@@ -40,7 +40,3 @@ hr.hr-text::after {
   height: 92vh;
   border: 2px solid red;
 }
-
-* { 
-	box-sizing: border-box;
-}
