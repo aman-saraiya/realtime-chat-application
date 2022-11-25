@@ -12,11 +12,11 @@ const fetchChats = async (req, res) => {
       .populate("users")
       .populate("latestMessage")
       .populate("groupAdmin")
-      .sort({ updatedAt: -1 });
+      .sort({ updatedAt: -1 })
+      .populate({
+        path: "latestMessage.sender",
+      });
 
-    await chats.populate({
-      path: "latestMessage.sender",
-    });
     res.status(200).json(chats);
   } catch (error) {
     console.log(error.message);

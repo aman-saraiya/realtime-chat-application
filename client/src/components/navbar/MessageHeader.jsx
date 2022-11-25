@@ -18,7 +18,7 @@ const MessageHeader = () => {
       >
         <ArrowLeftOutlined style={{ fontSize: "20px" }} />
       </button>
-      <h2 className="col m-0 p-0">Message Header</h2>
+      <h2 className="col m-0 p-0">{selectedChat.chatName}</h2>
     </div>
   );
 };
