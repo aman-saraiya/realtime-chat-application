@@ -46,7 +46,7 @@ const ChatsHeader = () => {
         <Dropdown placement="bottomRight" menu={{ items }}>
           <a>
             <Button shape="circle">
-              <i class="fa-solid fa-ellipsis-vertical"></i>
+              <i className="fa-solid fa-ellipsis-vertical"></i>
             </Button>
           </a>
         </Dropdown>

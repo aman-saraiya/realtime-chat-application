@@ -6,7 +6,7 @@ import UserChats from "../components/sections/UserChats";
 const Chats = () => {
   const { selectedChat, isScreenSmall } = ChatsState();
   const [fetchAgain, setFetchAgain] = useState(false);
-  console.log(selectedChat, isScreenSmall);
+  // console.log(selectedChat, isScreenSmall);
   return (
     <div
       className="container-fluid"

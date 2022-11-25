@@ -12,7 +12,6 @@ const ChatsList = ({ fetchAgain }) => {
   const loadChats = async () => {
     const response = await fetchChats();
     setChats(response.data);
-    console.log(response.data);
   };
   return (
     <div
@@ -26,7 +25,6 @@ const ChatsList = ({ fetchAgain }) => {
             style={{ border: "1px solid red" }}
             key={chat._id}
             onClick={() => {
-              console.log(chat);
               setSelectedChat(chat);
             }}
           >

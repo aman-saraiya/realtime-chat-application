@@ -25,7 +25,7 @@ const Search = ({ isSearching, setIsSearching }) => {
             onChange={handleUserSearch}
           />
           <i
-            class="fa-solid fa-xmark"
+            className="fa-solid fa-xmark"
             style={{ background: "white" }}
             onClick={() => {
               setSearchInput("");
