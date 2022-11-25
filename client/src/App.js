@@ -11,24 +11,29 @@ import ProtectedRoute from "./components/routes/ProtectedRoute";
 
 const App = () => {
   return (
-    <>
-      <ToastContainer></ToastContainer>
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/register/complete" element={<RegisterComplete />}></Route>
-        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
-        <Route
-          path="/chats"
-          element={
-            <ProtectedRoute>
-              <Chats />
-            </ProtectedRoute>
-          }
-        ></Route>
-      </Routes>
-    </>
+    <div className="body-background">
+      <div className="app-window" style={{ border: "1px solid red" }}>
+        <ToastContainer></ToastContainer>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route
+            path="/register/complete"
+            element={<RegisterComplete />}
+          ></Route>
+          <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+          <Route
+            path="/chats"
+            element={
+              <ProtectedRoute>
+                <Chats />
+              </ProtectedRoute>
+            }
+          ></Route>
+        </Routes>
+      </div>
+    </div>
   );
 };
 

@@ -5,10 +5,8 @@ import Header from "../components/navbar/Header";
 
 const Chats = () => {
   return (
-    <div className="flex">
-      <Header />
-      <UserChats />
-      <CurrentChat />
+    <div style={{ height: "100%" }}>
+      <h2>This is a chat</h2>
     </div>
   );
 };

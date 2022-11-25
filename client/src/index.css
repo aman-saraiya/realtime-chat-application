@@ -28,3 +28,19 @@ hr.hr-text::after {
   color: #818078;
   background-color: #fcfcfa;
 }
+
+.body-background {
+  background-color: #F2F2F0;
+  width: 100vw;
+  height: 100vh;
+  border: 2px solid red;
+}
+.app-window {
+  margin: 4vh;
+  height: 92vh;
+  border: 2px solid red;
+}
+
+* { 
+	box-sizing: border-box;
+}
