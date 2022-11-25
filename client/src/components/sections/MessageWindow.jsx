@@ -4,7 +4,7 @@ import SendMessage from "../forms/SendMessage";
 import MessageDisplay from "../message/MessageDisplay";
 import MessageHeader from "../navbar/MessageHeader";
 
-const CurrentChat = () => {
+const MessageWindow = ({}) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const handleSendMessage = () => {};
@@ -17,4 +17,4 @@ const CurrentChat = () => {
   );
 };
 
-export default CurrentChat;
+export default MessageWindow;

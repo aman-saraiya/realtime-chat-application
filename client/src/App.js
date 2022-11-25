@@ -8,6 +8,7 @@ import RegisterComplete from "./pages/auth/RegisterComplete";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import Chats from "./pages/Chats";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
+import ChatsProvider from "./components/context/ChatsProvider";
 
 const App = () => {
   return (
@@ -27,7 +28,9 @@ const App = () => {
             path="/chats"
             element={
               <ProtectedRoute>
-                <Chats />
+                <ChatsProvider>
+                  <Chats />
+                </ChatsProvider>
               </ProtectedRoute>
             }
           ></Route>

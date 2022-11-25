@@ -1,12 +1,15 @@
 import React from "react";
-
+import { ArrowLeftOutlined } from "@ant-design/icons";
 const MessageHeader = () => {
   return (
     <div
       className="row m-0 p-0"
       style={{ height: "8%", border: "1px solid red" }}
     >
-      <h2 className="m-0 p-0">Message Header</h2>
+      <button className="border-0 m-0 p-0" style={{ width: "4%" }}>
+        <ArrowLeftOutlined style={{ fontSize: "20px" }} />
+      </button>
+      <h2 className="col m-0 p-0">Message Header</h2>
     </div>
   );
 };

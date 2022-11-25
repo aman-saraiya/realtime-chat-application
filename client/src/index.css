@@ -33,10 +33,12 @@ hr.hr-text::after {
   background-color: #F2F2F0;
   width: 100vw;
   height: 100vh;
+  min-height: 450px;
   border: 2px solid red;
 }
 .app-window {
   margin: 4vh;
   height: 92vh;
   border: 2px solid red;
+  min-height: calc(450px - 8vh) ;
 }
