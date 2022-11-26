@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import { fetchChats } from "../../utils/chat";
 import { ChatsState } from "../context/ChatsProvider";
 
-const ChatsList = ({ fetchAgain }) => {
+const ChatsList = ({ fetchChatsAgain }) => {
   const { setSelectedChat } = ChatsState();
   const [chats, setChats] = useState([]);
   useEffect(() => {
     loadChats();
-  }, [fetchAgain]);
+  }, [fetchChatsAgain]);
   const loadChats = async () => {
     const response = await fetchChats();
     setChats(response.data);

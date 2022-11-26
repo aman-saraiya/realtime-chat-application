@@ -1,13 +1,21 @@
 import { SendOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
+import { sendMessage } from "../../utils/message";
+import { ChatsState } from "../context/ChatsProvider";
 
-const SendMessage = () => {
+const SendMessage = ({ setFetchChatsAgain }) => {
   const [messageContent, setMessageContent] = useState("");
+  const { selectedChat } = ChatsState();
+
   const handleInputChange = (event) => {
     setMessageContent(event.target.value);
   };
 
-  const handleSendMessage = () => {};
+  const handleSendMessage = async () => {
+    await sendMessage(selectedChat._id, messageContent);
+    setFetchChatsAgain((prevValue) => !prevValue);
+    setMessageContent("");
+  };
   return (
     <div className="row p-0 m-0" style={{ height: "8%" }}>
       {/* <input style={{ width: "100%", border: "1px solid red" }} type="text" /> */}
@@ -20,6 +28,7 @@ const SendMessage = () => {
         />
         <SendOutlined
           style={{ background: "white", fontSize: "25px", cursor: "pointer" }}
+          onClick={handleSendMessage}
         />
       </div>
     </div>

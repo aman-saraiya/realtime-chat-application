@@ -5,7 +5,7 @@ import UserChats from "../components/sections/UserChats";
 
 const Chats = () => {
   const { selectedChat, isScreenSmall } = ChatsState();
-  const [fetchAgain, setFetchAgain] = useState(false);
+  const [fetchChatsAgain, setFetchChatsAgain] = useState(false);
   // console.log(selectedChat, isScreenSmall);
   return (
     <div
@@ -22,7 +22,10 @@ const Chats = () => {
               (isScreenSmall && !selectedChat) || !isScreenSmall ? "" : "none",
           }}
         >
-          <UserChats setFetchAgain={setFetchAgain} fetchAgain={fetchAgain} />
+          <UserChats
+            setFetchChatsAgain={setFetchChatsAgain}
+            fetchChatsAgain={fetchChatsAgain}
+          />
         </div>
         <div
           className="col-12 col-lg-8 col-md-8 col-sm-12 p-0"
@@ -34,7 +37,7 @@ const Chats = () => {
           }}
         >
           <MessageWindow
-            setFetchAgain={setFetchAgain}
+            setFetchChatsAgain={setFetchChatsAgain}
             isScreenSmall={isScreenSmall}
           />
         </div>

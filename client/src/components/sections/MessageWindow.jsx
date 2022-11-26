@@ -5,14 +5,13 @@ import SendMessage from "../forms/SendMessage";
 import MessageDisplay from "../message/MessageDisplay";
 import MessageHeader from "../navbar/MessageHeader";
 
-const MessageWindow = ({}) => {
+const MessageWindow = ({ setFetchChatsAgain }) => {
   const { selectedChat } = ChatsState();
-  console.log(selectedChat);
   return selectedChat ? (
     <>
       <MessageHeader />
       <MessageDisplay />
-      <SendMessage />
+      <SendMessage setFetchChatsAgain={setFetchChatsAgain} />
     </>
   ) : (
     <></>
