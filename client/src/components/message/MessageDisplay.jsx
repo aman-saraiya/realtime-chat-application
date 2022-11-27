@@ -9,7 +9,6 @@ const MessageDisplay = ({ socket, messages, setMessages }) => {
   const loadMessages = async () => {
     const response = await fetchMessages(selectedChat._id);
     setMessages(response.data);
-    console.log(messages);
   };
   useEffect(() => {
     loadMessages();

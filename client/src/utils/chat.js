@@ -8,3 +8,18 @@ export const fetchChats = async () => {
     },
   });
 };
+
+export const createOrFetchPersonalChat = async (toUser) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/chat/`,
+    {
+      toUser: toUser,
+      fromUser: user._id,
+    },
+    {
+      headers: {
+        authToken: user.token,
+      },
+    }
+  );
+};

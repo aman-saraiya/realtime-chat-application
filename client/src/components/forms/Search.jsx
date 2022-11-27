@@ -3,7 +3,7 @@ import { useState } from "react";
 import { fetchUsers } from "../../utils/user";
 import UsersList from "../user/UsersList";
 
-const Search = ({ isSearching, setIsSearching }) => {
+const Search = ({ isSearching, setIsSearching, setFetchChatsAgain }) => {
   const [users, setUsers] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const handleUserSearch = async (event) => {
@@ -34,7 +34,13 @@ const Search = ({ isSearching, setIsSearching }) => {
           ></i>
         </div>
       </div>
-      {isSearching && <UsersList users={users} />}
+      {isSearching && (
+        <UsersList
+          setFetchChatsAgain={setFetchChatsAgain}
+          setIsSearching={setIsSearching}
+          users={users}
+        />
+      )}
     </>
   );
 };
