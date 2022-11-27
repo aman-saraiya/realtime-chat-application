@@ -20,7 +20,7 @@ const ChatsHeader = () => {
   const user = JSON.parse(window.localStorage.getItem("user"));
   const items = [
     { label: "View Profile", key: "view-profile" }, // remember to pass the key prop
-    { label: "Sign Out", key: "sign-out" },
+    { label: <div onClick={logout}>Sign Out</div>, key: "sign-out" },
   ];
   return (
     <div className="row p-0 m-0" style={{ height: "8%" }}>

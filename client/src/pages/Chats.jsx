@@ -3,7 +3,7 @@ import { ChatsState } from "../components/context/ChatsProvider";
 import MessageWindow from "../components/sections/MessageWindow";
 import UserChats from "../components/sections/UserChats";
 
-const Chats = () => {
+const Chats = ({ socket }) => {
   const { selectedChat, isScreenSmall } = ChatsState();
   const [fetchChatsAgain, setFetchChatsAgain] = useState(false);
   // console.log(selectedChat, isScreenSmall);
@@ -23,6 +23,7 @@ const Chats = () => {
           }}
         >
           <UserChats
+            socket={socket}
             setFetchChatsAgain={setFetchChatsAgain}
             fetchChatsAgain={fetchChatsAgain}
           />
@@ -37,6 +38,7 @@ const Chats = () => {
           }}
         >
           <MessageWindow
+            socket={socket}
             setFetchChatsAgain={setFetchChatsAgain}
             isScreenSmall={isScreenSmall}
           />

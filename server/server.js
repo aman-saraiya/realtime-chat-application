@@ -42,8 +42,9 @@ const io = require("socket.io")(server, {
 io.on("connection", (socket) => {
   console.log("Connected to server via socket.io.");
   socket.on("setup", (userData) => {
-    socket.join(userData._id);
-    socket.emit("connected");
+    const user = JSON.parse(userData);
+    socket.join(user._id);
+    socket.emit("connected", user._id);
   });
 
   socket.on("new message", (newMessageReceived) => {
@@ -52,17 +53,35 @@ io.on("connection", (socket) => {
       console.log("chat or chat.users not defined.");
       return;
     }
-    chat.users.forEach((user) => {
-      if (user._id === newMessageReceived.sender._id) return;
-      socket.to(user._id).emit("message received", newMessageReceived);
-    });
+    for (let i = 0; i < chat.users.length; i++) {
+      if (chat.users[i]._id == newMessageReceived.sender._id) {
+        continue;
+      } else {
+        socket
+          .to(chat.users[i]._id)
+          .emit("message received", newMessageReceived);
+      }
+    }
   });
 
   socket.on("join chat", (room) => {
     socket.join(room);
-    socket.emit("user joined room " + room);
+    console.log("user joined room " + room);
+  });
+  socket.on("leave chat", (room) => {
+    socket.leave(room);
+    console.log("user left room " + room);
   });
 
-  socket.on("typing", (room) => socket.to(room).emit("typing"));
+  socket.on("typing", (room) => {
+    console.log(room);
+    socket.to(room).emit("typing");
+  });
   socket.on("stop typing", (room) => socket.to(room).emit("stop typing"));
+
+  socket.off("setup", () => {
+    console.log("User Disconnected");
+    socket.leave(userData._id);
+    console.log(userData._id);
+  });
 });

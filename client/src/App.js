@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -10,7 +10,17 @@ import Chats from "./pages/Chats";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import ChatsProvider from "./components/context/ChatsProvider";
 
+const { io } = require("socket.io-client");
+const socket = io(process.env.REACT_APP_BACKEND_SERVER_ENDPOINT);
 const App = () => {
+  const user = window.localStorage.getItem("user");
+  useEffect(() => {
+    socket.emit("setup", user);
+    socket.on("connected", (userId) => {
+      console.log("Connected " + userId);
+    });
+  }, []);
+
   return (
     <div className="body-background">
       <div className="app-window" style={{ border: "1px solid red" }}>
@@ -29,7 +39,7 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <ChatsProvider>
-                  <Chats />
+                  <Chats socket={socket} />
                 </ChatsProvider>
               </ProtectedRoute>
             }

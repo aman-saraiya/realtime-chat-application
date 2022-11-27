@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { fetchChats } from "../../utils/chat";
 import { ChatsState } from "../context/ChatsProvider";
 
-const ChatsList = ({ fetchChatsAgain }) => {
+const ChatsList = ({ fetchChatsAgain, socket }) => {
   const { setSelectedChat } = ChatsState();
   const [chats, setChats] = useState([]);
   useEffect(() => {
@@ -13,6 +13,7 @@ const ChatsList = ({ fetchChatsAgain }) => {
     const response = await fetchChats();
     setChats(response.data);
   };
+
   return (
     <div
       className="row p-0 m-0"
@@ -25,7 +26,10 @@ const ChatsList = ({ fetchChatsAgain }) => {
             style={{ border: "1px solid red" }}
             key={chat._id}
             onClick={() => {
-              setSelectedChat(chat);
+              setSelectedChat((prevState) => {
+                prevState && socket.emit("leave chat", prevState._id);
+                return chat;
+              });
             }}
           >
             {chat.chatName}

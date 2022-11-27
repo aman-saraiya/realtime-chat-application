@@ -4,7 +4,7 @@ import Search from "../forms/Search";
 import ChatsList from "../chat/ChatsList";
 import UsersList from "../user/UsersList";
 
-const UserChats = ({ fetchChatsAgain, setFetchChatsAgain }) => {
+const UserChats = ({ fetchChatsAgain, setFetchChatsAgain, socket }) => {
   const [isSearching, setIsSearching] = useState(false);
   return (
     <>
@@ -14,7 +14,9 @@ const UserChats = ({ fetchChatsAgain, setFetchChatsAgain }) => {
         setIsSearching={setIsSearching}
         setFetchChatsAgain={setFetchChatsAgain}
       />
-      {!isSearching && <ChatsList fetchChatsAgain={fetchChatsAgain} />}
+      {!isSearching && (
+        <ChatsList socket={socket} fetchChatsAgain={fetchChatsAgain} />
+      )}
     </>
   );
 };
