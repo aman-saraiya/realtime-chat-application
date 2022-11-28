@@ -73,6 +73,25 @@ io.on("connection", (socket) => {
     console.log("user left room " + room);
   });
 
+  socket.on("new group", (newGroupChatReceived) => {
+    if (!newGroupChatReceived || !newGroupChatReceived.users) {
+      console.log("Group chat or group chat users missing");
+      return;
+    } else {
+      for (let i = 0; i < newGroupChatReceived.users.length; i++) {
+        if (
+          newGroupChatReceived.users[i]._id ==
+          newGroupChatReceived.groupAdmin._id
+        ) {
+          continue;
+        } else {
+          socket
+            .to(newGroupChatReceived.users[i]._id)
+            .emit("added to new group");
+        }
+      }
+    }
+  });
   socket.on("typing", (room) => {
     console.log(room);
     socket.to(room).emit("typing");

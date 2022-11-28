@@ -12,7 +12,7 @@ import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { ChatsState } from "../context/ChatsProvider";
 import CreateGroup from "../modal/CreateGroup";
-const ChatsHeader = ({ setFetchChatsAgain }) => {
+const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
   const navigate = useNavigate();
   const { setSelectedChat } = ChatsState();
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
@@ -47,6 +47,7 @@ const ChatsHeader = ({ setFetchChatsAgain }) => {
           isCreateGroupModalOpen={isCreateGroupModalOpen}
           setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
           setFetchChatsAgain={setFetchChatsAgain}
+          socket={socket}
         />
       </div>
       <div

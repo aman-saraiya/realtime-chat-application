@@ -10,6 +10,7 @@ const CreateGroup = ({
   isCreateGroupModalOpen,
   setIsCreateGroupModalOpen,
   setFetchChatsAgain,
+  socket,
 }) => {
   const { setSelectedChat } = ChatsState();
   const [groupName, setGroupName] = useState("");
@@ -22,6 +23,7 @@ const CreateGroup = ({
   const handleCreateGroup = async () => {
     const response = await createGroupChat(groupUsers, groupName, user._id);
     setSelectedChat(response.data);
+    socket.emit("new group", response.data);
     setFetchChatsAgain((prevState) => !prevState);
     setIsCreateGroupModalOpen(false);
     setGroupName("");
