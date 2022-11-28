@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, Avatar, Image, Dropdown, Button } from "antd";
+import { Menu, Avatar, Image, Dropdown, Button, Modal } from "antd";
 import {
   SettingOutlined,
   BellFilled,
@@ -10,13 +10,18 @@ import {
 } from "@ant-design/icons";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
-const ChatsHeader = () => {
+import { ChatsState } from "../context/ChatsProvider";
+import CreateGroup from "../modal/CreateGroup";
+const ChatsHeader = ({ setFetchChatsAgain }) => {
   const navigate = useNavigate();
+  const { setSelectedChat } = ChatsState();
+  const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const logout = async () => {
     await signOut(auth);
     window.localStorage.removeItem("user");
     navigate("/login");
   };
+
   const user = JSON.parse(window.localStorage.getItem("user"));
   const items = [
     { label: "View Profile", key: "view-profile" }, // remember to pass the key prop
@@ -35,9 +40,14 @@ const ChatsHeader = () => {
         className="col-1 p-0 m-0 float-end"
         style={{ border: "1px solid red" }}
       >
-        <Button shape="circle">
+        <Button shape="circle" onClick={() => setIsCreateGroupModalOpen(true)}>
           <UsergroupAddOutlined />
         </Button>
+        <CreateGroup
+          isCreateGroupModalOpen={isCreateGroupModalOpen}
+          setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+          setFetchChatsAgain={setFetchChatsAgain}
+        />
       </div>
       <div
         className="col-1 p-0 m-0 float-end"

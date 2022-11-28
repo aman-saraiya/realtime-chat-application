@@ -23,3 +23,18 @@ export const createOrFetchPersonalChat = async (toUser) => {
     }
   );
 };
+
+export const createGroupChat = async (users, groupName, adminUserId) => {
+  console.log(users, groupName, adminUserId);
+  // return await axios.post(
+  //   `${process.env.REACT_APP_API}/group/create`,
+  //   {
+  //     users: users,
+  //     chatName: groupName,
+  //     groupAdmin: adminUserId,
+  //   },
+  //   {
+  //     authToken: user.token,
+  //   }
+  // );
+};

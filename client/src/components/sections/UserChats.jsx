@@ -8,7 +8,7 @@ const UserChats = ({ fetchChatsAgain, setFetchChatsAgain, socket }) => {
   const [isSearching, setIsSearching] = useState(false);
   return (
     <>
-      <ChatsHeader />
+      <ChatsHeader setFetchChatsAgain={setFetchChatsAgain} />
       <Search
         isSearching={isSearching}
         setIsSearching={setIsSearching}
