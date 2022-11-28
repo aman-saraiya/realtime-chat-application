@@ -34,12 +34,10 @@ const SendMessage = ({
       if (timeDiff >= timerLength && typing) {
         socket.emit("stop typing", selectedChat._id);
       }
+      setTyping(false);
     }, timerLength);
     setTimeoutId(id);
   };
-  useEffect(() => {
-    socket.emit();
-  }, []);
   const handleSendMessage = async () => {
     const response = await sendMessage(selectedChat._id, messageContent);
     const message = response.data;
