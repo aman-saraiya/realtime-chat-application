@@ -1,20 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, Avatar, Image, Dropdown, Button, Modal } from "antd";
-import {
-  SettingOutlined,
-  BellFilled,
-  LogoutOutlined,
-  GroupOutlined,
-  UsergroupAddOutlined,
-} from "@ant-design/icons";
+import { UsergroupAddOutlined } from "@ant-design/icons";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { ChatsState } from "../context/ChatsProvider";
 import CreateGroup from "../modal/CreateGroup";
 const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
   const navigate = useNavigate();
-  const { setSelectedChat } = ChatsState();
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const logout = async () => {
     await signOut(auth);
