@@ -4,7 +4,12 @@ import Search from "../forms/Search";
 import ChatsList from "../chat/ChatsList";
 import UsersList from "../user/UsersList";
 
-const UserChats = ({ fetchChatsAgain, setFetchChatsAgain, socket }) => {
+const UserChats = ({
+  fetchChatsAgain,
+  setFetchChatsAgain,
+  socket,
+  notifications,
+}) => {
   const [isSearching, setIsSearching] = useState(false);
   useEffect(() => {
     socket.on("added to new group", () => {
@@ -20,7 +25,11 @@ const UserChats = ({ fetchChatsAgain, setFetchChatsAgain, socket }) => {
         setFetchChatsAgain={setFetchChatsAgain}
       />
       {!isSearching && (
-        <ChatsList socket={socket} fetchChatsAgain={fetchChatsAgain} />
+        <ChatsList
+          notifications={notifications}
+          socket={socket}
+          fetchChatsAgain={fetchChatsAgain}
+        />
       )}
     </>
   );

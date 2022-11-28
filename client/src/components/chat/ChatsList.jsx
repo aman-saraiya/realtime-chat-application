@@ -1,9 +1,10 @@
+import { notification } from "antd";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { fetchChats } from "../../utils/chat";
 import { ChatsState } from "../context/ChatsProvider";
 
-const ChatsList = ({ fetchChatsAgain, socket }) => {
+const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
   const { setSelectedChat } = ChatsState();
   const [chats, setChats] = useState([]);
   useEffect(() => {
@@ -19,11 +20,16 @@ const ChatsList = ({ fetchChatsAgain, socket }) => {
       className="row p-0 m-0"
       style={{ border: "1px solid green", height: "87%" }}
     >
-      {/* <h2 className="p-0 m-0">ChatList</h2> */}
       {chats &&
         chats.map((chat) => (
           <div
-            style={{ border: "1px solid red" }}
+            style={{
+              border:
+                !notifications ||
+                (notifications && notifications.indexOf(chat._id) == -1)
+                  ? "1px solid red"
+                  : "3px solid green",
+            }}
             key={chat._id}
             onClick={() => {
               setSelectedChat((prevState) => {

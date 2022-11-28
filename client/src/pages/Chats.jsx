@@ -6,6 +6,7 @@ import UserChats from "../components/sections/UserChats";
 const Chats = ({ socket }) => {
   const { selectedChat, isScreenSmall } = ChatsState();
   const [fetchChatsAgain, setFetchChatsAgain] = useState(false);
+  const [notifications, setNotifications] = useState([]);
   // console.log(selectedChat, isScreenSmall);
   return (
     <div
@@ -26,6 +27,7 @@ const Chats = ({ socket }) => {
             socket={socket}
             setFetchChatsAgain={setFetchChatsAgain}
             fetchChatsAgain={fetchChatsAgain}
+            notifications={notifications}
           />
         </div>
         <div
@@ -37,10 +39,13 @@ const Chats = ({ socket }) => {
               (isScreenSmall && selectedChat) || !isScreenSmall ? "" : "none",
           }}
         >
+          {JSON.stringify(notifications)}
           <MessageWindow
             socket={socket}
             setFetchChatsAgain={setFetchChatsAgain}
             isScreenSmall={isScreenSmall}
+            notifications={notifications}
+            setNotifications={setNotifications}
           />
         </div>
       </div>

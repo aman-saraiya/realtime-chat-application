@@ -15,14 +15,6 @@ const MessageDisplay = ({ socket, messages, setMessages }) => {
   }, [selectedChat]);
 
   useEffect(() => {
-    socket.on("message received", (newMessageReceived) => {
-      console.log("MESSAGE RECEIVED");
-      console.log(newMessageReceived);
-      if (selectedChat && newMessageReceived.chat._id == selectedChat._id) {
-        setMessages((prevState) => [...prevState, newMessageReceived]);
-      } else {
-      }
-    });
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
   }, []);
