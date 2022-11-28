@@ -6,9 +6,11 @@ import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { ChatsState } from "../context/ChatsProvider";
 import CreateGroup from "../modal/CreateGroup";
+import ProfileModal from "../modal/ProfileModal";
 const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
   const navigate = useNavigate();
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const logout = async () => {
     await signOut(auth);
     window.localStorage.removeItem("user");
@@ -17,7 +19,10 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
 
   const user = JSON.parse(window.localStorage.getItem("user"));
   const items = [
-    { label: "View Profile", key: "view-profile" }, // remember to pass the key prop
+    {
+      label: <div onClick={() => setIsProfileModalOpen(true)}>My Account</div>,
+      key: "my-account",
+    }, // remember to pass the key prop
     { label: <div onClick={logout}>Sign Out</div>, key: "sign-out" },
   ];
   return (
@@ -41,6 +46,10 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
           setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
           setFetchChatsAgain={setFetchChatsAgain}
           socket={socket}
+        />
+        <ProfileModal
+          isProfileModalOpen={isProfileModalOpen}
+          setIsProfileModalOpen={setIsProfileModalOpen}
         />
       </div>
       <div
