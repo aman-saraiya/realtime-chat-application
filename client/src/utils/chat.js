@@ -38,3 +38,48 @@ export const createGroupChat = async (users, groupName, adminUserId) => {
     }
   );
 };
+
+export const removeUserFromGroup = async (removeUserId, userId, chatId) => {
+  return await axios.put(
+    `${process.env.REACT_APP_API}/chat/group/remove-user`,
+    {
+      removeUser: removeUserId,
+      loggedInUser: userId,
+      groupChatId: chatId,
+    },
+    {
+      headers: {
+        authToken: user.token,
+      },
+    }
+  );
+};
+export const addUserToGroup = async (addUserId, userId, chatId) => {
+  return await axios.put(
+    `${process.env.REACT_APP_API}/chat/group/add-user`,
+    {
+      newUser: addUserId,
+      loggedInUser: userId,
+      groupChatId: chatId,
+    },
+    {
+      headers: {
+        authToken: user.token,
+      },
+    }
+  );
+};
+export const renameGroup = async (newGroupName, groupChatId) => {
+  return await axios.put(
+    `${process.env.REACT_APP_API}/chat/group/rename-group`,
+    {
+      newName: newGroupName,
+      groupChatId: groupChatId,
+    },
+    {
+      headers: {
+        authToken: user.token,
+      },
+    }
+  );
+};

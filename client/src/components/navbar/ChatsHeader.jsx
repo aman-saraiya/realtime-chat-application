@@ -48,6 +48,7 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
           socket={socket}
         />
         <ProfileModal
+          isMyAccountView={true}
           isProfileModalOpen={isProfileModalOpen}
           setIsProfileModalOpen={setIsProfileModalOpen}
         />

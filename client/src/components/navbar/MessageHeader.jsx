@@ -36,6 +36,7 @@ const MessageHeader = () => {
         />
       ) : (
         <ProfileModal
+          isMyAccountView={false}
           isProfileModalOpen={isModalOpen}
           setIsProfileModalOpen={setIsModalOpen}
         />
