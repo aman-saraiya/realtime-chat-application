@@ -33,12 +33,62 @@ hr.hr-text::after {
   background-color: #F2F2F0;
   width: 100vw;
   height: 100vh;
-  min-height: 450px;
+  min-height: 768px;
   border: 2px solid red;
 }
 .app-window {
   margin: 4vh;
   height: 92vh;
   border: 2px solid red;
-  min-height: calc(450px - 8vh) ;
+  min-height:calc(768px - 8vh) ;
+}
+:root {
+  --green500: #19bd06;
+  --brightWhiteFont: #FFF;
+  font-size: 24px;
+}
+
+@media only screen and (max-width : 1200px ) {
+  :root {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width : 992px ) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width : 768px ) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+.light_mode_header {
+  background-color: var(--green500);
+  color: var(--brightWhiteFont);
+  font-size: 1rem;
+}
+.dark_mode_header {}
+
+.profile_image {
+  height: 1.6rem;
+  width: 1.6rem;
+  border-radius: 0.8rem;
+  margin-left: 0.2rem;
+}
+
+.light_header_button {
+  color: var(--brightWhiteFont);
+  opacity: 0.8;
+}
+:hover.light_header_button{
+  color:var(--brightWhiteFont);
+  opacity: 1;
+  cursor: pointer;
+}
+.button_header_dark {
+
 }

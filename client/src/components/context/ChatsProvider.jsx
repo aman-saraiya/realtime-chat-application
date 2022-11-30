@@ -5,6 +5,7 @@ const ChatsContext = createContext();
 const ChatsProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState();
   const [isScreenSmall, setIsScreenSmall] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const updateScreenSize = () => {
     setIsScreenSmall(window.innerWidth < 768);
   };
@@ -15,7 +16,14 @@ const ChatsProvider = ({ children }) => {
 
   return (
     <ChatsContext.Provider
-      value={{ selectedChat, setSelectedChat, isScreenSmall, setIsScreenSmall }}
+      value={{
+        selectedChat,
+        setSelectedChat,
+        isScreenSmall,
+        setIsScreenSmall,
+        darkMode,
+        setDarkMode,
+      }}
     >
       {children}
     </ChatsContext.Provider>

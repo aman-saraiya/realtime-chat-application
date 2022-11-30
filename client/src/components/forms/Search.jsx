@@ -18,6 +18,7 @@ const Search = ({ isSearching, setIsSearching, setFetchChatsAgain }) => {
       <div className="row p-0 m-0" style={{ height: "5%" }}>
         <div className="input-group p-0 m-0">
           <input
+            className="p-0 m-0"
             style={{ width: "100%", border: "none" }}
             type="text"
             value={searchInput}
