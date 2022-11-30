@@ -39,7 +39,7 @@ const Chats = ({ socket }) => {
               (isScreenSmall && selectedChat) || !isScreenSmall ? "" : "none",
           }}
         >
-          {JSON.stringify(notifications)}
+          {/* {JSON.stringify(notifications)} */}
           <MessageWindow
             socket={socket}
             setFetchChatsAgain={setFetchChatsAgain}

@@ -6,13 +6,26 @@ import ProfileModal from "../modal/ProfileModal";
 import GroupModal from "../modal/GroupModal";
 const MessageHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isScreenSmall, selectedChat, setSelectedChat } = ChatsState();
+  const {
+    isScreenSmall,
+    selectedChat,
+    setSelectedChat,
+    darkMode,
+  } = ChatsState();
+  const user = JSON.parse(window.localStorage.getItem("user"));
   const handleBackClick = () => {
     setSelectedChat();
   };
+  const chatPicture = selectedChat.isGroupChat
+    ? selectedChat.groupPicture
+    : selectedChat.users[0] == user._id
+    ? selectedChat.users[1].profilePicture
+    : selectedChat.users[0].profilePicture;
   return (
     <div
-      className="row m-0 p-0"
+      className={`row m-0 p-0 ${
+        darkMode ? "dark_mode_header" : "light_mode_header"
+      }`}
       style={{ height: "8%", border: "1px solid red" }}
     >
       <button
@@ -20,15 +33,25 @@ const MessageHeader = () => {
         style={{ width: "4%", display: isScreenSmall ? "" : "none" }}
         onClick={handleBackClick}
       >
-        <ArrowLeftOutlined style={{ fontSize: "20px" }} />
+        <ArrowLeftOutlined />
       </button>
-      <h2 className="col m-0 p-0">{selectedChat.chatName}</h2>
-      <Button
-        className="btn col-2 m-0 p-0"
-        onClick={() => setIsModalOpen(true)}
+      <div
+        className="col-1 p-0 m-0 d-flex align-items-center justify-content-center"
+        style={{ border: "3px solid green" }}
       >
-        {selectedChat.isGroupChat ? "View Group" : "View User"}
-      </Button>
+        <img src={chatPicture} className="profile_image" />
+      </div>
+      <div className="col m-0 p-0 d-flex align-items-center">
+        {selectedChat.chatName}
+      </div>
+      <div
+        className="col-2 d-flex align-items-center float-end m-0 p-0 justify-content-center"
+        style={{ fontSize: "0.7rem" }}
+      >
+        <div onClick={() => setIsModalOpen(true)} style={{ cursor: "pointer" }}>
+          {selectedChat.isGroupChat ? "View Group" : "View User"}
+        </div>
+      </div>
       {selectedChat.isGroupChat ? (
         <GroupModal
           isGroupModalOpen={isModalOpen}
