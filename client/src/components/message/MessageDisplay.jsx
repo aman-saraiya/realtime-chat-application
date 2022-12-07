@@ -20,10 +20,7 @@ const MessageDisplay = ({ socket, messages, setMessages }) => {
   }, []);
 
   return (
-    <div
-      className="row p-0 m-0"
-      style={{ height: "84%", border: "1px solid green" }}
-    >
+    <div className="chatbox" style={{ border: "1px solid green" }}>
       {messages &&
         messages.map((message) => (
           <div key={message._id}>

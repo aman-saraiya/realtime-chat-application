@@ -46,9 +46,15 @@ const MessageHeader = () => {
       </div>
       <div
         className="col-2 d-flex align-items-center float-end m-0 p-0 justify-content-center"
-        style={{ fontSize: "0.7rem" }}
+        style={{ fontSize: "0.8rem" }}
       >
-        <div onClick={() => setIsModalOpen(true)} style={{ cursor: "pointer" }}>
+        <div
+          onClick={() => setIsModalOpen(true)}
+          style={{ cursor: "pointer" }}
+          className={`${
+            darkMode ? "dark_header_button" : "light_header_button"
+          }`}
+        >
           {selectedChat.isGroupChat ? "View Group" : "View User"}
         </div>
       </div>

@@ -49,18 +49,20 @@ const MessageWindow = ({
   return selectedChat ? (
     <>
       <MessageHeader />
-      <MessageDisplay
-        messages={messages}
-        setMessages={setMessages}
-        socket={socket}
-      />
-      <SendMessage
-        typing={typing}
-        setTyping={setTyping}
-        setFetchChatsAgain={setFetchChatsAgain}
-        socket={socket}
-        setMessages={setMessages}
-      />
+      <div className="message_section" style={{ border: "3px solid red" }}>
+        <MessageDisplay
+          messages={messages}
+          setMessages={setMessages}
+          socket={socket}
+        />
+        <SendMessage
+          typing={typing}
+          setTyping={setTyping}
+          setFetchChatsAgain={setFetchChatsAgain}
+          socket={socket}
+          setMessages={setMessages}
+        />
+      </div>
     </>
   ) : (
     <></>

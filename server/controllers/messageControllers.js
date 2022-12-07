@@ -30,6 +30,8 @@ const sendMessage = async (req, res) => {
 };
 const fetchMessages = async (req, res) => {
   const { chatId } = req.params;
+  const limit = parseInt(req.query.limit);
+  const offset = parseInt(req.query.offset);
   try {
     const messages = await Message.find({ chat: chatId })
       .populate("sender")

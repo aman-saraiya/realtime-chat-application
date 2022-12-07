@@ -18,21 +18,22 @@ const Search = ({ isSearching, setIsSearching, setFetchChatsAgain }) => {
       <div className="row p-0 m-0" style={{ height: "5%" }}>
         <div className="input-group p-0 m-0">
           <input
-            className="p-0 m-0"
-            style={{ width: "100%", border: "none" }}
+            className="search_input"
+            style={{ width: "100%" }}
             type="text"
             value={searchInput}
             onClick={handleUserSearch}
             onChange={handleUserSearch}
           />
-          <i
-            className="fa-solid fa-xmark"
-            style={{ background: "white" }}
-            onClick={() => {
-              setSearchInput("");
-              setIsSearching(false);
-            }}
-          ></i>
+          {isSearching && (
+            <i
+              className="fa-solid fa-xmark search_cancel"
+              onClick={() => {
+                setSearchInput("");
+                setIsSearching(false);
+              }}
+            ></i>
+          )}
         </div>
       </div>
       {isSearching && (

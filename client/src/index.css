@@ -45,6 +45,8 @@ hr.hr-text::after {
 :root {
   --green500: #19bd06;
   --brightWhiteFont: #FFF;
+  --green100: #f7fbf7;
+  --green250: #b8ffb8;
   font-size: 24px;
 }
 
@@ -91,4 +93,70 @@ hr.hr-text::after {
 }
 .button_header_dark {
 
+}
+
+.search_input {
+  background-color:var(--brightWhiteFont);
+  /* border-radius: 1rem; */
+  padding: 0;
+  padding-left: 0.5rem;
+  outline: none;
+  border:none;
+  font-size: 0.8rem;
+}
+
+
+.search_cancel {
+  /* border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem; */
+  background-color: var(--brightWhiteFont);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 0.5rem;
+}
+
+.message_input {
+  resize: none;
+  outline: none;
+  border:none;
+  font-size: 1rem;
+  display: flex;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  line-height: 1rem;
+  padding-top: 0.25rem;
+}
+
+.send_button {
+  cursor: "pointer";
+  border: "3px solid red";
+  display: flex;
+  align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+  background-color: var(--green500);
+  color: var(--brightWhiteFont);    
+}
+.send_button_deactivated {
+}
+.chatbox {
+  background-color: var(--green100);
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.message_section {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  height: 92%;
+  background-color: var(--green100);
 }

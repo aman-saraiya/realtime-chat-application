@@ -38,6 +38,9 @@ const SendMessage = ({
     }, timerLength);
     setTimeoutId(id);
   };
+  useEffect(() => {
+    setMessageContent("");
+  }, [selectedChat]);
   const handleSendMessage = async () => {
     const response = await sendMessage(selectedChat._id, messageContent);
     const message = response.data;
@@ -48,17 +51,26 @@ const SendMessage = ({
     setMessages((prevState) => [...prevState, message]);
   };
   return (
-    <div className="row p-0 m-0" style={{ height: "8%" }}>
+    <div
+      className="d-flex p-0 m-0 align-items-end"
+      style={{
+        border: "2px solid green",
+      }}
+    >
       {/* <input style={{ width: "100%", border: "1px solid red" }} type="text" /> */}
-      <div className="input-group p-0 m-0">
-        <input
-          style={{ width: "100%", border: "none" }}
-          type="text"
-          value={messageContent}
-          onChange={handleInputChange}
-        />
+
+      <textarea
+        rows={4}
+        className="message_input"
+        type="text"
+        value={messageContent}
+        onChange={handleInputChange}
+      />
+      <div className="send_button">
         <SendOutlined
-          style={{ background: "white", fontSize: "25px", cursor: "pointer" }}
+          style={{
+            border: "1px solid red",
+          }}
           onClick={handleSendMessage}
         />
       </div>
