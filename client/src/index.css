@@ -127,6 +127,8 @@ hr.hr-text::after {
   padding: 0;
   line-height: 1rem;
   padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  height: 1.5rem;
 }
 
 .send_button {

@@ -14,8 +14,24 @@ const SendMessage = ({
   const [messageContent, setMessageContent] = useState("");
   const [timeoutId, setTimeoutId] = useState();
   const { selectedChat } = ChatsState();
-
   const handleInputChange = (event) => {
+    document.getElementsByClassName("message_input")[0].style.height = "1.5rem";
+    var scrollHeight = event.target.scrollHeight;
+    const font_size_px = parseFloat(
+      getComputedStyle(document.documentElement).fontSize
+    );
+    const text_rows = (scrollHeight - 0.5 * font_size_px) / font_size_px;
+    console.log(text_rows);
+    if (text_rows <= 4) {
+      document.getElementsByClassName(
+        "message_input"
+      )[0].style.height = `${1.5 + (text_rows - 1)}rem`;
+    } else {
+      document.getElementsByClassName(
+        "message_input"
+      )[0].style.height = `4.5rem`;
+    }
+
     setMessageContent(event.target.value);
 
     if (!typing) {
@@ -60,7 +76,6 @@ const SendMessage = ({
       {/* <input style={{ width: "100%", border: "1px solid red" }} type="text" /> */}
 
       <textarea
-        rows={4}
         className="message_input"
         type="text"
         value={messageContent}
