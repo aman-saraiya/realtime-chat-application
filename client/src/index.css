@@ -150,8 +150,10 @@ hr.hr-text::after {
   background-color: var(--green100);
   font-size: 0.8rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   flex: 1;
+  overflow-y: scroll;
+  overflow-x: auto;
 }
 
 .message_section {

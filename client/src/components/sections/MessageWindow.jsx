@@ -14,7 +14,7 @@ const MessageWindow = ({
   const { selectedChat } = ChatsState();
   const user = JSON.parse(window.localStorage.getItem("user"));
   const [messages, setMessages] = useState([]);
-
+  const [messageInputHeight, setMessageInputHeight] = useState(1.5);
   const [typing, setTyping] = useState(false);
   useEffect(() => {
     {
@@ -54,6 +54,7 @@ const MessageWindow = ({
           messages={messages}
           setMessages={setMessages}
           socket={socket}
+          messageInputHeight={messageInputHeight}
         />
         <SendMessage
           typing={typing}
@@ -61,6 +62,7 @@ const MessageWindow = ({
           setFetchChatsAgain={setFetchChatsAgain}
           socket={socket}
           setMessages={setMessages}
+          setMessageInputHeight={setMessageInputHeight}
         />
       </div>
     </>

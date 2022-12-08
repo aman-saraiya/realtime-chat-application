@@ -10,26 +10,29 @@ const SendMessage = ({
   setMessages,
   typing,
   setTyping,
+  setMessageInputHeight,
 }) => {
   const [messageContent, setMessageContent] = useState("");
   const [timeoutId, setTimeoutId] = useState();
   const { selectedChat } = ChatsState();
   const handleInputChange = (event) => {
     document.getElementsByClassName("message_input")[0].style.height = "1.5rem";
+    setMessageInputHeight(1.5);
     var scrollHeight = event.target.scrollHeight;
     const font_size_px = parseFloat(
       getComputedStyle(document.documentElement).fontSize
     );
     const text_rows = (scrollHeight - 0.5 * font_size_px) / font_size_px;
-    console.log(text_rows);
     if (text_rows <= 4) {
       document.getElementsByClassName(
         "message_input"
       )[0].style.height = `${1.5 + (text_rows - 1)}rem`;
+      setMessageInputHeight(1.5 + (text_rows - 1));
     } else {
       document.getElementsByClassName(
         "message_input"
       )[0].style.height = `4.5rem`;
+      setMessageInputHeight(4.5);
     }
 
     setMessageContent(event.target.value);
