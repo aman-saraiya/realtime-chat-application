@@ -34,9 +34,12 @@ const fetchMessages = async (req, res) => {
   const offset = parseInt(req.query.offset);
   try {
     const messages = await Message.find({ chat: chatId })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip(offset)
       .populate("sender")
       .populate("chat");
-    res.json(messages);
+    res.json(messages.reverse());
   } catch (error) {
     console.log(error);
   }
