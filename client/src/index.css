@@ -152,8 +152,6 @@ hr.hr-text::after {
   display: flex;
   flex-direction: column-reverse;
   flex: 1;
-  overflow-y: scroll;
-  overflow-x: auto;
 }
 
 .message_section {

@@ -13,18 +13,26 @@ const MessageDisplay = ({
   const [isTyping, setIsTyping] = useState(false);
   const { selectedChat } = ChatsState();
   const loadMessages = async () => {
-    const response = await fetchMessages(selectedChat._id);
+    const response = await fetchMessages(selectedChat._id, 20, 0);
     setMessages(response.data);
   };
   useEffect(() => {
     loadMessages();
   }, [selectedChat]);
 
+  const appendMessages = async () => {
+    const response = await fetchMessages(selectedChat._id, 20, messages.length);
+    setMessages((prevState) => [...response.data, ...prevState]);
+  };
   useEffect(() => {
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
   }, []);
-  const handleMessagesScroll = () => {};
+  const handleMessagesScroll = (event) => {
+    if (event.currentTarget.scrollTop === 0) {
+      appendMessages();
+    }
+  };
   const textAreaSize =
     parseFloat(getComputedStyle(document.documentElement).fontSize) *
     messageInputHeight;
@@ -35,6 +43,7 @@ const MessageDisplay = ({
         <VirtualList
           data={messages}
           itemKey="_id"
+          height={200}
           onScroll={handleMessagesScroll}
         >
           {(item) => (
