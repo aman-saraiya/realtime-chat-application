@@ -4,6 +4,7 @@ import { ChatsState } from "../context/ChatsProvider";
 import VirtualList from "rc-virtual-list";
 import List from "react-virtualized/dist/commonjs/List";
 import { message } from "antd";
+import MessageCard from "./MessageCard";
 
 const MessageDisplay = ({
   socket,
@@ -60,7 +61,7 @@ const MessageDisplay = ({
           rowHeight={50}
           rowRenderer={({ index, key, style }) => (
             <div key={key} className="message_item" style={style}>
-              {`${messages[index].sender.name}- ${messages[index].content}`}
+              <MessageCard message={messages[index]} />
             </div>
           )}
           scrollToIndex={20}
