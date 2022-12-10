@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { fetchChats } from "../../utils/chat";
 import { ChatsState } from "../context/ChatsProvider";
+import ChatCard from "./ChatCard";
 
 const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
   const { setSelectedChat } = ChatsState();
@@ -38,7 +39,7 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
               });
             }}
           >
-            {chat.chatName}
+            <ChatCard chat={chat} />
           </div>
         ))}
     </div>
