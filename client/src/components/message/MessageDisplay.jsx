@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { fetchMessages } from "../../utils/message";
 import { ChatsState } from "../context/ChatsProvider";
-import { List } from "antd";
 import VirtualList from "rc-virtual-list";
+import List from "react-virtualized/dist/commonjs/List";
+import { message } from "antd";
 
 const MessageDisplay = ({
   socket,
@@ -16,9 +17,23 @@ const MessageDisplay = ({
     const response = await fetchMessages(selectedChat._id, 20, 0);
     setMessages(response.data);
   };
+  const [displayHeight, setDisplayHeight] = useState();
+  const [displayWidth, setDisplayWidth] = useState();
+  const [scrollIndex, setScrollIndex] = useState();
   useEffect(() => {
     loadMessages();
-  }, [selectedChat]);
+    const parent_height = document.getElementsByClassName("message_section")[0]
+      .clientHeight;
+    console.log(parent_height);
+    const textAreaSize =
+      parseFloat(getComputedStyle(document.documentElement).fontSize) *
+      messageInputHeight;
+    setDisplayHeight(parent_height - textAreaSize - 2);
+
+    setDisplayWidth(
+      document.getElementsByClassName("message_section")[0].clientWidth
+    );
+  }, [selectedChat, messageInputHeight]);
 
   const appendMessages = async () => {
     const response = await fetchMessages(selectedChat._id, 20, messages.length);
@@ -28,33 +43,44 @@ const MessageDisplay = ({
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
   }, []);
-  const handleMessagesScroll = (event) => {
-    if (event.currentTarget.scrollTop === 0) {
+  const handleMessagesScroll = ({ scrollTop }) => {
+    if (scrollTop === 0) {
       appendMessages();
     }
   };
-  const textAreaSize =
-    parseFloat(getComputedStyle(document.documentElement).fontSize) *
-    messageInputHeight;
+
   return (
     <div className="chatbox" style={{ border: "1px solid green" }}>
       <div>{isTyping && "Typing"}</div>
-      <List>
+      {messages && (
+        <List
+          height={displayHeight}
+          onScroll={handleMessagesScroll}
+          rowCount={messages.length}
+          rowHeight={50}
+          rowRenderer={({ index, key, style }) => (
+            <div key={key} className="message_item" style={style}>
+              {`${messages[index].sender.name}- ${messages[index].content}`}
+            </div>
+          )}
+          scrollToIndex={20}
+          width={displayWidth}
+        />
+      )}
+      {/* <List>
         <VirtualList
           data={messages}
           itemKey="_id"
-          height={200}
+          height={displayHeight}
           onScroll={handleMessagesScroll}
         >
           {(item) => (
             <List.Item key={item._id}>
-              <div>
-                {item.sender.name} - {item.content}
-              </div>
+              {item.sender.name} - {item.content}
             </List.Item>
           )}
         </VirtualList>
-      </List>
+      </List> */}
       {/* {messages &&
         messages.map((message) => (
           <div key={message._id}>

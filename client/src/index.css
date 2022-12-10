@@ -150,8 +150,7 @@ hr.hr-text::after {
   background-color: var(--green100);
   font-size: 0.8rem;
   display: flex;
-  flex-direction: column-reverse;
-  flex: 1;
+  flex-direction: column;
 }
 
 .message_section {
@@ -161,4 +160,8 @@ hr.hr-text::after {
   flex-direction: column;
   height: 92%;
   background-color: var(--green100);
+}
+.message_list {
+  display: flex;
+  flex-direction: column-reverse;
 }
