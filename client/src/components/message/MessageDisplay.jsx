@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchMessages } from "../../utils/message";
 import { ChatsState } from "../context/ChatsProvider";
-import VirtualList from "rc-virtual-list";
 import List from "react-virtualized/dist/commonjs/List";
 import { message } from "antd";
 import MessageCard from "./MessageCard";

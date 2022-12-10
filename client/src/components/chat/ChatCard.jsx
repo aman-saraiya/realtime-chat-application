@@ -1,4 +1,3 @@
-import { message } from "antd";
 import React from "react";
 
 const ChatCard = ({ chat }) => {
@@ -24,6 +23,7 @@ const ChatCard = ({ chat }) => {
         {chatWithUser._id !== chat.latestMessage.sender._id
           ? "You"
           : chatWithUser.name}
+        {": "}
         {chat.latestMessage.content.slice(0, 60)}
       </div>
     </>
