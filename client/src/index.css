@@ -39,6 +39,7 @@ hr.hr-text::after {
 .app-window {
   margin: 4vh;
   height: 92vh;
+  width: calc(100vw - 8vh);
   border: 2px solid red;
   min-height:calc(768px - 8vh) ;
 }
@@ -60,11 +61,21 @@ hr.hr-text::after {
   :root {
     font-size: 16px;
   }
+  .app-window {
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+  }
 }
 
 @media only screen and (max-width : 768px ) {
   :root {
     font-size: 16px;
+  }
+  .app-window {
+    margin: 4vh;
+    height: 92vh;
+    width: calc(100vw - 8vh);
   }
 }
 
