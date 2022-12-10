@@ -7,6 +7,7 @@ import { signOut } from "firebase/auth";
 import { ChatsState } from "../context/ChatsProvider";
 import CreateGroup from "../modal/CreateGroup";
 import ProfileModal from "../modal/ProfileModal";
+import { useLayoutEffect } from "react";
 const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
   const navigate = useNavigate();
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
@@ -31,7 +32,6 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
       className={`row p-0 m-0 ${
         darkMode ? "dark_mode_header" : "light_mode_header"
       }`}
-      style={{ height: "8%" }}
     >
       <div
         className="col-1 p-0 m-0 d-flex align-items-center"
@@ -39,7 +39,7 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
       >
         <img src={user.profilePicture} className="profile_image" />
       </div>
-      <div className="col d-flex align-items-center">{user.name}</div>
+      <div className="col p-1 d-flex align-items-center">{user.name}</div>
       <div
         className={`col-1 p-0 m-0 float-end d-flex align-items-center justify-content-center ${
           darkMode ? "dark_header_button" : "light_header_button"

@@ -26,7 +26,7 @@ const MessageHeader = () => {
       className={`row m-0 p-0 ${
         darkMode ? "dark_mode_header" : "light_mode_header"
       }`}
-      style={{ height: "8%", border: "1px solid red" }}
+      style={{ border: "1px solid red" }}
     >
       <button
         className="border-0 m-0 p-0"

@@ -83,6 +83,7 @@ hr.hr-text::after {
   background-color: var(--green500);
   color: var(--brightWhiteFont);
   font-size: 1rem;
+  height: 2.5rem;
 }
 .dark_mode_header {}
 
@@ -108,7 +109,7 @@ hr.hr-text::after {
 
 .search_input {
   background-color:var(--brightWhiteFont);
-  /* border-radius: 1rem; */
+  height: 1.5rem;
   padding: 0;
   padding-left: 0.5rem;
   outline: none;
@@ -116,10 +117,17 @@ hr.hr-text::after {
   font-size: 0.8rem;
 }
 
+.chats_users_list {
+  height: calc(100% - 4rem);
+  background-color: var(--green100); 
+}
+
+.chat_user_card {
+  height: 2.8rem;
+  border: 1px solid orangered;
+}
 
 .search_cancel {
-  /* border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem; */
   background-color: var(--brightWhiteFont);
   display: flex;
   justify-content: center;
