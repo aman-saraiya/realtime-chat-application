@@ -67,28 +67,6 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
           />
         )}
       </AutoSizer>
-      {/* {chats &&
-        chats.map((chat) => (
-          <div
-            className="chat_user_card row m-0"
-            style={{
-              border:
-                !notifications ||
-                (notifications && notifications.indexOf(chat._id) == -1)
-                  ? "3px solid red"
-                  : "3px solid green",
-            }}
-            key={chat._id}
-            onClick={() => {
-              setSelectedChat((prevState) => {
-                prevState && socket.emit("leave chat", prevState._id);
-                return chat;
-              });
-            }}
-          >
-            <ChatCard chat={chat} />
-          </div>
-        ))} */}
     </div>
   );
 };
