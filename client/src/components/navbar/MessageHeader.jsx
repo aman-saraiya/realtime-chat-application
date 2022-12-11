@@ -23,30 +23,34 @@ const MessageHeader = () => {
     : selectedChat.users[0].profilePicture;
   return (
     <div
-      className={`row m-0 p-0 ${
+      className={`d-flex flex-row m-0 p-0 ${
         darkMode ? "dark_mode_header" : "light_mode_header"
       }`}
-      style={{ border: "1px solid red" }}
     >
       <button
-        className="border-0 m-0 p-0"
-        style={{ width: "4%", display: isScreenSmall ? "" : "none" }}
+        className="border-0 m-0 p-0 send_button"
+        style={{
+          width: "1.5rem",
+          height: "2.5rem",
+          display: isScreenSmall ? "" : "none",
+          border: "1px solid red",
+        }}
         onClick={handleBackClick}
       >
         <ArrowLeftOutlined />
       </button>
       <div
-        className="col-1 p-0 m-0 d-flex align-items-center justify-content-center"
-        style={{ border: "3px solid green" }}
+        className="p-0 m-0 d-flex align-items-center"
+        // style={{ border: "3px solid green" }}
       >
         <img src={chatPicture} className="profile_image" />
       </div>
-      <div className="col m-0 p-0 d-flex align-items-center">
+      <div className="m-0 p-1 d-flex align-items-center flex-grow-1">
         {selectedChat.chatName}
       </div>
       <div
-        className="col-2 d-flex align-items-center float-end m-0 p-0 justify-content-center"
-        style={{ fontSize: "0.8rem" }}
+        className="d-flex align-items-center justify-content-center"
+        style={{ fontSize: "0.8rem", paddingRight: "0.5rem" }}
       >
         <div
           onClick={() => setIsModalOpen(true)}

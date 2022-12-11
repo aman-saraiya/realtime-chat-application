@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchMessages } from "../../utils/message";
 import { ChatsState } from "../context/ChatsProvider";
-import List from "react-virtualized/dist/commonjs/List";
-import { message } from "antd";
+import { AutoSizer, List } from "react-virtualized";
 import MessageCard from "./MessageCard";
 
 const MessageDisplay = ({
@@ -52,43 +51,41 @@ const MessageDisplay = ({
   return (
     <div className="chatbox" style={{ border: "1px solid green" }}>
       <div>{isTyping && "Typing"}</div>
-      {messages && (
-        <List
-          height={displayHeight}
-          onScroll={handleMessagesScroll}
-          rowCount={messages.length}
-          rowHeight={50}
-          rowRenderer={({ index, key, style }) => (
-            <div key={key} className="message_item" style={style}>
-              <MessageCard message={messages[index]} />
-            </div>
-          )}
-          scrollToIndex={20}
-          width={displayWidth}
-        />
-      )}
-      {/* <List>
-        <VirtualList
-          data={messages}
-          itemKey="_id"
-          height={displayHeight}
-          onScroll={handleMessagesScroll}
-        >
-          {(item) => (
-            <List.Item key={item._id}>
-              {item.sender.name} - {item.content}
-            </List.Item>
-          )}
-        </VirtualList>
-      </List> */}
-      {/* {messages &&
-        messages.map((message) => (
-          <div key={message._id}>
-            {message.sender.name} - {message.content}
-          </div>
-        ))}
-      <div>{isTyping && "Typing"}</div> */}
+      <AutoSizer>
+        {({ width, height }) => (
+          <List
+            height={height}
+            rowCount={messages.length}
+            rowHeight={
+              2.8 *
+              parseFloat(getComputedStyle(document.documentElement).fontSize)
+            }
+            rowRenderer={({ index, key, style }) => (
+              <div key={key} style={style}>
+                <MessageCard message={messages[index]} />
+              </div>
+            )}
+            width={width}
+          />
+        )}
+      </AutoSizer>
     </div>
+
+    // {messages && (
+    //     <List
+    //       height={displayHeight}
+    //       onScroll={handleMessagesScroll}
+    //       rowCount={messages.length}
+    //       rowHeight={50}
+    //       rowRenderer={({ index, key, style }) => (
+    //         <div key={key} style={style}>
+    //           <MessageCard message={messages[index]} />
+    //         </div>
+    //       )}
+    //       scrollToIndex={20}
+    //       width={displayWidth}
+    //     />
+    //   )}
   );
 };
 

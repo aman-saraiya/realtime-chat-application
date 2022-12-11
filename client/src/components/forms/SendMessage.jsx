@@ -76,8 +76,6 @@ const SendMessage = ({
         border: "2px solid green",
       }}
     >
-      {/* <input style={{ width: "100%", border: "1px solid red" }} type="text" /> */}
-
       <textarea
         className="message_input"
         type="text"
