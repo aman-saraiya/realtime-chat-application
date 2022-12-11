@@ -170,6 +170,7 @@ hr.hr-text::after {
   background-color: var(--green100);
   font-size: 0.8rem;
   display: flex;
+  flex: 1;
   flex-direction: column;
 }
 
@@ -178,7 +179,7 @@ hr.hr-text::after {
   margin: 0;
   padding: 0;
   flex-direction: column;
-  height: 92%;
+  height: calc(100% - 2.5rem);
   background-color: var(--green100);
 }
 .message_list {

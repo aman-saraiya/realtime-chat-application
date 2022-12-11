@@ -17,11 +17,6 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
     setChats(response.data);
   };
 
-  const list_space_ref = useRef(null);
-  useLayoutEffect(() => {
-    console.log(list_space_ref.current.clientHeight);
-  }, [list_space_ref]);
-
   const rowRenderer = ({ key, index, style }) => {
     return (
       <div key={key} style={style}>
@@ -48,11 +43,7 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
     );
   };
   return (
-    <div
-      className="chats_users_list"
-      ref={list_space_ref}
-      style={{ border: "1px solid green" }}
-    >
+    <div className="chats_users_list" style={{ border: "1px solid green" }}>
       <AutoSizer>
         {({ width, height }) => (
           <List
