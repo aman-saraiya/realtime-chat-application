@@ -29,38 +29,29 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
   ];
   return (
     <div
-      className={`row p-0 m-0 ${
+      className={`d-flex flex-row p-0 m-0  ${
         darkMode ? "dark_mode_header" : "light_mode_header"
       }`}
     >
       <div
-        className="col-1 p-0 m-0 d-flex align-items-center"
+        className="p-0 m-0 d-flex align-items-center"
         style={{ border: "3px solid green" }}
       >
         <img src={user.profilePicture} className="profile_image" />
       </div>
-      <div className="col p-1 d-flex align-items-center">{user.name}</div>
+      <div className="p-1 d-flex align-items-center flex-grow-1">
+        {user.name}
+      </div>
       <div
-        className={`col-1 p-0 m-0 float-end d-flex align-items-center justify-content-center ${
+        className={`p-0 m-0 d-flex align-items-center ${
           darkMode ? "dark_header_button" : "light_header_button"
         }`}
         style={{ border: "1px solid red" }}
       >
         <UsergroupAddOutlined onClick={() => setIsCreateGroupModalOpen(true)} />
       </div>
-      <CreateGroup
-        isCreateGroupModalOpen={isCreateGroupModalOpen}
-        setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
-        setFetchChatsAgain={setFetchChatsAgain}
-        socket={socket}
-      />
-      <ProfileModal
-        isMyAccountView={true}
-        isProfileModalOpen={isProfileModalOpen}
-        setIsProfileModalOpen={setIsProfileModalOpen}
-      />
       <div
-        className="p-0 m-0 float-end d-flex align-items-center justify-content-center"
+        className="p-0 m-0 d-flex  justify-content-center"
         style={{ border: "1px solid red", width: "1rem" }}
       >
         <Dropdown placement="bottomRight" trigger="click" menu={{ items }}>
@@ -74,6 +65,17 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
           </a>
         </Dropdown>
       </div>
+      <CreateGroup
+        isCreateGroupModalOpen={isCreateGroupModalOpen}
+        setIsCreateGroupModalOpen={setIsCreateGroupModalOpen}
+        setFetchChatsAgain={setFetchChatsAgain}
+        socket={socket}
+      />
+      <ProfileModal
+        isMyAccountView={true}
+        isProfileModalOpen={isProfileModalOpen}
+        setIsProfileModalOpen={setIsProfileModalOpen}
+      />
     </div>
   );
 };
