@@ -16,11 +16,14 @@ const MessageHeader = () => {
   const handleBackClick = () => {
     setSelectedChat();
   };
+  const chatWithUser = selectedChat.isGroupChat
+    ? ""
+    : selectedChat.users[0]._id === user._id
+    ? selectedChat.users[1]
+    : selectedChat.users[0];
   const chatPicture = selectedChat.isGroupChat
     ? selectedChat.groupPicture
-    : selectedChat.users[0] == user._id
-    ? selectedChat.users[1].profilePicture
-    : selectedChat.users[0].profilePicture;
+    : chatWithUser.profilePicture;
   return (
     <div
       className={`d-flex flex-row m-0 p-0 ${
@@ -46,7 +49,7 @@ const MessageHeader = () => {
         <img src={chatPicture} className="profile_image" />
       </div>
       <div className="m-0 p-1 d-flex align-items-center flex-grow-1">
-        {selectedChat.chatName}
+        {selectedChat.isGroupChat ? selectedChat.chatName : chatWithUser.name}
       </div>
       <div
         className="d-flex align-items-center justify-content-center"
