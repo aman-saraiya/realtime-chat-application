@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { fetchMessages } from "../../utils/message";
 import { ChatsState } from "../context/ChatsProvider";
-import { AutoSizer, List } from "react-virtualized";
+import {
+  CellMeasurer,
+  AutoSizer,
+  List,
+  InfiniteLoader,
+  CellMeasurerCache,
+} from "react-virtualized";
 import MessageCard from "./MessageCard";
+import { useRef } from "react";
+
+const cache = new CellMeasurerCache();
 
 const MessageDisplay = ({
   socket,
@@ -16,26 +25,31 @@ const MessageDisplay = ({
     const response = await fetchMessages(selectedChat._id, 20, 0);
     setMessages(response.data);
   };
-  const [displayHeight, setDisplayHeight] = useState();
-  const [displayWidth, setDisplayWidth] = useState();
-  const [scrollIndex, setScrollIndex] = useState();
+  // const [displayHeight, setDisplayHeight] = useState();
+  // const [displayWidth, setDisplayWidth] = useState();
+  const [scrollIndex, setScrollIndex] = useState(0);
+
+  const listRef = useRef(null);
+
   useEffect(() => {
     loadMessages();
-    const parent_height = document.getElementsByClassName("message_section")[0]
-      .clientHeight;
-    console.log(parent_height);
-    const textAreaSize =
-      parseFloat(getComputedStyle(document.documentElement).fontSize) *
-      messageInputHeight;
-    setDisplayHeight(parent_height - textAreaSize - 2);
+    // const parent_height = document.getElementsByClassName("message_section")[0]
+    //   .clientHeight;
+    // console.log(parent_height);
+    // const textAreaSize =
+    //   parseFloat(getComputedStyle(document.documentElement).fontSize) *
+    //   messageInputHeight;
+    // setDisplayHeight(parent_height - textAreaSize - 2);
 
-    setDisplayWidth(
-      document.getElementsByClassName("message_section")[0].clientWidth
-    );
-  }, [selectedChat, messageInputHeight]);
+    // setDisplayWidth(
+    //   document.getElementsByClassName("message_section")[0].clientWidth
+    // );
+  }, [selectedChat]);
 
   const appendMessages = async () => {
     const response = await fetchMessages(selectedChat._id, 20, messages.length);
+    setScrollIndex(messages.length);
+    console.log("CALLED");
     setMessages((prevState) => [...response.data, ...prevState]);
   };
   useEffect(() => {
@@ -48,45 +62,85 @@ const MessageDisplay = ({
     }
   };
 
+  // const getRowHeight = (index, width) => {
+  //   console.log(index, width);
+  //   return 70;
+  // };
+  const rowRenderer = ({ index, isScrolling, key, parent, style }) => {
+    let content;
+    if (index > messages.length) {
+      content = <div>LOADING...</div>;
+    } else {
+      content = (
+        <div style={style} key={key}>
+          <MessageCard message={messages[index]} />
+        </div>
+      );
+    }
+
+    return (
+      <CellMeasurer
+        cache={cache}
+        columnIndex={0}
+        key={key}
+        parent={parent}
+        rowIndex={index}
+      >
+        {content}
+      </CellMeasurer>
+    );
+  };
+
   return (
     <div className="chatbox" style={{ border: "1px solid green" }}>
-      <div>{isTyping && "Typing"}</div>
       <AutoSizer>
-        {({ width, height }) => (
-          <List
-            height={height}
-            rowCount={messages.length}
-            rowHeight={
-              2.8 *
-              parseFloat(getComputedStyle(document.documentElement).fontSize)
-            }
-            rowRenderer={({ index, key, style }) => (
-              <div key={key} style={style}>
-                <MessageCard message={messages[index]} />
-              </div>
-            )}
-            width={width}
-          />
-        )}
+        {({ height, width }) => {
+          return (
+            <List
+              ref={listRef}
+              deferredMeasurementCache={cache}
+              height={height}
+              overscanRowCount={1}
+              rowCount={messages.length}
+              rowHeight={100}
+              rowRenderer={rowRenderer}
+              width={width}
+              scrollToIndex={messages.length - scrollIndex}
+              onScroll={handleMessagesScroll}
+            />
+          );
+        }}
       </AutoSizer>
+      <div>{isTyping && "Typing"}</div>
     </div>
-
-    // {messages && (
-    //     <List
-    //       height={displayHeight}
-    //       onScroll={handleMessagesScroll}
-    //       rowCount={messages.length}
-    //       rowHeight={50}
-    //       rowRenderer={({ index, key, style }) => (
-    //         <div key={key} style={style}>
-    //           <MessageCard message={messages[index]} />
-    //         </div>
-    //       )}
-    //       scrollToIndex={20}
-    //       width={displayWidth}
-    //     />
-    //   )}
   );
 };
-
+{
+  /* <AutoSizer>
+{({ width, height }) => (
+  <CellMeasurer
+    cache={cache}
+    cellRenderer={({ rowIndex, ...rest }) =>
+      rowRenderer({ index: rowIndex, ...rest })
+    }
+    columnCount={0}
+    rowCount={messages.length}
+    width={width}
+    parent={parent}
+  >
+    {(getRowHeight, setRef) => (
+      <List
+        height={height}
+        rowCount={messages.length}
+        rowHeight={getRowHeight}
+        ref={setRef}
+        rowRenderer={rowRenderer}
+        width={width}
+        scrollToIndex={messages.length}
+      />
+    )}
+  </CellMeasurer>
+)}
+</AutoSizer> */
+}
 export default MessageDisplay;

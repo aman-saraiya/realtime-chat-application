@@ -65,6 +65,8 @@ const SendMessage = ({
     const message = response.data;
     socket.emit("stop typing", selectedChat._id);
     setFetchChatsAgain((prevValue) => !prevValue);
+    setMessageInputHeight(1.5);
+    document.getElementsByClassName("message_input")[0].style.height = `1.5rem`;
     setMessageContent("");
     socket.emit("new message", message);
     setMessages((prevState) => [...prevState, message]);

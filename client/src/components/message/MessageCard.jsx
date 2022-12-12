@@ -3,7 +3,12 @@ import { ChatsState } from "../context/ChatsProvider";
 
 const MessageCard = ({ message }) => {
   const user = JSON.parse(window.localStorage.getItem("user"));
-  const { selectedChat } = ChatsState();
+  const isSelfMessage = message.sender._id === user._id;
+  return (
+    <div className={`message_card ${isSelfMessage ? "self_message" : ""}`}>
+      {message.content}
+    </div>
+  );
   // return (
   //   <div
   //     className={`${message.sender._id == user._id &&

@@ -47,7 +47,7 @@ hr.hr-text::after {
   --green500: #19bd06;
   --brightWhiteFont: #FFF;
   --green100: #f7fbf7;
-  --green250: #b8ffb8;
+  --green250: #d1fbd1;
   font-size: 24px;
 }
 
@@ -123,6 +123,7 @@ hr.hr-text::after {
 }
 
 .chat_user_card {
+  background-color: var(--brightWhiteFont);
   height: 2.8rem;
   border: 1px solid orangered;
 }
@@ -185,4 +186,18 @@ hr.hr-text::after {
 .message_list {
   display: flex;
   flex-direction: column-reverse;
+}
+
+.message_card {
+  max-width: 80%;
+  background-color: var(--green250);
+  border-radius: 0.2rem;
+  border: 1px solid red;
+  width: fit-content;
+  padding: 0.1rem;
+}
+
+.self_message {
+  margin-right: 0;
+  margin-left: auto;
 }
