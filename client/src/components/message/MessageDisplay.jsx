@@ -11,7 +11,6 @@ const MessageDisplay = ({
   messages,
   setMessages,
   virtuoso,
-
   sentMessage,
   setSentMessage,
 }) => {
@@ -54,7 +53,6 @@ const MessageDisplay = ({
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
   }, []);
-  const START_INDEX = 10000;
   const INITIAL_ITEM_COUNT = 20;
   const [firstItemIndex, setFirstItemIndex] = useState(1000000000);
   return (
@@ -70,7 +68,7 @@ const MessageDisplay = ({
           }}
           ref={virtuoso}
           followOutput={(isAtBottom) => {
-            if (sentMessage) {
+            if (sentMessage || isAtBottom) {
               setSentMessage(false);
               return "auto";
             } else {

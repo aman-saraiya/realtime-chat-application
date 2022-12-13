@@ -192,9 +192,8 @@ hr.hr-text::after {
   max-width: 80%;
   background-color: var(--green250);
   border-radius: 0.2rem;
-  border: 1px solid red;
   width: fit-content;
-  padding: 0.1rem;
+  padding: 0.2rem;
 }
 
 .self_message {
