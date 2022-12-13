@@ -7,10 +7,13 @@ import { ChatsState } from "../context/ChatsProvider";
 const SendMessage = ({
   setFetchChatsAgain,
   socket,
+  messages,
   setMessages,
   typing,
   setTyping,
   setMessageInputHeight,
+  virtuoso,
+  setSentMessage,
 }) => {
   const [messageContent, setMessageContent] = useState("");
   const [timeoutId, setTimeoutId] = useState();
@@ -70,6 +73,7 @@ const SendMessage = ({
     setMessageContent("");
     socket.emit("new message", message);
     setMessages((prevState) => [...prevState, message]);
+    setSentMessage(true);
   };
   return (
     <div
