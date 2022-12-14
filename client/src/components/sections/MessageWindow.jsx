@@ -51,7 +51,7 @@ const MessageWindow = ({
   return selectedChat ? (
     <>
       <MessageHeader />
-      <div className="message_section" style={{ border: "3px solid red" }}>
+      <div className="message_section">
         <MessageDisplay
           setSentMessage={setSentMessage}
           messages={messages}

@@ -26,7 +26,7 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
             border:
               !notifications ||
               (notifications && notifications.indexOf(chats[index]._id) == -1)
-                ? "3px solid red"
+                ? ""
                 : "3px solid green",
           }}
           key={chats[index]._id}
@@ -43,7 +43,7 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
     );
   };
   return (
-    <div className="chats_users_list" style={{ border: "1px solid green" }}>
+    <div className="chats_users_list">
       <AutoSizer>
         {({ width, height }) => (
           <List

@@ -76,12 +76,7 @@ const SendMessage = ({
     setSentMessage(true);
   };
   return (
-    <div
-      className="d-flex p-0 m-0 align-items-end"
-      style={{
-        border: "2px solid green",
-      }}
-    >
+    <div className="d-flex p-0 m-0 align-items-end">
       <textarea
         className="message_input"
         type="text"
@@ -89,12 +84,7 @@ const SendMessage = ({
         onChange={handleInputChange}
       />
       <div className="send_button">
-        <SendOutlined
-          style={{
-            border: "1px solid red",
-          }}
-          onClick={handleSendMessage}
-        />
+        <SendOutlined onClick={handleSendMessage} />
       </div>
     </div>
   );

@@ -33,26 +33,22 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
         darkMode ? "dark_mode_header" : "light_mode_header"
       }`}
     >
-      <div
-        className="p-0 m-0 d-flex align-items-center"
-        style={{ border: "3px solid green" }}
-      >
+      <div className="p-0 m-0 d-flex align-items-center">
         <img src={user.profilePicture} className="profile_image" />
       </div>
-      <div className="p-1 d-flex align-items-center flex-grow-1">
+      <div className="p-2 d-flex align-items-center flex-grow-1">
         {user.name}
       </div>
       <div
         className={`p-0 m-0 d-flex align-items-center ${
           darkMode ? "dark_header_button" : "light_header_button"
         }`}
-        style={{ border: "1px solid red" }}
       >
         <UsergroupAddOutlined onClick={() => setIsCreateGroupModalOpen(true)} />
       </div>
       <div
         className="p-0 m-0 d-flex  justify-content-center"
-        style={{ border: "1px solid red", width: "1rem" }}
+        style={{ width: "2rem" }}
       >
         <Dropdown placement="bottomRight" trigger="click" menu={{ items }}>
           <a

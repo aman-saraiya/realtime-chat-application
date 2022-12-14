@@ -10,13 +10,10 @@ const ChatCard = ({ chat }) => {
     : chatWithUser.profilePicture;
   return (
     <>
-      <div
-        className="p-0 m-0 d-flex align-items-center"
-        style={{ border: "3px solid green" }}
-      >
+      <div className="p-0 m-0 d-flex align-items-center">
         <img src={chatCardImage} className="profile_image" />
       </div>
-      <div className="p-1 d-flex justify-content-center flex-column">
+      <div className="p-2 d-flex justify-content-center flex-column">
         <div
           className="row p-0 m-0"
           style={{ fontSize: "0.8rem", lineHeight: "1rem" }}
@@ -42,23 +39,6 @@ const ChatCard = ({ chat }) => {
           </div>
         )}
       </div>
-
-      {/* <div className="row chat_card p-0 m-0">
-        <div
-          className="col-1 p-0 m-0 d-flex align-items-center"
-          style={{ border: "3px solid green" }}
-        >
-          <img src={chatCardImage} className="profile_image" />
-        </div>
-        <div className="col">{chatCardTitle}</div>
-      </div>
-      <div style={{ fontSize: "0.8rem" }}>
-        {chatWithUser._id !== chat.latestMessage.sender._id
-          ? "You"
-          : chatWithUser.name}
-        {": "}
-        {chat.latestMessage.content.slice(0, 60)}
-      </div> */}
     </>
   );
 };

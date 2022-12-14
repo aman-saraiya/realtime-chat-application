@@ -3,10 +3,7 @@ import React from "react";
 const UserCard = ({ user }) => {
   return (
     <>
-      <div
-        className="col-1 p-0 m-0 d-flex align-items-center"
-        style={{ border: "3px solid green" }}
-      >
+      <div className="col-1 p-0 m-0 d-flex align-items-center">
         <img src={user.profilePicture} className="profile_image" />
       </div>
       <div

@@ -23,7 +23,7 @@ const App = () => {
 
   return (
     <div className="body-background">
-      <div className="app-window" style={{ border: "1px solid red" }}>
+      <div className="app-window">
         <ToastContainer></ToastContainer>
         <Routes>
           <Route path="/" element={<Home />}></Route>

@@ -56,7 +56,7 @@ const MessageDisplay = ({
   const INITIAL_ITEM_COUNT = 20;
   const [firstItemIndex, setFirstItemIndex] = useState(1000000000);
   return (
-    <div className="chatbox" style={{ border: "1px solid green" }}>
+    <div className="chatbox">
       {!loading && (
         <Virtuoso
           firstItemIndex={firstItemIndex}

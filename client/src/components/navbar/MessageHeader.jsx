@@ -36,7 +36,6 @@ const MessageHeader = () => {
           width: "1.5rem",
           height: "2.5rem",
           display: isScreenSmall ? "" : "none",
-          border: "1px solid red",
         }}
         onClick={handleBackClick}
       >
