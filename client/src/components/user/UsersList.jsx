@@ -13,7 +13,7 @@ const UsersList = ({ users, setFetchChatsAgain, setIsSearching }) => {
     setFetchChatsAgain((prevState) => !prevState);
   };
   return (
-    <div className="chats_users_list" style={{ border: "1px solid green" }}>
+    <div className="chats_users_list">
       {users &&
         users.map((user) => (
           <div

@@ -76,12 +76,16 @@ const SendMessage = ({
     setSentMessage(true);
   };
   return (
-    <div className="d-flex p-0 m-0 align-items-end">
+    <div
+      className="d-flex m-0 p-1 align-items-end"
+      style={{ backgroundColor: "#fef7e4" }}
+    >
       <textarea
         className="message_input"
         type="text"
         value={messageContent}
         onChange={handleInputChange}
+        placeholder="Message..."
       />
       <div className="send_button">
         <SendOutlined onClick={handleSendMessage} />

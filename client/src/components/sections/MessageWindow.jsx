@@ -75,7 +75,7 @@ const MessageWindow = ({
       </div>
     </>
   ) : (
-    <></>
+    <div className="message_section_placeholder"></div>
   );
 };
 

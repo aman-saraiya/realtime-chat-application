@@ -15,7 +15,10 @@ const Search = ({ isSearching, setIsSearching, setFetchChatsAgain }) => {
 
   return (
     <>
-      <div className="row p-0 m-0">
+      <div
+        className="row p-0 m-0"
+        style={{ borderBottom: "0.1rem solid #19bd06" }}
+      >
         <div className="input-group p-0 m-0">
           <input
             className="search_input"
@@ -24,6 +27,7 @@ const Search = ({ isSearching, setIsSearching, setFetchChatsAgain }) => {
             value={searchInput}
             onClick={handleUserSearch}
             onChange={handleUserSearch}
+            placeholder="Search Users..."
           />
           {isSearching && (
             <i

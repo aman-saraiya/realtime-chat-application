@@ -29,6 +29,7 @@ const MessageHeader = () => {
       className={`d-flex flex-row m-0 p-0 ${
         darkMode ? "dark_mode_header" : "light_mode_header"
       }`}
+      style={{ borderLeft: "0.2rem solid #dfdede" }}
     >
       <button
         className="border-0 m-0 p-0 send_button"
