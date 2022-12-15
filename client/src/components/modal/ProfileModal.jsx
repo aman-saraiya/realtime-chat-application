@@ -22,6 +22,7 @@ const ProfileModal = ({
       open={isProfileModalOpen}
       onCancel={() => setIsProfileModalOpen(false)}
       footer={[]}
+      width="20rem"
     >
       <div>
         <div className="text-center">
@@ -34,8 +35,8 @@ const ProfileModal = ({
               margin: "1rem",
             }}
           />
-          <h4>{user.name}</h4>
-          <h6>{user.email}</h6>
+          <div style={{ fontSize: "1rem" }}>{user.name}</div>
+          <div style={{ fontSize: "0.8rem" }}>{user.email}</div>
         </div>
       </div>
     </Modal>
