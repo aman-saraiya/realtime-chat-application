@@ -210,3 +210,6 @@ hr.hr-text::after {
   border-left: 0.2rem solid #dfdede;
 }
 
+.ant-modal-content {
+  border-radius:0 !important;
+}

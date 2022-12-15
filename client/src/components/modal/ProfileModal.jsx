@@ -29,9 +29,9 @@ const ProfileModal = ({
           <img
             src={user.profilePicture}
             style={{
-              height: "20%",
-              width: "20%",
-              borderRadius: "50%",
+              height: "4rem",
+              width: "4rem",
+              borderRadius: "2rem",
               margin: "1rem",
             }}
           />

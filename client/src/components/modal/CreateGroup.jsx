@@ -4,7 +4,9 @@ import { createGroupChat } from "../../utils/chat";
 import { ChatsState } from "../context/ChatsProvider";
 import { AutoComplete } from "antd";
 import { fetchUsers } from "../../utils/user";
-
+import { AutoSizer, List } from "react-virtualized";
+import UserCardModal from "../user/UserCardModal";
+import { json } from "react-router-dom";
 const user = JSON.parse(window.localStorage.getItem("user"));
 const CreateGroup = ({
   isCreateGroupModalOpen,
@@ -48,9 +50,8 @@ const CreateGroup = ({
     if (retrievedUsers) {
       for (let i = 0; i < retrievedUsers.length; i++) {
         optionsArray.push({
-          key: retrievedUsers[i]._id,
-          value: <div>{retrievedUsers[i].name}</div>,
-          id: retrievedUsers[i]._id,
+          label: retrievedUsers[i].name,
+          value: JSON.stringify(retrievedUsers[i]),
         });
       }
     }
@@ -63,11 +64,17 @@ const CreateGroup = ({
 
   const handleUserSelection = (value, option) => {
     if (groupUsers.indexOf(option.id) == -1) {
-      setGroupUsers((prevState) => [...prevState, option.id]);
+      setGroupUsers((prevState) => [...prevState, value]);
     }
     setSearchInput("");
   };
-
+  const rowRenderer = ({ key, index, style }) => {
+    return (
+      <div key={key} style={style}>
+        {groupUsers[index]}
+      </div>
+    );
+  };
   return (
     <>
       <Modal
@@ -75,9 +82,27 @@ const CreateGroup = ({
         open={isCreateGroupModalOpen}
         onOk={handleCreateGroup}
         onCancel={exitCreateGroupModal}
+        width="20rem"
+        bodyStyle={{ height: "16rem" }}
+        okButtonProps={{
+          style: {
+            backgroundColor: "#19bd06",
+          },
+        }}
       >
+        <div className="text-center">
+          <img
+            src={user.profilePicture}
+            style={{
+              height: "4rem",
+              width: "4rem",
+              borderRadius: "2rem",
+              margin: "1rem",
+            }}
+          />
+        </div>
         <form>
-          <div className="form-group">
+          <div className="form-group" style={{ fontSize: "0.8rem" }}>
             <input
               type="text"
               className="form-control"
@@ -85,28 +110,75 @@ const CreateGroup = ({
               value={groupName}
               onChange={handleGroupNameInput}
               placeholder="Group Name"
+              style={{
+                marginBottom: "0.5rem",
+                fontSize: "0.8rem",
+                lineHeight: "1rem",
+                borderRadius: "0",
+              }}
             />
           </div>
-          <AutoComplete
-            style={{
-              width: 200,
-            }}
-            options={options}
-            value={searchInput}
-            onChange={handleSearchInput}
-            onSelect={(value, option) => handleUserSelection(value, option)}
-            placeholder="Search Users to Add"
-          />
-          {JSON.stringify(groupUsers)}
           <div className="form-group">
             <input
               type="file"
               className="form-control"
               name="groupPicture"
               onChange={handleGroupPictureInput}
+              style={{
+                marginBottom: "0.5rem",
+                fontSize: "0.8rem",
+                lineHeight: "1rem",
+                borderRadius: "0",
+              }}
             />
           </div>
+          <AutoComplete
+            style={{
+              width: "100%",
+              height: "1rem",
+            }}
+            children={
+              <input
+                className="form-control"
+                style={{
+                  fontSize: "0.8rem",
+                  lineHeight: "1rem",
+                  borderRadius: "0",
+                  border: "1px solid #bdbdbd",
+                  outline: "none",
+                }}
+                placeholder="Search Users to Add"
+              />
+            }
+            className="form-group"
+            options={options}
+            value={searchInput}
+            onChange={handleSearchInput}
+            onSelect={(value, option) => handleUserSelection(value, option)}
+          />
+          {/* {JSON.stringify(groupUsers)} */}
         </form>
+        <div style={{ fontSize: "0.8rem", marginTop: "0.5rem" }}>
+          Participants:
+        </div>
+        <div
+          style={{
+            width: "100%",
+            maxHeight: "3rem",
+            backgroundColor: "#19bd06",
+            color: "#ffffff",
+            overflowY: "scroll",
+            marginTop: "0.5rem",
+            padding: "0",
+            margin: "0",
+          }}
+        >
+          <UserCardModal isAdmin={true} user={user} />
+          {groupUsers &&
+            groupUsers.map((user) => (
+              <UserCardModal isAdmin={false} user={JSON.parse(user)} />
+            ))}
+        </div>
       </Modal>
     </>
   );
