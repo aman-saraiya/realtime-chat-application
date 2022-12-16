@@ -71,13 +71,6 @@ const CreateGroup = ({
     }
     setSearchInput("");
   };
-  const rowRenderer = ({ key, index, style }) => {
-    return (
-      <div key={key} style={style}>
-        {groupUsers[index]}
-      </div>
-    );
-  };
   return (
     <>
       <Modal
