@@ -1,6 +1,11 @@
 import React from "react";
 
-const UserCardModal = ({ isAdmin, user }) => {
+const UserCardModal = ({ isAdmin, user, setGroupUsers, groupUsers }) => {
+  const removeUserFromGroup = () => {
+    setGroupUsers((prevState) =>
+      prevState.filter((groupUser) => JSON.parse(groupUser)._id != user._id)
+    );
+  };
   return (
     <div
       className="row d-flex m-0 p-0"
@@ -26,6 +31,7 @@ const UserCardModal = ({ isAdmin, user }) => {
           <i
             className="fa-solid fa-xmark search_cancel"
             style={{ backgroundColor: "#19bd06", color: "#ffffff" }}
+            onClick={removeUserFromGroup}
           ></i>
         </div>
       )}

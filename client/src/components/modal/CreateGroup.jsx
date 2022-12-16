@@ -23,7 +23,10 @@ const CreateGroup = ({
   };
   const handleGroupPictureInput = (event) => {};
   const handleCreateGroup = async () => {
-    const response = await createGroupChat(groupUsers, groupName, user._id);
+    const groupUserIds = groupUsers.map(
+      (groupUser) => JSON.parse(groupUser)._id
+    );
+    const response = await createGroupChat(groupUserIds, groupName, user._id);
     setSelectedChat(response.data);
     socket.emit("new group", response.data);
     setFetchChatsAgain((prevState) => !prevState);
@@ -176,7 +179,13 @@ const CreateGroup = ({
           <UserCardModal isAdmin={true} user={user} />
           {groupUsers &&
             groupUsers.map((user) => (
-              <UserCardModal isAdmin={false} user={JSON.parse(user)} />
+              <UserCardModal
+                key={JSON.parse(user)._id}
+                isAdmin={false}
+                setGroupUsers={setGroupUsers}
+                groupUsers={groupUsers}
+                user={JSON.parse(user)}
+              />
             ))}
         </div>
       </Modal>
