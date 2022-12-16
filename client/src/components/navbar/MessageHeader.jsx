@@ -4,7 +4,7 @@ import { ChatsState } from "../context/ChatsProvider";
 import { Button } from "antd";
 import ProfileModal from "../modal/ProfileModal";
 import GroupModal from "../modal/GroupModal";
-const MessageHeader = () => {
+const MessageHeader = ({ socket }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     isScreenSmall,
@@ -69,6 +69,7 @@ const MessageHeader = () => {
         <GroupModal
           isGroupModalOpen={isModalOpen}
           setIsGroupModalOpen={setIsModalOpen}
+          socket={socket}
         />
       ) : (
         <ProfileModal

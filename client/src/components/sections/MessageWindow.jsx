@@ -50,7 +50,7 @@ const MessageWindow = ({
   });
   return selectedChat ? (
     <>
-      <MessageHeader />
+      <MessageHeader socket={socket} />
       <div className="message_section">
         <MessageDisplay
           setSentMessage={setSentMessage}

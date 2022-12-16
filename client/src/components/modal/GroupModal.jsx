@@ -10,7 +10,7 @@ import {
 import { fetchUsers } from "../../utils/user";
 import UserCardModal from "../user/UserCardModal";
 
-const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen }) => {
+const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
   const { selectedChat, setSelectedChat } = ChatsState();
   const user = JSON.parse(window.localStorage.getItem("user"));
   const isCurrentUserAdmin = user._id == selectedChat.groupAdmin._id;
@@ -67,6 +67,7 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen }) => {
       selectedChat._id
     );
     const updatedChat = response.data;
+    socket.emit("new group", response.data);
     setSelectedChat(updatedChat);
     setAddUser();
   };
