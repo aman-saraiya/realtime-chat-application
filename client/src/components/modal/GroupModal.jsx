@@ -8,15 +8,17 @@ import {
   renameGroup,
 } from "../../utils/chat";
 import { fetchUsers } from "../../utils/user";
+import UserCardModal from "../user/UserCardModal";
 
 const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen }) => {
   const { selectedChat, setSelectedChat } = ChatsState();
   const user = JSON.parse(window.localStorage.getItem("user"));
-  const isAdmin = user._id == selectedChat.groupAdmin._id;
+  const isCurrentUserAdmin = user._id == selectedChat.groupAdmin._id;
   const [options, setOptions] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [addUser, setAddUser] = useState();
   const [newGroupName, setNewGroupName] = useState("");
+
   const handleSearchInput = async (value) => {
     setSearchInput(value);
   };
@@ -28,9 +30,9 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen }) => {
     if (retrievedUsers) {
       for (let i = 0; i < retrievedUsers.length; i++) {
         optionsArray.push({
-          key: retrievedUsers[i]._id,
-          value: <div>{retrievedUsers[i].name}</div>,
-          _id: retrievedUsers[i]._id,
+          label: retrievedUsers[i].name,
+          value: JSON.stringify(retrievedUsers[i]),
+          id: retrievedUsers[i]._id,
         });
       }
     }
@@ -42,8 +44,8 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen }) => {
   }, [searchInput]);
 
   const handleUserSelection = (value, option) => {
-    if (selectedChat.users.indexOf(option._id) == -1) {
-      setAddUser(option._id);
+    if (selectedChat.users.indexOf(option.id) == -1) {
+      setAddUser(JSON.parse(value));
     }
     setSearchInput("");
   };
@@ -59,7 +61,11 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen }) => {
     setSelectedChat(updatedChat);
   };
   const handleAddUser = async () => {
-    const response = await addUserToGroup(addUser, user._id, selectedChat._id);
+    const response = await addUserToGroup(
+      addUser._id,
+      user._id,
+      selectedChat._id
+    );
     const updatedChat = response.data;
     setSelectedChat(updatedChat);
     setAddUser();
@@ -82,49 +88,153 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen }) => {
       open={isGroupModalOpen}
       onCancel={handleGroupModalClose}
       footer={[]}
+      width="20rem"
+      bodyStyle={{ height: isCurrentUserAdmin ? "21rem" : "18rem" }}
     >
       <div>
         <div className="text-center">
           <img
             src={selectedChat.groupPicture}
             style={{
-              height: "20%",
-              width: "20%",
-              borderRadius: "50%",
+              height: "4rem",
+              width: "4rem",
+              borderRadius: "2rem",
               margin: "1rem",
             }}
           />
-          <h4>{selectedChat.chatName}</h4>
+          <div style={{ fontSize: "1rem" }}>{selectedChat.chatName}</div>
+        </div>
+
+        <div
+          style={{
+            fontSize: "0.8rem",
+            marginBottom: "0.5rem",
+            // backgroundColor: "#19bd06",
+            // width: "fit-content",
+            // paddingLeft: "0.1rem",
+            // paddingRight: "0.1rem",
+            // color: "#ffffff",
+          }}
+        >
+          Admin: {selectedChat.groupAdmin.name}
+        </div>
+
+        <div className="d-flex m-0 p-0">
           <input
+            type="text"
+            className="form-control"
+            name="newGroupName"
             value={newGroupName}
             onChange={(event) => setNewGroupName(event.target.value)}
-          />
-          <button onClick={handleRenameGroup}>Rename Group</button>
-          <h6>{selectedChat.groupAdmin.name}</h6>
-          <AutoComplete
+            placeholder="New Group Name"
             style={{
-              width: 200,
+              flex: 1,
+              marginBottom: "0.5rem",
+              fontSize: "0.8rem",
+              lineHeight: "1rem",
+              borderRadius: "0",
             }}
-            options={options}
-            value={searchInput}
-            onChange={handleSearchInput}
-            onSelect={(value, option) => handleUserSelection(value, option)}
-            placeholder="Search Users to Add"
           />
-          <button disabled={!addUser} onClick={handleAddUser}>
-            Click to Add User to Group
+          <button
+            style={{
+              marginLeft: "0.2rem",
+              marginBottom: "0.5rem",
+              backgroundColor: "#19bd06",
+              color: "#ffffff",
+              border: "none",
+              fontSize: "0.6rem",
+              width: "5rem",
+            }}
+            onClick={handleRenameGroup}
+          >
+            Rename Group
           </button>
-          <div>{addUser}</div>
-          <div className="d-flex flex-wrap">
-            {selectedChat.users.map((user) => (
-              <UserChicklet
-                key={user._id}
-                name={user.name}
-                isAdmin={isAdmin}
-                onRemove={() => handleRemoveUser(user)}
-              />
-            ))}
+        </div>
+
+        {isCurrentUserAdmin && (
+          <div style={{ marginBottom: "0.5rem" }}>
+            <AutoComplete
+              style={{
+                width: "100%",
+                height: "1.5rem",
+                marginBottom: "0.5rem",
+              }}
+              options={options}
+              value={searchInput}
+              onChange={handleSearchInput}
+              onSelect={(value, option) => handleUserSelection(value, option)}
+              children={
+                <input
+                  className="form-control"
+                  style={{
+                    fontSize: "0.8rem",
+                    lineHeight: "1rem",
+                    borderRadius: "0",
+                    border: "1px solid #bdbdbd",
+                    outline: "none",
+                  }}
+                  placeholder="Search User to Add"
+                />
+              }
+            />
+            <div
+              className="d-flex m-0 p-0"
+              style={{ marginBottom: "0.5rem", height: "1.3390rem" }}
+            >
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  fontSize: "0.8rem",
+                  height: "1rem",
+                  borderRadius: "0",
+                }}
+              >
+                Selected User: {addUser ? addUser.name : "None"}
+              </div>
+              <button
+                disabled={!addUser}
+                onClick={handleAddUser}
+                style={{
+                  marginLeft: "0.2rem",
+                  backgroundColor: "#19bd06",
+                  color: "#ffffff",
+                  border: "none",
+                  fontSize: "0.6rem",
+                  width: "5rem",
+                  paddingTop: "0.1875rem",
+                  paddingBottom: "0.1534rem",
+                }}
+              >
+                Add to Group
+              </button>
+            </div>
           </div>
+        )}
+        <div style={{ fontSize: "0.8rem", marginTop: "0.5rem" }}>
+          Participants:
+        </div>
+        <div
+          style={{
+            width: "100%",
+            maxHeight: "4.8rem",
+            backgroundColor: "#19bd06",
+            color: "#ffffff",
+            overflowY: "scroll",
+            marginTop: "0.5rem",
+            padding: "0",
+            margin: "0",
+          }}
+        >
+          {selectedChat.users.map((groupUser) => (
+            <UserCardModal
+              key={groupUser._id}
+              isAdmin={groupUser._id === selectedChat.groupAdmin._id}
+              isCurrentUserAdmin={isCurrentUserAdmin}
+              user={groupUser}
+              removeUserFromGroup={() => handleRemoveUser(groupUser)}
+            />
+          ))}
         </div>
       </div>
     </Modal>

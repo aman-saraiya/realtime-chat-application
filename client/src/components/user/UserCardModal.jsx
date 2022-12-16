@@ -1,11 +1,11 @@
 import React from "react";
 
-const UserCardModal = ({ isAdmin, user, setGroupUsers, groupUsers }) => {
-  const removeUserFromGroup = () => {
-    setGroupUsers((prevState) =>
-      prevState.filter((groupUser) => JSON.parse(groupUser)._id != user._id)
-    );
-  };
+const UserCardModal = ({
+  isAdmin,
+  user,
+  removeUserFromGroup,
+  isCurrentUserAdmin,
+}) => {
   return (
     <div
       className="row d-flex m-0 p-0"
@@ -23,7 +23,7 @@ const UserCardModal = ({ isAdmin, user, setGroupUsers, groupUsers }) => {
       >
         {user.name} {isAdmin && "(Admin)"}
       </div>
-      {!isAdmin && (
+      {!isAdmin && isCurrentUserAdmin && (
         <div
           className="col-1 p-1 m-0  align-items-center"
           style={{ fontSize: "0.8rem", lineHeight: "1rem" }}

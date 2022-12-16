@@ -55,6 +55,7 @@ const CreateGroup = ({
         optionsArray.push({
           label: retrievedUsers[i].name,
           value: JSON.stringify(retrievedUsers[i]),
+          id: retrievedUsers[i]._id,
         });
       }
     }
@@ -66,10 +67,18 @@ const CreateGroup = ({
   }, [searchInput]);
 
   const handleUserSelection = (value, option) => {
-    if (groupUsers.indexOf(option.id) == -1) {
+    if (groupUsers.indexOf(value) == -1) {
       setGroupUsers((prevState) => [...prevState, value]);
     }
     setSearchInput("");
+  };
+
+  const removeUserFromGroup = (removeUser) => {
+    setGroupUsers((prevState) =>
+      prevState.filter(
+        (groupUser) => JSON.parse(groupUser)._id != removeUser._id
+      )
+    );
   };
   return (
     <>
@@ -79,12 +88,22 @@ const CreateGroup = ({
         onOk={handleCreateGroup}
         onCancel={exitCreateGroupModal}
         width="20rem"
-        bodyStyle={{ height: "16rem" }}
+        bodyStyle={{ height: "18rem" }}
         okButtonProps={{
           style: {
             backgroundColor: "#19bd06",
+            borderRadius: 0,
           },
+          type: "primary",
         }}
+        cancelButtonProps={{
+          style: {
+            borderRadius: 0,
+            backgroundColor: "#bdbdbd",
+          },
+          type: "text",
+        }}
+        okText="Create"
       >
         <div className="text-center">
           <img
@@ -160,7 +179,7 @@ const CreateGroup = ({
         <div
           style={{
             width: "100%",
-            maxHeight: "3rem",
+            maxHeight: "4.8rem",
             backgroundColor: "#19bd06",
             color: "#ffffff",
             overflowY: "scroll",
@@ -169,15 +188,17 @@ const CreateGroup = ({
             margin: "0",
           }}
         >
-          <UserCardModal isAdmin={true} user={user} />
+          <UserCardModal isAdmin={true} user={user} isCurrentUserAdmin={true} />
           {groupUsers &&
-            groupUsers.map((user) => (
+            groupUsers.map((groupUser) => (
               <UserCardModal
-                key={JSON.parse(user)._id}
+                key={JSON.parse(groupUser)._id}
                 isAdmin={false}
-                setGroupUsers={setGroupUsers}
-                groupUsers={groupUsers}
-                user={JSON.parse(user)}
+                isCurrentUserAdmin={true}
+                removeUserFromGroup={() =>
+                  removeUserFromGroup(JSON.parse(groupUser))
+                }
+                user={JSON.parse(groupUser)}
               />
             ))}
         </div>
