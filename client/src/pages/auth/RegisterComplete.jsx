@@ -11,6 +11,9 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../../firebase";
+import AuthHOC from "./AuthHOC";
+import AppPreviewSection from "./AppPreviewSection";
+import FormSection from "./FormSection";
 
 const RegisterComplete = () => {
   const [user, setUser] = useState({
@@ -32,10 +35,12 @@ const RegisterComplete = () => {
     }));
   }, []);
 
-  const handlePasswordVisiblility = () => {
+  const handlePasswordVisiblility = (event) => {
+    event.preventDefault();
     setPasswordVisible((prevState) => !prevState);
   };
   const handleInputChange = (event) => {
+    event.preventDefault();
     setUser((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
@@ -88,69 +93,101 @@ const RegisterComplete = () => {
   };
   const uploadImageToCloudinary = () => {};
   return (
-    <div>
-      <form>
-        <div className="form-group">
-          <input
-            type="text"
-            className="form-control"
-            name="firstName"
-            onChange={handleInputChange}
-            placeholder="First Name"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            className="form-control"
-            name="lastName"
-            onChange={handleInputChange}
-            placeholder="Last Name"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="email"
-            value={user.email}
-            className="form-control"
-            name="email"
-            onChange={handleInputChange}
-            placeholder="Email"
-            disabled
-          />
-        </div>
-        <div className="form-group">
-          <div className="input-group">
+    <AuthHOC>
+      <AppPreviewSection />
+      <FormSection>
+        <form className="login-form">
+          <div className="d-flex flex-column">
             <input
-              type={passwordVisible ? "text" : "password"}
-              name="password"
-              value={user.password}
-              className="form-control"
+              type="text"
+              name="firstName"
               onChange={handleInputChange}
-              placeholder="Password"
+              placeholder="First Name"
+              className="auth-form-input flex-grow-1"
+              value={user.firstName}
             />
-            <Button
-              className="input-group-text"
-              onClick={handlePasswordVisiblility}
-              disabled={!user.password}
-            >
-              {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-            </Button>
+
+            <input
+              type="text"
+              name="lastName"
+              onChange={handleInputChange}
+              placeholder="Last Name"
+              className="auth-form-input flex-grow-1"
+              value={user.lastName}
+            />
+
+            <input
+              type="email"
+              value={user.email}
+              name="email"
+              onChange={handleInputChange}
+              placeholder="Email"
+              disabled
+              className="auth-form-input flex-grow-1"
+            />
           </div>
-        </div>
-        <div className="form-group">
-          <input
-            type="file"
-            className="form-control"
-            name="profilePicture"
-            onChange={handleInputChange}
-          />
-        </div>
-        <Button type="submit" onClick={handleRegistration}>
-          Register
-        </Button>
-      </form>
-    </div>
+
+          <div>
+            <div className="d-flex">
+              <input
+                type={passwordVisible ? "text" : "password"}
+                name="password"
+                value={user.password}
+                onChange={handleInputChange}
+                placeholder="Password"
+                className="auth-form-input flex-grow-1"
+                style={{ borderRight: "none" }}
+              />
+              <div
+                className="d-flex align-items-center justify-content-center auth-form-input"
+                style={{ border: "1px solid ##dfdede", borderLeft: "none" }}
+              >
+                <button
+                  className="d-flex"
+                  style={{
+                    outline: "none",
+                    backgroundColor: "#ffffff",
+                    border: "none",
+                  }}
+                  onClick={handlePasswordVisiblility}
+                  disabled={!user.password}
+                >
+                  {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="d-flex">
+            <input
+              type="file"
+              name="profilePicture"
+              onChange={handleInputChange}
+              className="auth-form-input flex-grow-1"
+            />
+          </div>
+
+          <div className="d-flex justify-content-end">
+            <button
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: "0.5rem",
+                backgroundColor: "#19bd06",
+                color: "#ffffff",
+                outline: "none",
+                border: "none",
+                height: "1.4rem",
+                fontSize: "0.8rem",
+              }}
+              type="submit"
+              onClick={handleRegistration}
+            >
+              Complete Registration
+            </button>
+          </div>
+        </form>
+      </FormSection>
+    </AuthHOC>
   );
 };
 
