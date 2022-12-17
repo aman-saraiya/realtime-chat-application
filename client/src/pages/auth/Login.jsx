@@ -10,13 +10,17 @@ import { toast } from "react-toastify";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "../../firebase";
 import { createOrUpdateUser } from "../../utils/auth";
+import AppPreviewSection from "./AppPreviewSection";
+import FormSection from "./FormSection";
+import AuthHOC from "./AuthHOC";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const navigate = useNavigate();
-  const handlePasswordVisiblility = () => {
+  const handlePasswordVisiblility = (event) => {
+    event.preventDefault();
     setPasswordVisible((prevState) => !prevState);
   };
 
@@ -42,7 +46,8 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = async (event) => {
+    event.preventDefault();
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
       const { user } = result;
@@ -50,56 +55,103 @@ const Login = () => {
       const idTokenResult = await user.getIdTokenResult();
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      // toast.error(error.message);
     }
   };
   return (
-    <div>
-      <form>
-        <div className="form-group">
-          <input
-            type="email"
-            name="email"
-            value={email}
-            className="form-control"
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="Email"
-          />
-        </div>
-        <div className="form-group">
-          <div className="input-group">
+    <AuthHOC>
+      <AppPreviewSection />
+      <FormSection>
+        <form className="login-form">
+          <div className="d-flex">
             <input
-              type={passwordVisible ? "text" : "password"}
-              name="password"
-              value={password}
-              className="form-control"
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="Password"
+              type="email"
+              name="email"
+              value={email}
+              className="auth-form-input flex-grow-1"
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="Email"
             />
-            <Button
-              className="input-group-text"
-              onClick={handlePasswordVisiblility}
-              disabled={!password}
-            >
-              {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-            </Button>
           </div>
-        </div>
-        <Button onClick={handleLogin} disabled={!email || password.length < 6}>
-          Login
-        </Button>
-        <a href="/forgot-password">Forgot Password?</a>
-        <div>
-          Don't have an account? <a href="/register">Sign Up</a>
-        </div>
-        <hr data-content="OR" className="hr-text" />
-        <div className="form-group">
-          <Button onClick={handleGoogleLogin} className="">
-            <GoogleOutlined />
-          </Button>
-        </div>
-      </form>
-    </div>
+          <div>
+            <div className="d-flex">
+              <input
+                type={passwordVisible ? "text" : "password"}
+                name="password"
+                value={password}
+                className="auth-form-input flex-grow-1"
+                style={{ borderRight: "none" }}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Password"
+              />
+              <div
+                className="d-flex align-items-center justify-content-center auth-form-input"
+                style={{ border: "1px solid ##dfdede", borderLeft: "none" }}
+              >
+                <button
+                  className="d-flex"
+                  style={{
+                    outline: "none",
+                    backgroundColor: "#ffffff",
+                    border: "none",
+                  }}
+                  onClick={handlePasswordVisiblility}
+                  disabled={!password}
+                >
+                  {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="d-flex" style={{ justifyContent: "space-between" }}>
+            <a href="/forgot-password">
+              <div style={{ fontSize: "0.8rem" }}>Forgot Password?</div>
+            </a>
+            <button
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: "0.5rem",
+                backgroundColor: "#19bd06",
+                color: "#ffffff",
+                outline: "none",
+                border: "none",
+                height: "1.4rem",
+                fontSize: "0.8rem",
+              }}
+              onClick={handleLogin}
+              disabled={!email || password.length < 6}
+            >
+              Login
+            </button>
+          </div>
+          <div style={{ fontSize: "0.8rem" }}>
+            Don't have an account? <a href="/register">Sign Up</a>
+          </div>
+          <hr data-content="or" className="hr-text" />
+          <div className="justify-content-center  d-flex align-items-center">
+            <button
+              style={{
+                fontSize: "0.8rem",
+                border: "none",
+                outline: "none",
+                backgroundColor: "#19bd06",
+                color: "#ffffff",
+                padding: "0.05rem",
+                display: "flex",
+                alignItems: "center",
+                flex: 1,
+                justifyContent: "center",
+              }}
+              onClick={handleGoogleLogin}
+            >
+              <GoogleOutlined style={{ paddingRight: "0.5rem" }} /> Login with
+              Google
+            </button>
+          </div>
+        </form>
+      </FormSection>
+    </AuthHOC>
   );
 };
 
