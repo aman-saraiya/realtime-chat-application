@@ -33,7 +33,7 @@ const MessageDisplay = ({
   const appendMessages = async () => {
     if (topReached) return;
 
-    const messages_to_append = 5;
+    const messages_to_append = 10;
     const response = await fetchMessages(
       selectedChat._id,
       messages_to_append,
@@ -51,11 +51,9 @@ const MessageDisplay = ({
   };
   useEffect(() => {
     socket.on("typing", () => {
-      console.log("TYPING RECEIVED");
       setIsTyping(true);
     });
     socket.on("stop typing", () => {
-      console.log("STOP TYPING RECEIVED");
       setIsTyping(false);
     });
   }, []);
