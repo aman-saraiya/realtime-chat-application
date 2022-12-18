@@ -7,12 +7,10 @@ import { ChatsState } from "../context/ChatsProvider";
 const SendMessage = ({
   setFetchChatsAgain,
   socket,
-  messages,
   setMessages,
   typing,
   setTyping,
   setMessageInputHeight,
-  virtuoso,
   setSentMessage,
 }) => {
   const [messageContent, setMessageContent] = useState("");
@@ -41,19 +39,24 @@ const SendMessage = ({
     setMessageContent(event.target.value);
 
     if (!typing) {
-      setTyping((prevState) => !prevState);
+      setTyping(true);
       socket.emit("typing", selectedChat._id);
     }
 
     let lastTypingTime = new Date().getTime();
     var timerLength = 2000;
-    {
-      timeoutId && clearTimeout(timeoutId);
+    if (timeoutId) {
+      clearTimeout(timeoutId);
     }
     const id = setTimeout(() => {
+      console.log("Set Timeout Called");
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
-      if (timeDiff >= timerLength && typing) {
+      console.log(timeDiff);
+      console.log(timerLength);
+      console.log(typing);
+      if (timeDiff >= timerLength) {
+        console.log("Stop Typing Emitted");
         socket.emit("stop typing", selectedChat._id);
       }
       setTyping(false);

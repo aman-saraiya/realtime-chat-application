@@ -66,14 +66,12 @@ const MessageWindow = ({
           sentMessage={sentMessage}
         />
         <SendMessage
-          messages={messages}
           typing={typing}
           setTyping={setTyping}
           setFetchChatsAgain={setFetchChatsAgain}
           socket={socket}
           setMessages={setMessages}
           setMessageInputHeight={setMessageInputHeight}
-          virtuoso={virtuoso}
           setSentMessage={setSentMessage}
         />
       </div>

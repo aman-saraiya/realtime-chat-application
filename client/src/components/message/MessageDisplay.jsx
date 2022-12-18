@@ -50,8 +50,14 @@ const MessageDisplay = ({
     }
   };
   useEffect(() => {
-    socket.on("typing", () => setIsTyping(true));
-    socket.on("stop typing", () => setIsTyping(false));
+    socket.on("typing", () => {
+      console.log("TYPING RECEIVED");
+      setIsTyping(true);
+    });
+    socket.on("stop typing", () => {
+      console.log("STOP TYPING RECEIVED");
+      setIsTyping(false);
+    });
   }, []);
 
   const INITIAL_ITEM_COUNT = 20;
