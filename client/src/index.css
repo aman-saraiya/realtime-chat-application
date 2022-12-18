@@ -109,6 +109,7 @@ hr.hr-text::after {
   .app-window {
     margin:0;
     height: 100vh;
+    min-height: 768px;
     width: 100vw;
     border: "1px solid red"
   }

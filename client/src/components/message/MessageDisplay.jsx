@@ -53,6 +53,7 @@ const MessageDisplay = ({
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
   }, []);
+
   const INITIAL_ITEM_COUNT = 20;
   const [firstItemIndex, setFirstItemIndex] = useState(1000000000);
   return (
@@ -77,7 +78,7 @@ const MessageDisplay = ({
           }}
         />
       )}
-      <div>{isTyping && "Typing"}</div>
+      <div>{isTyping && "Typing..."}</div>
     </div>
   );
 };

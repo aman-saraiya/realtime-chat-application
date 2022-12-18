@@ -32,9 +32,12 @@ const MessageWindow = ({
     socket.on("message received", (newMessageReceived) => {
       console.log("MESSAGE RECEIVED");
       // console.log(newMessageReceived);
+      // console.log(selectedChat);
+      // console.log(newMessageReceived);
       if (selectedChat && newMessageReceived.chat._id == selectedChat._id) {
         setMessages((prevState) => [...prevState, newMessageReceived]);
       } else {
+        console.log("Went to Notification");
         const chatIndex = notifications.indexOf(newMessageReceived.chat._id);
         if (chatIndex == -1) {
           setNotifications((prevState) => [
@@ -47,7 +50,8 @@ const MessageWindow = ({
         }
       }
     });
-  });
+    return () => socket.off("message received");
+  }, [selectedChat]);
   return selectedChat ? (
     <>
       <MessageHeader socket={socket} />
