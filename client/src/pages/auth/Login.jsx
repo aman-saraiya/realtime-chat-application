@@ -86,13 +86,14 @@ const Login = () => {
               />
               <div
                 className="d-flex align-items-center justify-content-center auth-form-input"
-                style={{ border: "1px solid ##dfdede", borderLeft: "none" }}
+                style={{ border: "1px solid #dfdede", borderLeft: "none" }}
               >
                 <button
                   className="d-flex"
                   style={{
                     outline: "none",
                     backgroundColor: "#ffffff",
+                    color: "#9c9a9a",
                     border: "none",
                   }}
                   onClick={handlePasswordVisiblility}
