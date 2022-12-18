@@ -7,7 +7,7 @@ import { ChatsState } from "../context/ChatsProvider";
 import ChatCard from "./ChatCard";
 
 const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
-  const { setSelectedChat } = ChatsState();
+  const { setSelectedChat, selectedChat } = ChatsState();
   const [chats, setChats] = useState([]);
   useEffect(() => {
     loadChats();
@@ -28,6 +28,10 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
               (notifications && notifications.indexOf(chats[index]._id) == -1)
                 ? ""
                 : "3px solid green",
+            backgroundColor:
+              selectedChat &&
+              selectedChat._id === chats[index]._id &&
+              "#e3fde3",
           }}
           key={chats[index]._id}
           onClick={() => {
