@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import React, { useState, useRef } from "react";
 import { useEffect } from "react";
 import { ChatsState } from "../context/ChatsProvider";
@@ -20,40 +21,71 @@ const MessageWindow = ({
   const [sentMessage, setSentMessage] = useState(false);
   useEffect(() => {
     {
-      selectedChat && socket.emit("join chat", selectedChat._id);
-      if (selectedChat && notifications.indexOf(selectedChat._id) !== -1) {
+      var chatIdx = -1;
+      if (selectedChat) {
+        for (var i = 0; i < notifications.length; i++) {
+          if (notifications[i]._id === selectedChat._id) {
+            chatIdx = i;
+            break;
+          }
+        }
+      }
+
+      if (selectedChat && chatIdx != -1) {
         setNotifications((prevState) =>
-          prevState.filter((chatId) => chatId !== selectedChat._id)
+          prevState.filter((_, index) => index !== chatIdx)
         );
       }
     }
+  }, [selectedChat, notifications]);
+
+  useEffect(() => {
+    selectedChat && socket.emit("join chat", selectedChat._id);
   }, [selectedChat]);
   useEffect(() => {
     socket.on("message received", (newMessageReceived) => {
       console.log("MESSAGE RECEIVED");
-      // console.log(newMessageReceived);
-      // console.log(selectedChat);
-      // console.log(newMessageReceived);
+
       if (selectedChat && newMessageReceived.chat._id == selectedChat._id) {
         setMessages((prevState) => [...prevState, newMessageReceived]);
       } else {
         console.log("Went to Notification");
-        const chatIndex = notifications.indexOf(newMessageReceived.chat._id);
-        if (chatIndex == -1) {
-          setNotifications((prevState) => [
-            ...prevState,
-            newMessageReceived.chat._id,
-          ]);
+        var chatIndex = -1;
+        // notifications.indexOf(newMessageReceived.chat._id);
+        for (var i = 0; i < notifications.length; i++) {
+          if (notifications[i]._id === newMessageReceived.chat._id) {
+            chatIndex = i;
+            break;
+          }
+        }
+        console.log(chatIndex);
+        if (chatIndex === -1) {
+          setNotifications((prevState) => {
+            return [
+              ...prevState,
+              { _id: newMessageReceived.chat._id, count: 1 },
+            ];
+          });
           setFetchChatsAgain((prevState) => !prevState);
-        } else if (chatIndex != notifications.length - 1) {
-          setFetchChatsAgain((prevState) => !prevState);
+        } else {
+          setNotifications((prevState) => {
+            return prevState.map((notification) =>
+              notification._id === newMessageReceived.chat._id
+                ? { _id: notification._id, count: notification.count + 1 }
+                : notification
+            );
+          });
+          if (chatIndex != notifications.length - 1) {
+            setFetchChatsAgain((prevState) => !prevState);
+          }
         }
       }
     });
     return () => socket.off("message received");
-  }, [selectedChat]);
+  }, [selectedChat, notifications]);
   return selectedChat ? (
     <>
+      {/* {JSON.stringify(notifications)} */}
       <MessageHeader socket={socket} />
       <div className="message_section">
         <MessageDisplay
@@ -77,7 +109,9 @@ const MessageWindow = ({
       </div>
     </>
   ) : (
-    <div className="message_section_placeholder"></div>
+    <div className="message_section_placeholder">
+      {/* {JSON.stringify(notifications)} */}
+    </div>
   );
 };
 

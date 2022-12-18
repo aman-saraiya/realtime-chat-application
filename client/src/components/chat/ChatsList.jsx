@@ -23,11 +23,6 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
         <div
           className="chat_user_card d-flex m-0 p-0"
           style={{
-            border:
-              !notifications ||
-              (notifications && notifications.indexOf(chats[index]._id) == -1)
-                ? ""
-                : "3px solid green",
             backgroundColor:
               selectedChat &&
               selectedChat._id === chats[index]._id &&
@@ -41,7 +36,7 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
             });
           }}
         >
-          <ChatCard chat={chats[index]} />
+          <ChatCard notifications={notifications} chat={chats[index]} />
         </div>
       </div>
     );
