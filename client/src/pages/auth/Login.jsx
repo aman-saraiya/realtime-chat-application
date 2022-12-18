@@ -106,7 +106,7 @@ const Login = () => {
           </div>
           <div className="d-flex" style={{ justifyContent: "space-between" }}>
             <a href="/forgot-password">
-              <div style={{ fontSize: "0.8rem" }}>Forgot Password?</div>
+              <div style={{ fontSize: "0.6rem" }}>Forgot Password?</div>
             </a>
             <button
               style={{
@@ -126,7 +126,7 @@ const Login = () => {
               Login
             </button>
           </div>
-          <div style={{ fontSize: "0.8rem" }}>
+          <div style={{ fontSize: "0.6rem" }}>
             Don't have an account? <a href="/register">Sign Up</a>
           </div>
           <hr data-content="or" className="hr-text" />
