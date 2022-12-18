@@ -75,9 +75,7 @@ const MessageWindow = ({
                 : notification
             );
           });
-          if (chatIndex != notifications.length - 1) {
-            setFetchChatsAgain((prevState) => !prevState);
-          }
+          setFetchChatsAgain((prevState) => !prevState);
         }
       }
     });
