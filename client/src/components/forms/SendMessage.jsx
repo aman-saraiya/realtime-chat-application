@@ -49,14 +49,14 @@ const SendMessage = ({
       clearTimeout(timeoutId);
     }
     const id = setTimeout(() => {
-      console.log("Set Timeout Called");
+      // console.log("Set Timeout Called");
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
-      console.log(timeDiff);
-      console.log(timerLength);
-      console.log(typing);
+      // console.log(timeDiff);
+      // console.log(timerLength);
+      // console.log(typing);
       if (timeDiff >= timerLength) {
-        console.log("Stop Typing Emitted");
+        // console.log("Stop Typing Emitted");
         socket.emit("stop typing", selectedChat._id);
       }
       setTyping(false);
