@@ -39,7 +39,7 @@ const Login = () => {
         token: idTokenResult.token,
         _id: response.data._id,
       };
-      //window.localStorage.setItem("user", JSON.stringify(loggedInUser));
+      window.localStorage.setItem("user", JSON.stringify(loggedInUser));
 
       setTimeout(() => {
         setUser(loggedInUser);

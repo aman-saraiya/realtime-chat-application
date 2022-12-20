@@ -6,6 +6,7 @@ import { AutoComplete } from "antd";
 import { fetchUsers } from "../../utils/user";
 import UserCardModal from "../user/UserCardModal";
 import { UserState } from "../context/UserProvider";
+import { fileUploadAndResize } from "../../utils/fileResizeAndUpload";
 const CreateGroup = ({
   isCreateGroupModalOpen,
   setIsCreateGroupModalOpen,
@@ -16,12 +17,23 @@ const CreateGroup = ({
   const { user } = UserState();
   const { setSelectedChat } = ChatsState();
   const [groupName, setGroupName] = useState("");
-  const [groupPicture, setGroupPicture] = useState("");
+  const [groupPicture, setGroupPicture] = useState(
+    "https://res.cloudinary.com/dh94shztn/image/upload/v1671572515/MERN%20Chat%20App/groupIcon_mcypgi.png"
+  );
   const [groupUsers, setGroupUsers] = useState([]);
   const handleGroupNameInput = (event) => {
     setGroupName(event.target.value);
   };
-  const handleGroupPictureInput = (event) => {};
+  const handleGroupPictureInput = async (event) => {
+    // console.log(event.target.files[0]);
+    try {
+      const response = await fileUploadAndResize(event.target.files[0]);
+      console.log(response.data.url);
+      setGroupPicture(response.data.url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleCreateGroup = async () => {
     const groupUserIds = groupUsers.map(
       (groupUser) => JSON.parse(groupUser)._id
@@ -30,6 +42,7 @@ const CreateGroup = ({
       groupUserIds,
       groupName,
       user._id,
+      groupPicture,
       user
     );
     setSelectedChat(response.data);
@@ -112,7 +125,7 @@ const CreateGroup = ({
       >
         <div className="text-center">
           <img
-            src={user.profilePicture}
+            src={groupPicture}
             style={{
               height: "4rem",
               width: "4rem",

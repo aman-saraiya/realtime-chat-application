@@ -27,13 +27,20 @@ export const createOrFetchPersonalChat = async (toUser, user) => {
   );
 };
 
-export const createGroupChat = async (users, groupName, adminUserId, user) => {
+export const createGroupChat = async (
+  users,
+  groupName,
+  adminUserId,
+  groupPicture,
+  user
+) => {
   // console.log(users, groupName, adminUserId);
   return await axios.post(
     `${process.env.REACT_APP_API}/chat/group/create`,
     {
       users: users,
       chatName: groupName,
+      groupPicture: groupPicture,
       groupAdmin: adminUserId,
     },
     {
