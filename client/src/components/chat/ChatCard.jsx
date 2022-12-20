@@ -1,8 +1,9 @@
 import React from "react";
 import { useEffect } from "react";
-
+import { UserState } from "../context/UserProvider";
 const ChatCard = ({ chat, notifications }) => {
-  const user = JSON.parse(window.localStorage.getItem("user"));
+  //const user = JSON.parse(window.localStorage.getItem("user"));
+  const { user } = UserState();
   const chatWithUser =
     chat.users[0]._id == user._id ? chat.users[1] : chat.users[0];
   const chatCardTitle = chat.isGroupChat ? chat.chatName : chatWithUser.name;

@@ -42,7 +42,8 @@ const io = require("socket.io")(server, {
 io.on("connection", (socket) => {
   console.log("Connected to server via socket.io.");
   socket.on("setup", (userData) => {
-    const user = JSON.parse(userData);
+    const user = userData;
+    // const user = JSON.parse(userData);
     socket.join(user._id);
     socket.emit("connected", user._id);
   });

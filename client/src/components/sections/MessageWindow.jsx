@@ -5,6 +5,7 @@ import { ChatsState } from "../context/ChatsProvider";
 import SendMessage from "../forms/SendMessage";
 import MessageDisplay from "../message/MessageDisplay";
 import MessageHeader from "../navbar/MessageHeader";
+import { UserState } from "../context/UserProvider";
 
 const MessageWindow = ({
   setFetchChatsAgain,
@@ -13,7 +14,8 @@ const MessageWindow = ({
   setNotifications,
 }) => {
   const { selectedChat } = ChatsState();
-  const user = JSON.parse(window.localStorage.getItem("user"));
+  //const user = JSON.parse(window.localStorage.getItem("user"));
+  const { user } = UserState();
   const [messages, setMessages] = useState([]);
   const [messageInputHeight, setMessageInputHeight] = useState(1.5);
   const [typing, setTyping] = useState(false);

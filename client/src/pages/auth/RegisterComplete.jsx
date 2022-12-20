@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "antd";
 import { toast } from "react-toastify";
 import { createOrUpdateUser } from "../../utils/auth";
 import { useEffect } from "react";
@@ -14,9 +13,12 @@ import { auth } from "../../firebase";
 import AuthHOC from "./AuthHOC";
 import AppPreviewSection from "./AppPreviewSection";
 import FormSection from "./FormSection";
+import { UserState } from "../../components/context/UserProvider";
 
 const RegisterComplete = () => {
-  const [user, setUser] = useState({
+  const { setUser } = UserState();
+
+  const [userDetails, setUserDetails] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -29,7 +31,7 @@ const RegisterComplete = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
 
   useEffect(() => {
-    setUser((prevState) => ({
+    setUserDetails((prevState) => ({
       ...prevState,
       email: window.localStorage.getItem("emailForRegistration"),
     }));
@@ -41,16 +43,21 @@ const RegisterComplete = () => {
   };
   const handleInputChange = (event) => {
     event.preventDefault();
-    setUser((prevState) => ({
+    setUserDetails((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
   };
   const validateUserDetails = () => {
-    if (!user.firstName || !user.lastName || !user.email || !user.password) {
+    if (
+      !userDetails.firstName ||
+      !userDetails.lastName ||
+      !userDetails.email ||
+      !userDetails.password
+    ) {
       toast.error("Please provide all the required details");
       return false;
-    } else if (user.password.length < 6) {
+    } else if (userDetails.password.length < 6) {
       toast.error("Password must be at least 6 characters long");
       return false;
     }
@@ -64,15 +71,15 @@ const RegisterComplete = () => {
     try {
       const result = await signInWithEmailLink(
         auth,
-        user.email,
+        userDetails.email,
         window.location.href
       );
-      if (result.user.emailVerified) {
+      if (result.userDetails.emailVerified) {
         window.localStorage.removeItem("emailForRegistration");
         let registeredUser = auth.currentUser;
-        await updatePassword(registeredUser, user.password);
+        await updatePassword(registeredUser, userDetails.password);
         await updateProfile(registeredUser, {
-          displayName: `${user.firstName} ${user.lastName}`,
+          displayName: `${userDetails.firstName} ${userDetails.lastName}`,
         });
         const idTokenResult = await registeredUser.getIdTokenResult();
         const response = await createOrUpdateUser(idTokenResult.token);
@@ -83,7 +90,10 @@ const RegisterComplete = () => {
           token: idTokenResult.token,
           _id: response.data._id,
         };
-        window.localStorage.setItem("user", JSON.stringify(loggedInUser));
+        //window.localStorage.setItem("user", JSON.stringify(loggedInUser));
+
+        setUser(loggedInUser);
+
         navigate("/chats");
       }
     } catch (error) {
@@ -104,7 +114,7 @@ const RegisterComplete = () => {
               onChange={handleInputChange}
               placeholder="First Name"
               className="auth-form-input flex-grow-1"
-              value={user.firstName}
+              value={userDetails.firstName}
             />
 
             <input
@@ -113,12 +123,12 @@ const RegisterComplete = () => {
               onChange={handleInputChange}
               placeholder="Last Name"
               className="auth-form-input flex-grow-1"
-              value={user.lastName}
+              value={userDetails.lastName}
             />
 
             <input
               type="email"
-              value={user.email}
+              value={userDetails.email}
               name="email"
               onChange={handleInputChange}
               placeholder="Email"
@@ -132,7 +142,7 @@ const RegisterComplete = () => {
               <input
                 type={passwordVisible ? "text" : "password"}
                 name="password"
-                value={user.password}
+                value={userDetails.password}
                 onChange={handleInputChange}
                 placeholder="Password"
                 className="auth-form-input flex-grow-1"
@@ -150,7 +160,7 @@ const RegisterComplete = () => {
                     border: "none",
                   }}
                   onClick={handlePasswordVisiblility}
-                  disabled={!user.password}
+                  disabled={!userDetails.password}
                 >
                   {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
                 </button>

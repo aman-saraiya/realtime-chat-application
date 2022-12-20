@@ -4,16 +4,18 @@ import { useEffect } from "react";
 import { AutoSizer, List } from "react-virtualized";
 import { fetchChats } from "../../utils/chat";
 import { ChatsState } from "../context/ChatsProvider";
+import { UserState } from "../context/UserProvider";
 import ChatCard from "./ChatCard";
 
 const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
   const { setSelectedChat, selectedChat } = ChatsState();
+  const { user } = UserState();
   const [chats, setChats] = useState([]);
   useEffect(() => {
     loadChats();
   }, [fetchChatsAgain]);
   const loadChats = async () => {
-    const response = await fetchChats();
+    const response = await fetchChats(user);
     setChats(response.data);
   };
 

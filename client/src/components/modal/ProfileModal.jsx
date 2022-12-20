@@ -1,14 +1,16 @@
 import React from "react";
 import { Modal } from "antd";
 import { ChatsState } from "../context/ChatsProvider";
+import { UserState } from "../context/UserProvider";
 const ProfileModal = ({
   isProfileModalOpen,
   setIsProfileModalOpen,
   isMyAccountView,
 }) => {
   const { selectedChat } = ChatsState();
-  const currentUser = JSON.parse(window.localStorage.getItem("user"));
-
+  const userState = UserState();
+  const currentUser = userState.user;
+  // const currentUser = JSON.parse(window.localStorage.getItem("user"));
   if (selectedChat) {
     var otherUser =
       selectedChat.users[0]._id == currentUser._id

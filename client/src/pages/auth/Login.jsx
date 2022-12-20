@@ -13,11 +13,13 @@ import { createOrUpdateUser } from "../../utils/auth";
 import AppPreviewSection from "./AppPreviewSection";
 import FormSection from "./FormSection";
 import AuthHOC from "./AuthHOC";
+import { UserState } from "../../components/context/UserProvider";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-
+  const { user, setUser } = UserState();
   const navigate = useNavigate();
   const handlePasswordVisiblility = (event) => {
     event.preventDefault();
@@ -28,8 +30,7 @@ const Login = () => {
     event.preventDefault();
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      const { user } = result;
-      const idTokenResult = await user.getIdTokenResult();
+      const idTokenResult = await result.user.getIdTokenResult();
       const response = await createOrUpdateUser(idTokenResult.token);
       const loggedInUser = {
         name: response.data.name,
@@ -38,8 +39,13 @@ const Login = () => {
         token: idTokenResult.token,
         _id: response.data._id,
       };
-      window.localStorage.setItem("user", JSON.stringify(loggedInUser));
+      //window.localStorage.setItem("user", JSON.stringify(loggedInUser));
+
+      setTimeout(() => {
+        setUser(loggedInUser);
+      }, 1000);
       navigate("/chats");
+      // console.log(user);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -50,9 +56,8 @@ const Login = () => {
     event.preventDefault();
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
-      const { user } = result;
-      console.log(user);
-      const idTokenResult = await user.getIdTokenResult();
+
+      const idTokenResult = await result.user.getIdTokenResult();
     } catch (error) {
       console.log(error);
       // toast.error(error.message);

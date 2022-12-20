@@ -2,13 +2,25 @@ import React, { useEffect, useState } from "react";
 import { ChatsState } from "../components/context/ChatsProvider";
 import MessageWindow from "../components/sections/MessageWindow";
 import UserChats from "../components/sections/UserChats";
+import { UserState } from "../components/context/UserProvider";
 
 const Chats = ({ socket }) => {
+  //const user = window.localStorage.getItem("user");
+  const { user } = UserState();
+  useEffect(() => {
+    if (user) {
+      socket.emit("setup", user);
+      socket.on("connected", (userId) => {
+        console.log("Connected " + userId);
+      });
+    }
+    console.log(user);
+  }, [user]);
   const { selectedChat, isScreenSmall } = ChatsState();
   const [fetchChatsAgain, setFetchChatsAgain] = useState(false);
   const [notifications, setNotifications] = useState([]);
   // console.log(selectedChat, isScreenSmall);
-  return (
+  return user ? (
     <div className="container-fluid" style={{ height: "100%" }}>
       <div className="row" style={{ height: "100%" }}>
         <div
@@ -45,6 +57,8 @@ const Chats = ({ socket }) => {
         </div>
       </div>
     </div>
+  ) : (
+    <div>Loading...</div>
   );
 };
 

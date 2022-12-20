@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { sendMessage } from "../../utils/message";
 import { ChatsState } from "../context/ChatsProvider";
+import { UserState } from "../context/UserProvider";
 
 const SendMessage = ({
   setFetchChatsAgain,
@@ -16,6 +17,7 @@ const SendMessage = ({
   const [messageContent, setMessageContent] = useState("");
   const [timeoutId, setTimeoutId] = useState();
   const { selectedChat } = ChatsState();
+  const { user } = UserState();
   const handleInputChange = (event) => {
     document.getElementsByClassName("message_input")[0].style.height = "1.5rem";
     setMessageInputHeight(1.5);
@@ -67,7 +69,7 @@ const SendMessage = ({
     setMessageContent("");
   }, [selectedChat]);
   const handleSendMessage = async () => {
-    const response = await sendMessage(selectedChat._id, messageContent);
+    const response = await sendMessage(selectedChat._id, messageContent, user);
     const message = response.data;
     socket.emit("stop typing", selectedChat._id);
     setFetchChatsAgain((prevValue) => !prevValue);

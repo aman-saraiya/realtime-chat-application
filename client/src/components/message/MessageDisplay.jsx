@@ -5,7 +5,7 @@ import MessageCard from "./MessageCard";
 import { useRef } from "react";
 import { message } from "antd";
 import { Virtuoso } from "react-virtuoso";
-
+import { UserState } from "../context/UserProvider";
 const MessageDisplay = ({
   socket,
   messages,
@@ -16,11 +16,12 @@ const MessageDisplay = ({
 }) => {
   const [isTyping, setIsTyping] = useState(false);
   const { selectedChat } = ChatsState();
+  const { user } = UserState();
   const [loading, setLoading] = useState(false);
   const [topReached, setTopReached] = useState(false);
   const loadMessages = async () => {
     setLoading(true);
-    const response = await fetchMessages(selectedChat._id, 20, 0);
+    const response = await fetchMessages(selectedChat._id, 20, 0, user);
     setMessages(response.data);
     setLoading(false);
   };
@@ -37,7 +38,8 @@ const MessageDisplay = ({
     const response = await fetchMessages(
       selectedChat._id,
       messages_to_append,
-      messages.length
+      messages.length,
+      user
     );
     // console.log(messages.length, response.data.length);
     if (messages.length && !response.data.length) {

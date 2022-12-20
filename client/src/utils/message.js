@@ -1,7 +1,10 @@
 import axios from "axios";
-const user = JSON.parse(window.localStorage.getItem("user"));
+import { UserState } from "../components/context/UserProvider";
 
-export const fetchMessages = async (chatId, limit, offset) => {
+const user = JSON.parse(window.localStorage.getItem("user"));
+// const { user } = UserState();
+
+export const fetchMessages = async (chatId, limit, offset, user) => {
   return await axios.get(
     `${process.env.REACT_APP_API}/message/${chatId}?limit=${limit}&offset=${offset}`,
     {

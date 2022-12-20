@@ -9,10 +9,12 @@ import {
 } from "../../utils/chat";
 import { fetchUsers } from "../../utils/user";
 import UserCardModal from "../user/UserCardModal";
+import { UserState } from "../context/UserProvider";
 
 const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
   const { selectedChat, setSelectedChat } = ChatsState();
-  const user = JSON.parse(window.localStorage.getItem("user"));
+  //const user = JSON.parse(window.localStorage.getItem("user"));
+  const { user } = UserState();
   const isCurrentUserAdmin = user._id == selectedChat.groupAdmin._id;
   const [options, setOptions] = useState([]);
   const [searchInput, setSearchInput] = useState("");
@@ -24,7 +26,7 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
   };
 
   const loadUsers = async () => {
-    const response = await fetchUsers(searchInput);
+    const response = await fetchUsers(searchInput, user);
     const retrievedUsers = response.data;
     var optionsArray = [];
     if (retrievedUsers) {
@@ -54,7 +56,8 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
     const response = await removeUserFromGroup(
       removeUser._id,
       user._id,
-      selectedChat._id
+      selectedChat._id,
+      user
     );
     const updatedChat = response.data;
     // console.log(updatedChat);
@@ -64,7 +67,8 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
     const response = await addUserToGroup(
       addUser._id,
       user._id,
-      selectedChat._id
+      selectedChat._id,
+      user
     );
     const updatedChat = response.data;
     socket.emit("new group", response.data);
@@ -77,7 +81,7 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
   };
 
   const handleRenameGroup = async () => {
-    const response = await renameGroup(newGroupName, selectedChat._id);
+    const response = await renameGroup(newGroupName, selectedChat._id, user);
     const updatedChat = response.data;
     setSelectedChat(updatedChat);
     setNewGroupName("");

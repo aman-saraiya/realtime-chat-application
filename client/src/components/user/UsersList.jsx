@@ -1,12 +1,14 @@
 import React from "react";
 import { createOrFetchPersonalChat } from "../../utils/chat";
 import { ChatsState } from "../context/ChatsProvider";
+import { UserState } from "../context/UserProvider";
 import UserCard from "./UserCard";
 
 const UsersList = ({ users, setFetchChatsAgain, setIsSearching }) => {
   const { setSelectedChat } = ChatsState();
+  const { user } = UserState();
   const handleUserSelection = async (toUser) => {
-    const response = await createOrFetchPersonalChat(toUser);
+    const response = await createOrFetchPersonalChat(toUser, user);
     const chatDetails = response.data;
     setSelectedChat(chatDetails);
     setIsSearching(false);

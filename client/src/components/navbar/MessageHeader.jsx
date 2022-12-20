@@ -4,6 +4,8 @@ import { ChatsState } from "../context/ChatsProvider";
 import { Button } from "antd";
 import ProfileModal from "../modal/ProfileModal";
 import GroupModal from "../modal/GroupModal";
+import { UserState } from "../context/UserProvider";
+
 const MessageHeader = ({ socket }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
@@ -12,7 +14,8 @@ const MessageHeader = ({ socket }) => {
     setSelectedChat,
     darkMode,
   } = ChatsState();
-  const user = JSON.parse(window.localStorage.getItem("user"));
+  //const user = JSON.parse(window.localStorage.getItem("user"));
+  const { user } = UserState();
   const handleBackClick = () => {
     setSelectedChat();
   };

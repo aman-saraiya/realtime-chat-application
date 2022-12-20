@@ -4,16 +4,16 @@ import { createGroupChat } from "../../utils/chat";
 import { ChatsState } from "../context/ChatsProvider";
 import { AutoComplete } from "antd";
 import { fetchUsers } from "../../utils/user";
-import { AutoSizer, List } from "react-virtualized";
 import UserCardModal from "../user/UserCardModal";
-import { json } from "react-router-dom";
-const user = JSON.parse(window.localStorage.getItem("user"));
+import { UserState } from "../context/UserProvider";
 const CreateGroup = ({
   isCreateGroupModalOpen,
   setIsCreateGroupModalOpen,
   setFetchChatsAgain,
   socket,
 }) => {
+  //const user = JSON.parse(window.localStorage.getItem("user"));
+  const { user } = UserState();
   const { setSelectedChat } = ChatsState();
   const [groupName, setGroupName] = useState("");
   const [groupPicture, setGroupPicture] = useState("");
@@ -26,7 +26,12 @@ const CreateGroup = ({
     const groupUserIds = groupUsers.map(
       (groupUser) => JSON.parse(groupUser)._id
     );
-    const response = await createGroupChat(groupUserIds, groupName, user._id);
+    const response = await createGroupChat(
+      groupUserIds,
+      groupName,
+      user._id,
+      user
+    );
     setSelectedChat(response.data);
     socket.emit("new group", response.data);
     setFetchChatsAgain((prevState) => !prevState);
@@ -47,7 +52,7 @@ const CreateGroup = ({
   };
 
   const loadUsers = async () => {
-    const response = await fetchUsers(searchInput);
+    const response = await fetchUsers(searchInput, user);
     const retrievedUsers = response.data;
     var optionsArray = [];
     if (retrievedUsers) {
@@ -196,7 +201,7 @@ const CreateGroup = ({
                 isAdmin={false}
                 isCurrentUserAdmin={true}
                 removeUserFromGroup={() =>
-                  removeUserFromGroup(JSON.parse(groupUser))
+                  removeUserFromGroup(JSON.parse(groupUser), user)
                 }
                 user={JSON.parse(groupUser)}
               />

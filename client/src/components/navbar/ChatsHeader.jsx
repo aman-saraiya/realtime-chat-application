@@ -8,18 +8,23 @@ import { ChatsState } from "../context/ChatsProvider";
 import CreateGroup from "../modal/CreateGroup";
 import ProfileModal from "../modal/ProfileModal";
 import { useLayoutEffect } from "react";
+import { UserState } from "../context/UserProvider";
+
 const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
   const navigate = useNavigate();
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const { darkMode } = ChatsState();
+  const { setUser } = UserState();
   const logout = async () => {
     await signOut(auth);
-    window.localStorage.removeItem("user");
+    // window.localStorage.removeItem("user");
+    setUser(null);
     navigate("/login");
   };
 
-  const user = JSON.parse(window.localStorage.getItem("user"));
+  //const user = JSON.parse(window.localStorage.getItem("user"));
+  const { user } = UserState();
   const items = [
     {
       label: <div onClick={() => setIsProfileModalOpen(true)}>My Account</div>,

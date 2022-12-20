@@ -1,7 +1,10 @@
 import axios from "axios";
-const user = JSON.parse(window.localStorage.getItem("user"));
+import { UserState } from "../components/context/UserProvider";
 
-export const fetchChats = async () => {
+// const user = JSON.parse(window.localStorage.getItem("user"));
+// const { user } = UserState();
+
+export const fetchChats = async (user) => {
   return await axios.get(`${process.env.REACT_APP_API}/chat/${user._id}`, {
     headers: {
       authToken: user.token,
@@ -9,7 +12,7 @@ export const fetchChats = async () => {
   });
 };
 
-export const createOrFetchPersonalChat = async (toUser) => {
+export const createOrFetchPersonalChat = async (toUser, user) => {
   return await axios.post(
     `${process.env.REACT_APP_API}/chat/`,
     {
@@ -24,7 +27,7 @@ export const createOrFetchPersonalChat = async (toUser) => {
   );
 };
 
-export const createGroupChat = async (users, groupName, adminUserId) => {
+export const createGroupChat = async (users, groupName, adminUserId, user) => {
   // console.log(users, groupName, adminUserId);
   return await axios.post(
     `${process.env.REACT_APP_API}/chat/group/create`,
@@ -39,7 +42,12 @@ export const createGroupChat = async (users, groupName, adminUserId) => {
   );
 };
 
-export const removeUserFromGroup = async (removeUserId, userId, chatId) => {
+export const removeUserFromGroup = async (
+  removeUserId,
+  userId,
+  chatId,
+  user
+) => {
   return await axios.put(
     `${process.env.REACT_APP_API}/chat/group/remove-user`,
     {
@@ -54,7 +62,7 @@ export const removeUserFromGroup = async (removeUserId, userId, chatId) => {
     }
   );
 };
-export const addUserToGroup = async (addUserId, userId, chatId) => {
+export const addUserToGroup = async (addUserId, userId, chatId, user) => {
   return await axios.put(
     `${process.env.REACT_APP_API}/chat/group/add-user`,
     {
@@ -69,7 +77,7 @@ export const addUserToGroup = async (addUserId, userId, chatId) => {
     }
   );
 };
-export const renameGroup = async (newGroupName, groupChatId) => {
+export const renameGroup = async (newGroupName, groupChatId, user) => {
   return await axios.put(
     `${process.env.REACT_APP_API}/chat/group/rename-group`,
     {
