@@ -6,8 +6,6 @@ const chatSchema = mongoose.Schema(
     isGroupChat: { type: Boolean, default: false },
     groupPicture: {
       type: String,
-      default:
-        "https://icon-library.com/images/people-group-icon/people-group-icon-10.jpg",
     },
     groupAdmin: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     chatName: { type: String, required: true, trim: true },

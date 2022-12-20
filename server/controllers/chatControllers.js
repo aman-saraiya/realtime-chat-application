@@ -67,8 +67,8 @@ const createOrFetchPersonalChat = async (req, res) => {
   }
 };
 const createGroupChat = async (req, res) => {
-  const { users, groupAdmin, chatName } = req.body;
-  if (!users || !groupAdmin || !chatName) {
+  const { users, groupAdmin, chatName, groupPicture } = req.body;
+  if (!users || !groupAdmin || !chatName || !groupPicture) {
     res.status(400).send({ message: "Please fill all the fields" });
     return;
   }
@@ -81,6 +81,7 @@ const createGroupChat = async (req, res) => {
       isGroupChat: true,
       users: users,
       groupAdmin: groupAdmin,
+      groupPicture: groupPicture,
       chatName: chatName,
     }).save();
     // console.log(groupChat);

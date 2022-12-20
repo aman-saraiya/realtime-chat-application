@@ -20,7 +20,7 @@ mongoose
 app.use(cors());
 // json() is a built-in middleware function in Express.
 // This method is used to parse the incoming requests with JSON payloads and is based upon the bodyparser.
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 readdirSync("./routes").map((route) =>
   app.use("/api", require("./routes/" + route))
