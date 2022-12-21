@@ -29,6 +29,7 @@ const RegisterComplete = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [profilePictureUri, setProfilePictureUri] = useState("");
 
   useEffect(() => {
     setUserDetails((prevState) => ({
@@ -78,10 +79,10 @@ const RegisterComplete = () => {
         window.localStorage.removeItem("emailForRegistration");
         let registeredUser = auth.currentUser;
         await updatePassword(registeredUser, userDetails.password);
+        const idTokenResult = await registeredUser.getIdTokenResult();
         await updateProfile(registeredUser, {
           displayName: `${userDetails.firstName} ${userDetails.lastName}`,
         });
-        const idTokenResult = await registeredUser.getIdTokenResult();
         const response = await createOrUpdateUser(idTokenResult.token);
         const loggedInUser = {
           name: response.data.name,

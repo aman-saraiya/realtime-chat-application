@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
     profilePicture: {
       type: String,
       default:
-        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+        "https://res.cloudinary.com/dh94shztn/image/upload/v1671614422/MERN%20Chat%20App/personIcon_mgfjlq.png",
     },
   },
   {
