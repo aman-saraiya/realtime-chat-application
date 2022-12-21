@@ -27,7 +27,7 @@ const CreateGroup = ({
   const handleGroupPictureInput = async (event) => {
     // console.log(event.target.files[0]);
     try {
-      const response = await fileUploadAndResize(event.target.files[0]);
+      const response = await fileUploadAndResize(event.target.files[0], user);
       console.log(response.data.url);
       setGroupPicture(response.data.url);
     } catch (error) {

@@ -18,10 +18,9 @@ const resizeFile = (file) =>
     );
   });
 
-export const fileUploadAndResize = async (file) => {
-  const user = JSON.parse(window.localStorage.getItem("user"));
-  var uploadedFileURI = "";
-  console.log(file);
+export const fileUploadAndResize = async (file, user) => {
+  // const user = JSON.parse(window.localStorage.getItem("user"));
+  // console.log(file);
   if (file) {
     const resizedFileUri = await resizeFile(file);
     return axios.post(
