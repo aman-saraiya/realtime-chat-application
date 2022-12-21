@@ -11,3 +11,15 @@ export const fetchUsers = async (searchQuery, user) => {
     }
   );
 };
+
+export const updateProfileImage = async (profileImageUri, user) => {
+  return await axios.put(
+    `${process.env.REACT_APP_API}/user/updateProfileImage`,
+    {
+      profilePictureUri: profileImageUri,
+    },
+    {
+      headers: { authToken: user.token },
+    }
+  );
+};

@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Modal } from "antd";
 import { ChatsState } from "../context/ChatsProvider";
 import { UserState } from "../context/UserProvider";
+import { EditOutlined } from "@ant-design/icons";
+import { fileUploadAndResize } from "../../utils/fileResizeAndUpload";
+import { updateProfileImage } from "../../utils/user";
 const ProfileModal = ({
   isProfileModalOpen,
   setIsProfileModalOpen,
@@ -10,6 +13,7 @@ const ProfileModal = ({
   const { selectedChat } = ChatsState();
   const userState = UserState();
   const currentUser = userState.user;
+  const setUser = userState.setUser;
   // const currentUser = JSON.parse(window.localStorage.getItem("user"));
   if (selectedChat) {
     var otherUser =
@@ -17,7 +21,25 @@ const ProfileModal = ({
         ? selectedChat.users[1]
         : selectedChat.users[0];
   }
+  const editRef = useRef();
   const user = isMyAccountView ? currentUser : otherUser;
+  const onProfileEditClick = () => {
+    // `current` points to the mounted file input element
+    editRef.current.click();
+  };
+  const handleProfileImageUpdate = async (event) => {
+    console.log(event.target.files[0]);
+    try {
+      const response = await fileUploadAndResize(event.target.files[0], user);
+      // console.log(response.data.url);
+      // setGroupPicture(response.data.url);
+      const updateResponse = await updateProfileImage(response.data.url, user);
+      // console.log(updateResponse.data);
+      setUser(updateResponse.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Modal
       title={isMyAccountView ? "My Account" : "User Details"}
@@ -28,15 +50,36 @@ const ProfileModal = ({
     >
       <div>
         <div className="text-center">
-          <img
-            src={user.profilePicture}
-            style={{
-              height: "4rem",
-              width: "4rem",
-              borderRadius: "2rem",
-              margin: "1rem",
-            }}
-          />
+          <div className="d-flex justify-content-center">
+            <input
+              type="file"
+              ref={editRef}
+              style={{ display: "none" }}
+              onChange={handleProfileImageUpdate}
+            />
+            <img
+              src={user.profilePicture}
+              style={{
+                height: "4rem",
+                width: "4rem",
+                borderRadius: "2rem",
+                margin: "1rem",
+                // marginBottom: isMyAccountView ? "0" : "1rem",
+                marginRight: isMyAccountView ? "0" : "1rem",
+              }}
+            />
+            {isMyAccountView && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  marginBottom: "1rem",
+                }}
+              >
+                <EditOutlined onClick={onProfileEditClick} />
+              </div>
+            )}
+          </div>
           <div style={{ fontSize: "1rem" }}>{user.name}</div>
           <div style={{ fontSize: "0.8rem" }}>{user.email}</div>
         </div>

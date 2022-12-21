@@ -5,6 +5,7 @@ import { UserState } from "../context/UserProvider";
 const ProtectedRoute = ({ children }) => {
   //const user = JSON.parse(window.localStorage.getItem("user"));
   const { user } = UserState();
+  return children;
   return user && user.token ? children : <LoadingToRedirect />;
 };
 

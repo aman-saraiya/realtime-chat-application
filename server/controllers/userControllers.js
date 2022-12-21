@@ -5,7 +5,7 @@ const createOrUpdateUser = async (req, res) => {
 
     const user = await User.findOneAndUpdate(
       { email: email },
-      { name: name, profilePicture: photoURL },
+      { name: name },
       { new: true }
     );
     if (user) {
@@ -44,4 +44,25 @@ const fetchUsers = async (req, res) => {
   const users = await User.find(filter).find({ _id: { $ne: userId } });
   res.json(users);
 };
-module.exports = { createOrUpdateUser, currentUser, fetchUsers };
+const updateProfileImage = async (req, res) => {
+  try {
+    const { email } = req.user;
+    const { profilePictureUri } = req.body;
+
+    const user = await User.findOneAndUpdate(
+      { email: email },
+      { profilePicture: profilePictureUri },
+      { new: true }
+    );
+    console.log("User Updated.", user);
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+  }
+};
+module.exports = {
+  createOrUpdateUser,
+  currentUser,
+  fetchUsers,
+  updateProfileImage,
+};
