@@ -18,7 +18,7 @@ const CreateGroup = ({
   const { setSelectedChat } = ChatsState();
   const [groupName, setGroupName] = useState("");
   const [groupPicture, setGroupPicture] = useState(
-    "https://res.cloudinary.com/dh94shztn/image/upload/v1671572515/MERN%20Chat%20App/groupIcon_mcypgi.png"
+    "https://res.cloudinary.com/dh94shztn/image/upload/v1671613414/MERN%20Chat%20App/groupIcon_zsoewt.png"
   );
   const [groupUsers, setGroupUsers] = useState([]);
   const handleGroupNameInput = (event) => {
