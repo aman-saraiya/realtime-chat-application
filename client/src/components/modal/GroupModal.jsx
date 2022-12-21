@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Modal, AutoComplete } from "antd";
 import { ChatsState } from "../context/ChatsProvider";
 import UserChicklet from "./UserChicklet";
@@ -6,11 +6,13 @@ import {
   removeUserFromGroup,
   addUserToGroup,
   renameGroup,
+  updateGroupPicture,
 } from "../../utils/chat";
 import { fetchUsers } from "../../utils/user";
 import UserCardModal from "../user/UserCardModal";
 import { UserState } from "../context/UserProvider";
-
+import { EditOutlined } from "@ant-design/icons";
+import { fileUploadAndResize } from "../../utils/fileResizeAndUpload";
 const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
   const { selectedChat, setSelectedChat } = ChatsState();
   //const user = JSON.parse(window.localStorage.getItem("user"));
@@ -86,7 +88,28 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
     setSelectedChat(updatedChat);
     setNewGroupName("");
   };
-
+  const editRef = useRef();
+  const onProfileEditClick = () => {
+    // `current` points to the mounted file input element
+    editRef.current.click();
+  };
+  const handleProfileImageUpdate = async (event) => {
+    console.log(event.target.files[0]);
+    try {
+      const response = await fileUploadAndResize(event.target.files[0], user);
+      // console.log(response.data.url);
+      // setGroupPicture(response.data.url);
+      const updateResponse = await updateGroupPicture(
+        response.data.url,
+        selectedChat._id,
+        user
+      );
+      // console.log(updateResponse.data);
+      setSelectedChat(updateResponse.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Modal
       title="Group Details"
@@ -98,15 +121,33 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
     >
       <div>
         <div className="text-center">
-          <img
-            src={selectedChat.groupPicture}
-            style={{
-              height: "4rem",
-              width: "4rem",
-              borderRadius: "2rem",
-              margin: "1rem",
-            }}
-          />
+          <div className="d-flex justify-content-center">
+            <input
+              type="file"
+              ref={editRef}
+              style={{ display: "none" }}
+              onChange={handleProfileImageUpdate}
+            />
+            <img
+              src={selectedChat.groupPicture}
+              style={{
+                height: "4rem",
+                width: "4rem",
+                borderRadius: "2rem",
+                margin: "1rem",
+                marginRight: "0",
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                marginBottom: "1rem",
+              }}
+            >
+              <EditOutlined onClick={onProfileEditClick} />
+            </div>
+          </div>
           <div style={{ fontSize: "1rem" }}>{selectedChat.chatName}</div>
         </div>
 

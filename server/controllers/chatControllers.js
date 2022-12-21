@@ -195,6 +195,33 @@ const renameGroup = async (req, res) => {
   }
 };
 
+const updateGroupPicture = async (req, res) => {
+  try {
+    const { profilePictureUri, groupChatId } = req.body;
+    if (!profilePictureUri || !groupChatId) {
+      console.log("Please pass all the details");
+      res.sendStatus(400);
+      return;
+    }
+    const updatedChat = await Chat.findByIdAndUpdate(
+      groupChatId,
+      {
+        groupPicture: profilePictureUri,
+      },
+      { new: true }
+    )
+      .populate("users")
+      .populate("groupAdmin")
+      .exec();
+    console.log(updatedChat);
+
+    res.json(updatedChat);
+  } catch (error) {
+    console.log(error.message);
+    res.sendStatus(400);
+  }
+};
+
 module.exports = {
   fetchChats,
   createGroupChat,
@@ -202,4 +229,5 @@ module.exports = {
   addUserToGroup,
   removeUserFromGroup,
   renameGroup,
+  updateGroupPicture,
 };

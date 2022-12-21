@@ -98,3 +98,22 @@ export const renameGroup = async (newGroupName, groupChatId, user) => {
     }
   );
 };
+
+export const updateGroupPicture = async (
+  newGroupPicture,
+  groupChatId,
+  user
+) => {
+  return await axios.put(
+    `${process.env.REACT_APP_API}/chat/group/update-group-picture`,
+    {
+      profilePictureUri: newGroupPicture,
+      groupChatId: groupChatId,
+    },
+    {
+      headers: {
+        authToken: user.token,
+      },
+    }
+  );
+};
