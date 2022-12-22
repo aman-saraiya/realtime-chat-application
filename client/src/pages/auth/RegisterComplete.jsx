@@ -16,8 +16,11 @@ import FormSection from "./FormSection";
 import { UserState } from "../../components/context/UserProvider";
 
 const RegisterComplete = () => {
-  const { setUser, setUserLoading } = UserState();
+  const { setUser, setUserLoading, user } = UserState();
 
+  if (user) {
+    navigate("/chats");
+  }
   const [userDetails, setUserDetails] = useState({
     firstName: "",
     lastName: "",
@@ -27,11 +30,11 @@ const RegisterComplete = () => {
   });
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [uploadingImage, setUploadingImage] = useState(false);
-  const [profilePictureUri, setProfilePictureUri] = useState("");
 
   useEffect(() => {
+    if (!window.localStorage.getItem("emailForRegistration")) {
+      navigate("/register");
+    }
     setUserDetails((prevState) => ({
       ...prevState,
       email: window.localStorage.getItem("emailForRegistration"),
@@ -169,14 +172,14 @@ const RegisterComplete = () => {
               </div>
             </div>
           </div>
-          <div className="d-flex">
+          {/* <div className="d-flex">
             <input
               type="file"
               name="profilePicture"
               onChange={handleInputChange}
               className="auth-form-input flex-grow-1"
             />
-          </div>
+          </div> */}
 
           <div className="d-flex justify-content-end">
             <button

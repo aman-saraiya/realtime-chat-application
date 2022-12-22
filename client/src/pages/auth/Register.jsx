@@ -5,10 +5,16 @@ import { toast } from "react-toastify";
 import AuthHOC from "./AuthHOC";
 import AppPreviewSection from "./AppPreviewSection";
 import FormSection from "./FormSection";
+import { UserState } from "../../components/context/UserProvider";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-
+  const navigate = useNavigate();
+  const { user } = UserState();
+  if (user) {
+    navigate("/chats");
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     const config = {
@@ -32,7 +38,7 @@ const Register = () => {
       <AppPreviewSection />
       <FormSection>
         <form className="login-form" onSubmit={handleSubmit}>
-          <div className="d-flex">
+          <div className="d-flex flex-column">
             <input
               type="email"
               value={email}
@@ -41,7 +47,10 @@ const Register = () => {
               placeholder="Email"
             />
           </div>
-          <div className="d-flex justify-content-end">
+          <div className="d-flex" style={{ justifyContent: "space-between" }}>
+            <div style={{ fontSize: "0.6rem" }}>
+              Already have an account? <a href="/login">Login</a>
+            </div>
             <button
               style={{
                 display: "flex",

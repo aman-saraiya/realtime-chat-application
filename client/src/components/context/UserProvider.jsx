@@ -32,13 +32,8 @@ const UserProvider = ({ children }) => {
       window.localStorage.setItem("userLoading", "false");
     }
   };
-  // useEffect(() => {
-  //   let registeredUser = auth.currentUser;
-  //   getCurrentUserFromFireBase(registeredUser);
-  // }, []);
-  useEffect(() => {
-    // console.log("Rendered");
 
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("auth state changed");
       console.log(currentUser);
