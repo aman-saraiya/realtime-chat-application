@@ -16,18 +16,23 @@ const ProtectedRoute = ({ children }) => {
   const { user } = UserState();
   useEffect(() => {
     console.log("User State Changed");
+    console.log(user);
     if (user) {
       window.localStorage.setItem("userLoading", "false");
       setUserLoading(false);
+      window.localStorage.setItem("isAuthenticated", "true");
     }
   }, [user]);
   if (userLoading === "true") {
+    console.log("userLoading here");
     return <div>Loading...</div>;
   } else {
     if (user) {
       return children;
     } else {
-      return <LoadingToRedirect />;
+      return window.localStorage.getItem("isAuthenticated") === "false" ? (
+        <LoadingToRedirect />
+      ) : null;
     }
   }
 };

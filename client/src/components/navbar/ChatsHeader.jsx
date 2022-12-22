@@ -22,6 +22,7 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
     socket.emit("terminate", user);
     setUser(null);
     navigate("/login");
+    window.localStorage.setItem("isAuthenticated", "false");
   };
 
   //const user = JSON.parse(window.localStorage.getItem("user"));

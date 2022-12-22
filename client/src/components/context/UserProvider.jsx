@@ -7,6 +7,7 @@ import { createOrUpdateUser } from "../../utils/auth";
 import { getCurrentUser } from "../../utils/user";
 const UserContext = createContext();
 const UserProvider = ({ children }) => {
+  console.log("UserProvider");
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(false);
 
@@ -16,13 +17,15 @@ const UserProvider = ({ children }) => {
       const idTokenResult = await registeredUser.getIdTokenResult();
       getCurrentUser(idTokenResult.token)
         .then((res) => {
-          setUser({
-            name: res.data.name,
-            email: res.data.email,
-            profilePicture: res.data.profilePicture,
-            token: idTokenResult.token,
-            _id: res.data._id,
-          });
+          setTimeout(() => {
+            setUser({
+              name: res.data.name,
+              email: res.data.email,
+              profilePicture: res.data.profilePicture,
+              token: idTokenResult.token,
+              _id: res.data._id,
+            });
+          }, 1000);
         })
         .catch((err) => {
           window.localStorage.setItem("userLoading", "false");
@@ -35,6 +38,7 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      window.localStorage.setItem("isAuthenticated", "false");
       console.log("auth state changed");
       console.log(currentUser);
       getCurrentUserFromFireBase(currentUser);
