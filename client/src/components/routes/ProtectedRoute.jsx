@@ -30,7 +30,8 @@ const ProtectedRoute = ({ children }) => {
     if (user) {
       return children;
     } else {
-      return window.localStorage.getItem("isAuthenticated") === "false" ? (
+      return !window.localStorage.getItem("isAuthenticated") ||
+        window.localStorage.getItem("isAuthenticated") === "false" ? (
         <LoadingToRedirect />
       ) : null;
     }

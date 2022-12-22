@@ -1,4 +1,4 @@
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, onIdTokenChanged } from "firebase/auth";
 import React, { createContext, useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
@@ -37,7 +37,7 @@ const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onIdTokenChanged(auth, (currentUser) => {
       window.localStorage.setItem("isAuthenticated", "false");
       console.log("auth state changed");
       console.log(currentUser);
