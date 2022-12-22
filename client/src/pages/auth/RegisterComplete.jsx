@@ -16,7 +16,7 @@ import FormSection from "./FormSection";
 import { UserState } from "../../components/context/UserProvider";
 
 const RegisterComplete = () => {
-  const { setUser } = UserState();
+  const { setUser, setUserLoading } = UserState();
 
   const [userDetails, setUserDetails] = useState({
     firstName: "",
@@ -66,6 +66,7 @@ const RegisterComplete = () => {
   };
   const handleRegistration = async (event) => {
     event.preventDefault();
+    // setUserLoading(true);
     const isValidated = validateUserDetails();
     if (!isValidated) return;
 
@@ -84,17 +85,17 @@ const RegisterComplete = () => {
           displayName: `${userDetails.firstName} ${userDetails.lastName}`,
         });
         const response = await createOrUpdateUser(idTokenResult.token);
-        const loggedInUser = {
-          name: response.data.name,
-          email: response.data.email,
-          profilePicture: response.data.profilePicture,
-          token: idTokenResult.token,
-          _id: response.data._id,
-        };
-        //window.localStorage.setItem("user", JSON.stringify(loggedInUser));
+        // const loggedInUser = {
+        //   name: response.data.name,
+        //   email: response.data.email,
+        //   profilePicture: response.data.profilePicture,
+        //   token: idTokenResult.token,
+        //   _id: response.data._id,
+        // };
+        // //window.localStorage.setItem("user", JSON.stringify(loggedInUser));
 
-        setUser(loggedInUser);
-
+        // setUser(loggedInUser);
+        // setUserLoading(false);
         navigate("/chats");
       }
     } catch (error) {
@@ -102,7 +103,7 @@ const RegisterComplete = () => {
       toast.error(error);
     }
   };
-  const uploadImageToCloudinary = () => {};
+  // const uploadImageToCloudinary = () => {};
   return (
     <AuthHOC>
       <AppPreviewSection />

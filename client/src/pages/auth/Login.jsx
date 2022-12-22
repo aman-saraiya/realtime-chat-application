@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "antd";
 import {
   EyeOutlined,
   EyeInvisibleOutlined,
@@ -19,15 +18,19 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { user, setUser } = UserState();
+  const { user, setUser, setUserLoading } = UserState();
   const navigate = useNavigate();
   const handlePasswordVisiblility = (event) => {
     event.preventDefault();
     setPasswordVisible((prevState) => !prevState);
   };
 
+  if (user) {
+    navigate("/chats");
+  }
   const handleLogin = async (event) => {
     event.preventDefault();
+    window.localStorage.setItem("userLoading", "true");
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const idTokenResult = await result.user.getIdTokenResult();
@@ -39,14 +42,11 @@ const Login = () => {
         token: idTokenResult.token,
         _id: response.data._id,
       };
-      window.localStorage.setItem("user", JSON.stringify(loggedInUser));
 
-      setTimeout(() => {
-        setUser(loggedInUser);
-      }, 1000);
+      setUser(loggedInUser);
       navigate("/chats");
-      // console.log(user);
     } catch (error) {
+      window.localStorage.setItem("userLoading", "false");
       console.log(error);
       toast.error(error.message);
     }

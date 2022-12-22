@@ -4,7 +4,7 @@ const router = express.Router();
 // import controller
 const {
   createOrUpdateUser,
-  currentUser,
+  getCurrentUser,
   fetchUsers,
   updateProfileImage,
 } = require("../controllers/userControllers");
@@ -12,7 +12,7 @@ const {
 // import middleware
 const { authCheck } = require("../middleware/auth");
 router.post("/user/create-or-update", authCheck, createOrUpdateUser);
-router.post("/user/current-user", authCheck, currentUser);
+router.post("/user/current-user", authCheck, getCurrentUser);
 router.get("/user/:userId", authCheck, fetchUsers);
 router.put("/user/updateProfileImage", authCheck, updateProfileImage);
 module.exports = router;

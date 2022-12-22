@@ -25,7 +25,7 @@ const createOrUpdateUser = async (req, res) => {
   }
 };
 
-const currentUser = async (req, res) => {
+const getCurrentUser = async (req, res) => {
   const { email } = req.user;
   const user = await User.findOne({ email: email });
   res.json(user);
@@ -62,7 +62,7 @@ const updateProfileImage = async (req, res) => {
 };
 module.exports = {
   createOrUpdateUser,
-  currentUser,
+  getCurrentUser,
   fetchUsers,
   updateProfileImage,
 };

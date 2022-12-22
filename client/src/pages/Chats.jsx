@@ -20,7 +20,7 @@ const Chats = ({ socket }) => {
   const [fetchChatsAgain, setFetchChatsAgain] = useState(false);
   const [notifications, setNotifications] = useState([]);
   // console.log(selectedChat, isScreenSmall);
-  return user ? (
+  return (
     <div className="container-fluid" style={{ height: "100%" }}>
       <div className="row" style={{ height: "100%" }}>
         <div
@@ -57,8 +57,6 @@ const Chats = ({ socket }) => {
         </div>
       </div>
     </div>
-  ) : (
-    <div>Loading...</div>
   );
 };
 
