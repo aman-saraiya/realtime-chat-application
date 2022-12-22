@@ -91,7 +91,15 @@ const MessageDisplay = ({
           }}
         />
       )}
-      <div>{isTyping && "Typing..."}</div>
+      <div>
+        {isTyping && (
+          <div class="typing-indicator p-1">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

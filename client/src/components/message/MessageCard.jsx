@@ -7,7 +7,11 @@ const MessageCard = ({ message }) => {
   const isSelfMessage = message.sender._id === user._id;
   return (
     <div style={{ padding: "0.1rem" }}>
-      <div className={`message_card ${isSelfMessage ? "self_message" : ""}`}>
+      <div
+        className={`message_card ${
+          isSelfMessage ? "self_message" : "other_message"
+        }`}
+      >
         {message.content}
       </div>
     </div>

@@ -82,8 +82,8 @@ const SendMessage = ({
   };
   return (
     <div
-      className="d-flex m-0 p-1 align-items-end"
-      style={{ backgroundColor: "#fef7e4" }}
+      className="d-flex m-0 align-items-end"
+      style={{ backgroundColor: "#fef7e4", padding: "0.5rem" }}
     >
       <textarea
         className="message_input"
