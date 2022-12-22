@@ -19,8 +19,8 @@ const UserProvider = ({ children }) => {
           setUser({
             name: res.data.name,
             email: res.data.email,
+            profilePicture: res.data.profilePicture,
             token: idTokenResult.token,
-            role: res.data.role,
             _id: res.data._id,
           });
         })
@@ -39,7 +39,7 @@ const UserProvider = ({ children }) => {
       console.log(currentUser);
       getCurrentUserFromFireBase(currentUser);
     });
-    return unsubscribe();
+    return () => unsubscribe();
   }, []);
   return (
     <UserContext.Provider

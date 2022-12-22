@@ -35,7 +35,14 @@ const ProfileModal = ({
       // setGroupPicture(response.data.url);
       const updateResponse = await updateProfileImage(response.data.url, user);
       // console.log(updateResponse.data);
-      setUser(updateResponse.data);
+
+      setUser((prevUserState) => ({
+        name: updateResponse.data.name,
+        email: updateResponse.data.email,
+        profilePicture: updateResponse.data.profilePicture,
+        token: prevUserState.token,
+        _id: updateResponse.data._id,
+      }));
     } catch (error) {
       console.log(error);
     }

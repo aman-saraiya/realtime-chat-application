@@ -8,13 +8,17 @@ const Chats = ({ socket }) => {
   //const user = window.localStorage.getItem("user");
   const { user } = UserState();
   useEffect(() => {
+    socket.on("connected", (userId) => {
+      console.log("Connected " + userId);
+    });
+
+    return () => socket.off("connected");
+  }, []);
+  useEffect(() => {
     if (user) {
       socket.emit("setup", user);
-      socket.on("connected", (userId) => {
-        console.log("Connected " + userId);
-      });
     }
-    console.log(user);
+    // console.log(user);
   }, [user]);
   const { selectedChat, isScreenSmall } = ChatsState();
   const [fetchChatsAgain, setFetchChatsAgain] = useState(false);

@@ -15,16 +15,16 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const { darkMode } = ChatsState();
-  const { setUser } = UserState();
+  const { user, setUser } = UserState();
   const logout = async () => {
     await signOut(auth);
     // window.localStorage.removeItem("user");
+    socket.emit("terminate", user);
     setUser(null);
     navigate("/login");
   };
 
   //const user = JSON.parse(window.localStorage.getItem("user"));
-  const { user } = UserState();
   const items = [
     {
       label: <div onClick={() => setIsProfileModalOpen(true)}>My Account</div>,

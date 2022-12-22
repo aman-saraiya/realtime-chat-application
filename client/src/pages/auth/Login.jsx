@@ -13,6 +13,7 @@ import AppPreviewSection from "./AppPreviewSection";
 import FormSection from "./FormSection";
 import AuthHOC from "./AuthHOC";
 import { UserState } from "../../components/context/UserProvider";
+import { useEffect } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -25,9 +26,12 @@ const Login = () => {
     setPasswordVisible((prevState) => !prevState);
   };
 
-  if (user) {
-    navigate("/chats");
-  }
+  useEffect(() => {
+    if (user) {
+      navigate("/chats");
+    }
+  }, [user]);
+
   const handleLogin = async (event) => {
     event.preventDefault();
     window.localStorage.setItem("userLoading", "true");
@@ -35,16 +39,16 @@ const Login = () => {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const idTokenResult = await result.user.getIdTokenResult();
       const response = await createOrUpdateUser(idTokenResult.token);
-      const loggedInUser = {
-        name: response.data.name,
-        email: response.data.email,
-        profilePicture: response.data.profilePicture,
-        token: idTokenResult.token,
-        _id: response.data._id,
-      };
+      // const loggedInUser = {
+      //   name: response.data.name,
+      //   email: response.data.email,
+      //   profilePicture: response.data.profilePicture,
+      //   token: idTokenResult.token,
+      //   _id: response.data._id,
+      // };
 
-      setUser(loggedInUser);
-      navigate("/chats");
+      // setUser(loggedInUser);
+      // navigate("/chats");
     } catch (error) {
       window.localStorage.setItem("userLoading", "false");
       console.log(error);

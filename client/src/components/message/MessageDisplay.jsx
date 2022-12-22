@@ -29,6 +29,7 @@ const MessageDisplay = ({
   useEffect(() => {
     loadMessages();
     setTopReached(false);
+    setIsTyping(false);
   }, [selectedChat]);
 
   const appendMessages = async () => {
@@ -52,12 +53,18 @@ const MessageDisplay = ({
     }
   };
   useEffect(() => {
+    console.log("typing 1");
     socket.on("typing", () => {
       setIsTyping(true);
     });
     socket.on("stop typing", () => {
       setIsTyping(false);
     });
+
+    return () => {
+      socket.off("typing");
+      socket.off("stop typing");
+    };
   }, []);
 
   const INITIAL_ITEM_COUNT = 20;

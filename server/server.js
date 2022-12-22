@@ -99,7 +99,7 @@ io.on("connection", (socket) => {
   });
   socket.on("stop typing", (room) => socket.to(room).emit("stop typing"));
 
-  socket.off("setup", () => {
+  socket.on("terminate", (userData) => {
     console.log("User Disconnected");
     socket.leave(userData._id);
     console.log(userData._id);
