@@ -16,7 +16,6 @@ const MessageDisplay = ({
 }) => {
   const [isTyping, setIsTyping] = useState(false);
   const { selectedChat } = ChatsState();
-  const { user } = UserState();
   const [loading, setLoading] = useState(false);
   const [topReached, setTopReached] = useState(false);
   const loadMessages = async () => {
@@ -70,7 +69,16 @@ const MessageDisplay = ({
   const [firstItemIndex, setFirstItemIndex] = useState(1000000000);
   return (
     <div className="chatbox">
-      {!loading && (
+      {loading ? (
+        <>
+          <div
+            className="d-flex flex-column justify-content-center align-items-center"
+            style={{ height: "100%" }}
+          >
+            <div className="loader-messages"></div>
+          </div>
+        </>
+      ) : (
         <Virtuoso
           firstItemIndex={firstItemIndex}
           initialTopMostItemIndex={INITIAL_ITEM_COUNT - 1}
