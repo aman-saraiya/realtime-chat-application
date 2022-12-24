@@ -38,3 +38,18 @@ export const fileUploadAndResize = async (file) => {
     );
   }
 };
+
+export const deleteImage = async (imageId) => {
+  const authToken = await auth.currentUser.getIdToken();
+  return axios.post(
+    `${process.env.REACT_APP_API}/removeimage`,
+    {
+      public_id: imageId,
+    },
+    {
+      headers: {
+        authtoken: authToken,
+      },
+    }
+  );
+};

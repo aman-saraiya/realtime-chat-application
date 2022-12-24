@@ -38,7 +38,11 @@ const ProfileModal = ({
         _id: response.data.public_id,
       });
       // console.log(updateResponse.data);
-
+      const imageIdToBeDeleted = user.profilePicture._id;
+      if (imageIdToBeDeleted != "default") {
+        response = await deleteImage(imageIdToBeDeleted);
+        console.log(response);
+      }
       setUser((prevUserState) => ({
         name: updateResponse.data.name,
         email: updateResponse.data.email,

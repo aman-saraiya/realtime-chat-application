@@ -11,7 +11,10 @@ import { fetchUsers } from "../../utils/user";
 import UserCardModal from "../user/UserCardModal";
 import { UserState } from "../context/UserProvider";
 import { EditOutlined } from "@ant-design/icons";
-import { fileUploadAndResize } from "../../utils/fileResizeAndUpload";
+import {
+  deleteImage,
+  fileUploadAndResize,
+} from "../../utils/fileResizeAndUpload";
 const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
   const { selectedChat, setSelectedChat } = ChatsState();
   //const user = JSON.parse(window.localStorage.getItem("user"));
@@ -105,6 +108,11 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
         selectedChat._id
       );
       // console.log(updateResponse.data);
+      const imageIdToBeDeleted = selectedChat.groupPicture._id;
+      if (imageIdToBeDeleted != "default") {
+        response = await deleteImage(imageIdToBeDeleted);
+        console.log(response);
+      }
       setSelectedChat(updateResponse.data);
     } catch (error) {
       console.log(error);
