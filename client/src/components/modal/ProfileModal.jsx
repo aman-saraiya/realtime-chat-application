@@ -3,7 +3,10 @@ import { Modal } from "antd";
 import { ChatsState } from "../context/ChatsProvider";
 import { UserState } from "../context/UserProvider";
 import { EditOutlined } from "@ant-design/icons";
-import { fileUploadAndResize } from "../../utils/fileResizeAndUpload";
+import {
+  deleteImage,
+  fileUploadAndResize,
+} from "../../utils/fileResizeAndUpload";
 import { updateProfileImage } from "../../utils/user";
 const ProfileModal = ({
   isProfileModalOpen,
