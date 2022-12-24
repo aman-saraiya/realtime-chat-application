@@ -24,7 +24,7 @@ export const updateProfileImage = async (profileImageUri) => {
   );
 };
 
-export const getCurrentUser = async (authToken) => {
+export const getCurrentUser = async () => {
   const authToken = await auth.currentUser.getIdToken();
   return await axios.post(
     `${process.env.REACT_APP_API}/user/current-user`,

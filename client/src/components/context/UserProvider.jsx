@@ -14,7 +14,7 @@ const UserProvider = ({ children }) => {
     window.localStorage.setItem("userLoading", "true");
     if (registeredUser) {
       const idTokenResult = await registeredUser.getIdTokenResult();
-      getCurrentUser(idTokenResult.token)
+      getCurrentUser()
         .then((res) => {
           setTimeout(() => {
             setUser({
