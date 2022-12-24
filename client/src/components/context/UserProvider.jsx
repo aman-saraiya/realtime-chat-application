@@ -16,15 +16,13 @@ const UserProvider = ({ children }) => {
       const idTokenResult = await registeredUser.getIdTokenResult();
       getCurrentUser()
         .then((res) => {
-          setTimeout(() => {
-            setUser({
-              name: res.data.name,
-              email: res.data.email,
-              profilePicture: res.data.profilePicture,
-              token: idTokenResult.token,
-              _id: res.data._id,
-            });
-          }, 1000);
+          setUser({
+            name: res.data.name,
+            email: res.data.email,
+            profilePicture: res.data.profilePicture,
+            token: idTokenResult.token,
+            _id: res.data._id,
+          });
         })
         .catch((err) => {
           window.localStorage.setItem("userLoading", "false");

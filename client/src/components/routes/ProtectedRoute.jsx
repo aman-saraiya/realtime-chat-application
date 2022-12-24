@@ -3,6 +3,7 @@ import LoadingToRedirect from "./LoadingToRedirect";
 import { UserState } from "../context/UserProvider";
 import { useEffect } from "react";
 import { useState } from "react";
+import ChatsLoading from "./ChatsLoading";
 
 const ProtectedRoute = ({ children }) => {
   // const navigate = useNavigate();
@@ -24,17 +25,7 @@ const ProtectedRoute = ({ children }) => {
   }, [user]);
   if (userLoading === "true") {
     console.log("userLoading here");
-    return (
-      <div
-        className="d-flex flex-column justify-content-center align-items-center"
-        style={{ height: "100%" }}
-      >
-        <div className="loader"></div>
-        <div style={{ margin: "1rem", color: "#19bd06" }}>
-          Loading your chats ...
-        </div>
-      </div>
-    );
+    return <ChatsLoading />;
   } else {
     if (user) {
       return children;
@@ -42,7 +33,9 @@ const ProtectedRoute = ({ children }) => {
       return !window.localStorage.getItem("isAuthenticated") ||
         window.localStorage.getItem("isAuthenticated") === "false" ? (
         <LoadingToRedirect />
-      ) : null;
+      ) : (
+        <ChatsLoading />
+      );
     }
   }
 };

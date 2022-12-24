@@ -366,11 +366,11 @@ body {
   } */
 
 .loader {
-  border: 0.3rem solid #ffffff; /* Light grey */
-  border-top: 0.3rem solid #19bd06; /* Blue */
+  border: 0.25rem solid #ffffff; /* Light grey */
+  border-top: 0.25rem solid #19bd06; /* Blue */
   border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   animation: spin 1s linear infinite;
 }
 

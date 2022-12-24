@@ -4,9 +4,19 @@ import { useNavigate } from "react-router-dom";
 const LoadingToRedirect = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    setTimeout(() => navigate("/"), 100);
+    setTimeout(() => navigate("/"), 1000);
   });
-  return <div align="center">Redirecting to Login Page</div>;
+  return (
+    <div
+      className="d-flex flex-column justify-content-center align-items-center"
+      style={{ height: "100%" }}
+    >
+      <div className="loader"></div>
+      <div style={{ margin: "1rem", color: "#19bd06" }}>
+        Redirecting to Login Page ...
+      </div>
+    </div>
+  );
 };
 
 export default LoadingToRedirect;
