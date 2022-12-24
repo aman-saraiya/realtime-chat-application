@@ -1,7 +1,6 @@
 import React from "react";
 import LoadingToRedirect from "./LoadingToRedirect";
 import { UserState } from "../context/UserProvider";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -25,7 +24,17 @@ const ProtectedRoute = ({ children }) => {
   }, [user]);
   if (userLoading === "true") {
     console.log("userLoading here");
-    return <div>Loading...</div>;
+    return (
+      <div
+        className="d-flex flex-column justify-content-center align-items-center"
+        style={{ height: "100%" }}
+      >
+        <div className="loader"></div>
+        <div style={{ margin: "1rem", color: "#19bd06" }}>
+          Loading your chats ...
+        </div>
+      </div>
+    );
   } else {
     if (user) {
       return children;
