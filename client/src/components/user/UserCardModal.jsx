@@ -13,7 +13,7 @@ const UserCardModal = ({
     >
       <div className="col-1 p-0 m-0 d-flex align-items-center justify-content-center">
         <img
-          src={user.profilePicture}
+          src={user.profilePicture.url}
           style={{ width: "0.8rem", height: "0.8rem", borderRadius: "0.4rem" }}
         />
       </div>

@@ -4,7 +4,7 @@ const UserCard = ({ user }) => {
   return (
     <>
       <div className="col-1 p-0 m-0 d-flex align-items-center">
-        <img src={user.profilePicture} className="profile_image" />
+        <img src={user.profilePicture.url} className="profile_image" />
       </div>
       <div
         className="col p-1 d-flex align-items-center"

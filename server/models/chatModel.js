@@ -5,9 +5,11 @@ const chatSchema = mongoose.Schema(
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     isGroupChat: { type: Boolean, default: false },
     groupPicture: {
-      type: String,
-      default:
-        "https://res.cloudinary.com/dh94shztn/image/upload/v1671613414/MERN%20Chat%20App/groupIcon_zsoewt.png",
+      type: Object,
+      default: {
+        url: "https://res.cloudinary.com/dh94shztn/image/upload/v1671613414/MERN%20Chat%20App/groupIcon_zsoewt.png",
+        _id: "default",
+      },
     },
     groupAdmin: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     chatName: { type: String, required: true, trim: true },

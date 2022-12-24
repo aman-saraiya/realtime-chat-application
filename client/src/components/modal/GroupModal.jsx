@@ -96,8 +96,12 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
       const response = await fileUploadAndResize(event.target.files[0]);
       // console.log(response.data.url);
       // setGroupPicture(response.data.url);
+      const updatedPicture = {
+        url: response.data.url,
+        _id: response.data.public_id,
+      };
       const updateResponse = await updateGroupPicture(
-        response.data.url,
+        updatedPicture,
         selectedChat._id
       );
       // console.log(updateResponse.data);
@@ -125,7 +129,7 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
               onChange={handleProfileImageUpdate}
             />
             <img
-              src={selectedChat.groupPicture}
+              src={selectedChat.groupPicture.url}
               style={{
                 height: "4rem",
                 width: "4rem",

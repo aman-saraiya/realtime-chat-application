@@ -40,7 +40,7 @@ const ChatsHeader = ({ setFetchChatsAgain, socket }) => {
       }`}
     >
       <div className="p-0 m-0 d-flex align-items-center">
-        <img src={user.profilePicture} className="profile_image" />
+        <img src={user.profilePicture.url} className="profile_image" />
       </div>
       <div className="p-2 d-flex align-items-center flex-grow-1">
         {user.name}

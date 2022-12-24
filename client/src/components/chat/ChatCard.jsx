@@ -8,8 +8,8 @@ const ChatCard = ({ chat, notifications }) => {
     chat.users[0]._id == user._id ? chat.users[1] : chat.users[0];
   const chatCardTitle = chat.isGroupChat ? chat.chatName : chatWithUser.name;
   const chatCardImage = chat.isGroupChat
-    ? chat.groupPicture
-    : chatWithUser.profilePicture;
+    ? chat.groupPicture.url
+    : chatWithUser.profilePicture.url;
 
   var notifCount = 0;
   for (var i = 0; i < notifications.length; i++) {

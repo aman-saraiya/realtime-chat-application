@@ -25,7 +25,6 @@ const RegisterComplete = () => {
     firstName: "",
     lastName: "",
     email: "",
-    profilePicture: "",
     password: "",
   });
   const navigate = useNavigate();
@@ -172,14 +171,6 @@ const RegisterComplete = () => {
               </div>
             </div>
           </div>
-          {/* <div className="d-flex">
-            <input
-              type="file"
-              name="profilePicture"
-              onChange={handleInputChange}
-              className="auth-form-input flex-grow-1"
-            />
-          </div> */}
 
           <div className="d-flex justify-content-end">
             <button

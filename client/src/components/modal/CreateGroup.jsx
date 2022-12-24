@@ -17,9 +17,7 @@ const CreateGroup = ({
   const { user } = UserState();
   const { setSelectedChat } = ChatsState();
   const [groupName, setGroupName] = useState("");
-  const [groupPicture, setGroupPicture] = useState(
-    "https://res.cloudinary.com/dh94shztn/image/upload/v1671613414/MERN%20Chat%20App/groupIcon_zsoewt.png"
-  );
+  const [groupPicture, setGroupPicture] = useState();
   const [groupUsers, setGroupUsers] = useState([]);
   const handleGroupNameInput = (event) => {
     setGroupName(event.target.value);
@@ -28,8 +26,8 @@ const CreateGroup = ({
     // console.log(event.target.files[0]);
     try {
       const response = await fileUploadAndResize(event.target.files[0]);
-      console.log(response.data.url);
-      setGroupPicture(response.data.url);
+      // console.log(response.data);
+      setGroupPicture({ url: response.data.url, _id: response.data.public_id });
     } catch (error) {
       console.log(error);
     }
@@ -124,7 +122,7 @@ const CreateGroup = ({
       >
         <div className="text-center">
           <img
-            src={groupPicture}
+            src={groupPicture.url}
             style={{
               height: "4rem",
               width: "4rem",

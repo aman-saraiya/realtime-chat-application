@@ -68,7 +68,7 @@ const createOrFetchPersonalChat = async (req, res) => {
 };
 const createGroupChat = async (req, res) => {
   const { users, groupAdmin, chatName, groupPicture } = req.body;
-  if (!users || !groupAdmin || !chatName || !groupPicture) {
+  if (!users || !groupAdmin || !chatName) {
     res.status(400).send({ message: "Please fill all the fields" });
     return;
   }
@@ -77,13 +77,23 @@ const createGroupChat = async (req, res) => {
   }
   users.push(groupAdmin);
   try {
-    const groupChat = await new Chat({
-      isGroupChat: true,
-      users: users,
-      groupAdmin: groupAdmin,
-      groupPicture: groupPicture,
-      chatName: chatName,
-    }).save();
+    let groupChat = {};
+    if (groupPicture) {
+      groupChat = await new Chat({
+        isGroupChat: true,
+        users: users,
+        groupAdmin: groupAdmin,
+        groupPicture: groupPicture,
+        chatName: chatName,
+      }).save();
+    } else {
+      groupChat = await new Chat({
+        isGroupChat: true,
+        users: users,
+        groupAdmin: groupAdmin,
+        chatName: chatName,
+      }).save();
+    }
     // console.log(groupChat);
     var fullGroupChat = await groupChat.populate("users");
     fullGroupChat = await fullGroupChat.populate("groupAdmin");

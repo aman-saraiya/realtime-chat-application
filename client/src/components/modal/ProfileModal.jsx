@@ -65,7 +65,7 @@ const ProfileModal = ({
               onChange={handleProfileImageUpdate}
             />
             <img
-              src={user.profilePicture}
+              src={user.profilePicture.url}
               style={{
                 height: "4rem",
                 width: "4rem",

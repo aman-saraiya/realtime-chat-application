@@ -12,9 +12,11 @@ const userSchema = new mongoose.Schema(
       index: true,
     },
     profilePicture: {
-      type: String,
-      default:
-        "https://res.cloudinary.com/dh94shztn/image/upload/v1671614422/MERN%20Chat%20App/personIcon_mgfjlq.png",
+      type: Object,
+      default: {
+        url: "https://res.cloudinary.com/dh94shztn/image/upload/v1671614422/MERN%20Chat%20App/personIcon_mgfjlq.png",
+        _id: "default",
+      },
     },
   },
   {

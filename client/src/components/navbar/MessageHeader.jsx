@@ -25,8 +25,8 @@ const MessageHeader = ({ socket }) => {
     ? selectedChat.users[1]
     : selectedChat.users[0];
   const chatPicture = selectedChat.isGroupChat
-    ? selectedChat.groupPicture
-    : chatWithUser.profilePicture;
+    ? selectedChat.groupPicture.url
+    : chatWithUser.profilePicture.url;
   return (
     <div
       className={`d-flex flex-row m-0 p-0 ${
