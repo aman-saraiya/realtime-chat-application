@@ -33,7 +33,10 @@ const ProfileModal = ({
       const response = await fileUploadAndResize(event.target.files[0]);
       // console.log(response.data.url);
       // setGroupPicture(response.data.url);
-      const updateResponse = await updateProfileImage(response.data.url);
+      const updateResponse = await updateProfileImage({
+        url: response.data.url,
+        _id: response.data.public_id,
+      });
       // console.log(updateResponse.data);
 
       setUser((prevUserState) => ({
