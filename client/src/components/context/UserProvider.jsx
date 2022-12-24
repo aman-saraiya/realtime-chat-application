@@ -37,7 +37,7 @@ const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onIdTokenChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       window.localStorage.setItem("isAuthenticated", "false");
       console.log("auth state changed");
       console.log(currentUser);

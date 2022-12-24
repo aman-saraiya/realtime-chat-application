@@ -1,7 +1,7 @@
 import React from "react";
 import { ChatsState } from "../context/ChatsProvider";
 import { UserState } from "../context/UserProvider";
-const MessageCard = ({ message }) => {
+const MessageCard = ({ message, isGroupChat }) => {
   //const user = JSON.parse(window.localStorage.getItem("user"));
   const { user } = UserState();
   const isSelfMessage = message.sender._id === user._id;
@@ -12,7 +12,11 @@ const MessageCard = ({ message }) => {
           isSelfMessage ? "self_message" : "other_message"
         }`}
       >
-        {message.content}
+        {isGroupChat && !isSelfMessage && (
+          <div className="message_sender">{message.sender.name}</div>
+        )}
+
+        <div style={{ lineHeight: "1rem" }}>{message.content}</div>
       </div>
     </div>
   );

@@ -78,7 +78,12 @@ const MessageDisplay = ({
           data={messages}
           startReached={appendMessages}
           itemContent={(index, message) => {
-            return <MessageCard message={message} />;
+            return (
+              <MessageCard
+                message={message}
+                isGroupChat={selectedChat.isGroupChat}
+              />
+            );
           }}
           ref={virtuoso}
           followOutput={(isAtBottom) => {

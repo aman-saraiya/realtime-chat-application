@@ -245,7 +245,8 @@ hr.hr-text::after {
   background-color: var(--green250);
   border-radius: 0.2rem;
   width: fit-content;
-  padding: 1px;
+  padding: 0.2rem 0.5rem;
+  
 }
 
 .self_message {
@@ -254,6 +255,9 @@ hr.hr-text::after {
 }
 .other_message {
   margin-left: 0.5rem;
+}
+.message_sender {
+  font-weight: bold;
 }
 
 .message_section_placeholder {
@@ -337,3 +341,26 @@ body {
   display: table-cell;
   vertical-align: middle;
 }
+
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  /* * {
+    scrollbar-width: auto;
+    scrollbar-color: #474747 #fef7e4;
+  } */
+
+  /* Chrome, Edge, and Safari */
+  /* *::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #fef7e4;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #989898;
+    border-radius: 10px;
+    border: 3px solid #fef7e4;
+  } */
