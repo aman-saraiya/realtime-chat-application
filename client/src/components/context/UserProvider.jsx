@@ -3,7 +3,6 @@ import React, { createContext, useState } from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { auth } from "../../firebase";
-import { createOrUpdateUser } from "../../utils/auth";
 import { getCurrentUser } from "../../utils/user";
 const UserContext = createContext();
 const UserProvider = ({ children }) => {

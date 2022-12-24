@@ -21,7 +21,7 @@ const MessageDisplay = ({
   const [topReached, setTopReached] = useState(false);
   const loadMessages = async () => {
     setLoading(true);
-    const response = await fetchMessages(selectedChat._id, 20, 0, user);
+    const response = await fetchMessages(selectedChat._id, 20, 0);
     setMessages(response.data);
     setLoading(false);
   };
@@ -39,8 +39,7 @@ const MessageDisplay = ({
     const response = await fetchMessages(
       selectedChat._id,
       messages_to_append,
-      messages.length,
-      user
+      messages.length
     );
     // console.log(messages.length, response.data.length);
     if (messages.length && !response.data.length) {

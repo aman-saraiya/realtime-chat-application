@@ -11,7 +11,7 @@ const Search = ({ isSearching, setIsSearching, setFetchChatsAgain }) => {
   const handleUserSearch = async (event) => {
     setIsSearching(true);
     setSearchInput(event.target.value);
-    const response = await fetchUsers(event.target.value, user);
+    const response = await fetchUsers(event.target.value, user._id);
     setUsers(response.data);
   };
 

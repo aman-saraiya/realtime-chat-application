@@ -30,10 +30,10 @@ const ProfileModal = ({
   const handleProfileImageUpdate = async (event) => {
     console.log(event.target.files[0]);
     try {
-      const response = await fileUploadAndResize(event.target.files[0], user);
+      const response = await fileUploadAndResize(event.target.files[0]);
       // console.log(response.data.url);
       // setGroupPicture(response.data.url);
-      const updateResponse = await updateProfileImage(response.data.url, user);
+      const updateResponse = await updateProfileImage(response.data.url);
       // console.log(updateResponse.data);
 
       setUser((prevUserState) => ({

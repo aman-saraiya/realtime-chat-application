@@ -1,27 +1,26 @@
 import axios from "axios";
-import { UserState } from "../components/context/UserProvider";
+import { auth } from "../firebase";
 
-//const user = JSON.parse(window.localStorage.getItem("user"));
-// const { user } = UserState();
-
-export const fetchMessages = async (chatId, limit, offset, user) => {
+export const fetchMessages = async (chatId, limit, offset) => {
+  const authToken = await auth.currentUser.getIdToken();
   return await axios.get(
     `${process.env.REACT_APP_API}/message/${chatId}?limit=${limit}&offset=${offset}`,
     {
       headers: {
-        authToken: user.token,
+        authToken: authToken,
       },
     }
   );
 };
 
-export const sendMessage = async (chatId, messageContent, user) => {
+export const sendMessage = async (chatId, messageContent, userId) => {
+  const authToken = await auth.currentUser.getIdToken();
   return axios.post(
     `${process.env.REACT_APP_API}/message`,
-    { senderId: user._id, chatId: chatId, content: messageContent },
+    { senderId: userId, chatId: chatId, content: messageContent },
     {
       headers: {
-        authToken: user.token,
+        authToken: authToken,
       },
     }
   );

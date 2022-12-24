@@ -15,7 +15,7 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
     loadChats();
   }, [fetchChatsAgain]);
   const loadChats = async () => {
-    const response = await fetchChats(user);
+    const response = await fetchChats(user._id);
     setChats(response.data);
   };
 

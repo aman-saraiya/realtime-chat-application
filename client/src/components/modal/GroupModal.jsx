@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, AutoComplete } from "antd";
 import { ChatsState } from "../context/ChatsProvider";
-import UserChicklet from "./UserChicklet";
 import {
   removeUserFromGroup,
   addUserToGroup,
@@ -28,7 +27,7 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
   };
 
   const loadUsers = async () => {
-    const response = await fetchUsers(searchInput, user);
+    const response = await fetchUsers(searchInput, user._id);
     const retrievedUsers = response.data;
     var optionsArray = [];
     if (retrievedUsers) {
@@ -58,8 +57,7 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
     const response = await removeUserFromGroup(
       removeUser._id,
       user._id,
-      selectedChat._id,
-      user
+      selectedChat._id
     );
     const updatedChat = response.data;
     // console.log(updatedChat);
@@ -69,8 +67,7 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
     const response = await addUserToGroup(
       addUser._id,
       user._id,
-      selectedChat._id,
-      user
+      selectedChat._id
     );
     const updatedChat = response.data;
     socket.emit("new group", response.data);
@@ -83,7 +80,7 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
   };
 
   const handleRenameGroup = async () => {
-    const response = await renameGroup(newGroupName, selectedChat._id, user);
+    const response = await renameGroup(newGroupName, selectedChat._id);
     const updatedChat = response.data;
     setSelectedChat(updatedChat);
     setNewGroupName("");
@@ -96,13 +93,12 @@ const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
   const handleProfileImageUpdate = async (event) => {
     console.log(event.target.files[0]);
     try {
-      const response = await fileUploadAndResize(event.target.files[0], user);
+      const response = await fileUploadAndResize(event.target.files[0]);
       // console.log(response.data.url);
       // setGroupPicture(response.data.url);
       const updateResponse = await updateGroupPicture(
         response.data.url,
-        selectedChat._id,
-        user
+        selectedChat._id
       );
       // console.log(updateResponse.data);
       setSelectedChat(updateResponse.data);

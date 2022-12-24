@@ -69,7 +69,11 @@ const SendMessage = ({
     setMessageContent("");
   }, [selectedChat]);
   const handleSendMessage = async () => {
-    const response = await sendMessage(selectedChat._id, messageContent, user);
+    const response = await sendMessage(
+      selectedChat._id,
+      messageContent,
+      user._id
+    );
     const message = response.data;
     socket.emit("stop typing", selectedChat._id);
     setFetchChatsAgain((prevValue) => !prevValue);

@@ -38,7 +38,7 @@ const Login = () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const idTokenResult = await result.user.getIdTokenResult();
-      const response = await createOrUpdateUser(idTokenResult.token);
+      const response = await createOrUpdateUser();
       // const loggedInUser = {
       //   name: response.data.name,
       //   email: response.data.email,

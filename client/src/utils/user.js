@@ -1,30 +1,31 @@
 import axios from "axios";
-import { UserState } from "../components/context/UserProvider";
-// const user = JSON.parse(window.localStorage.getItem("user"));
-// const { user } = UserState();
+import { auth } from "../firebase";
 
-export const fetchUsers = async (searchQuery, user) => {
+export const fetchUsers = async (searchQuery, userId) => {
+  const authToken = await auth.currentUser.getIdToken();
   return await axios.get(
-    `${process.env.REACT_APP_API}/user/${user._id}?search=${searchQuery}`,
+    `${process.env.REACT_APP_API}/user/${userId}?search=${searchQuery}`,
     {
-      headers: { authToken: user.token },
+      headers: { authToken: authToken },
     }
   );
 };
 
-export const updateProfileImage = async (profileImageUri, user) => {
+export const updateProfileImage = async (profileImageUri) => {
+  const authToken = await auth.currentUser.getIdToken();
   return await axios.put(
     `${process.env.REACT_APP_API}/user/updateProfileImage`,
     {
       profilePictureUri: profileImageUri,
     },
     {
-      headers: { authToken: user.token },
+      headers: { authToken: authToken },
     }
   );
 };
 
 export const getCurrentUser = async (authToken) => {
+  const authToken = await auth.currentUser.getIdToken();
   return await axios.post(
     `${process.env.REACT_APP_API}/user/current-user`,
     {},

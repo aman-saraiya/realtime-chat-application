@@ -1,27 +1,30 @@
 import axios from "axios";
-import { UserState } from "../components/context/UserProvider";
+import { auth } from "../firebase";
 
 // const user = JSON.parse(window.localStorage.getItem("user"));
 // const { user } = UserState();
 
-export const fetchChats = async (user) => {
-  return await axios.get(`${process.env.REACT_APP_API}/chat/${user._id}`, {
+export const fetchChats = async (userId) => {
+  const authToken = await auth.currentUser.getIdToken();
+  return await axios.get(`${process.env.REACT_APP_API}/chat/${userId}`, {
     headers: {
-      authToken: user.token,
+      authToken: authToken,
     },
   });
 };
 
-export const createOrFetchPersonalChat = async (toUser, user) => {
+export const createOrFetchPersonalChat = async (toUser, userId) => {
+  const authToken = await auth.currentUser.getIdToken();
+
   return await axios.post(
     `${process.env.REACT_APP_API}/chat/`,
     {
       toUser: toUser,
-      fromUser: user._id,
+      fromUser: userId,
     },
     {
       headers: {
-        authToken: user.token,
+        authToken: authToken,
       },
     }
   );
@@ -31,10 +34,11 @@ export const createGroupChat = async (
   users,
   groupName,
   adminUserId,
-  groupPicture,
-  user
+  groupPicture
 ) => {
   // console.log(users, groupName, adminUserId);
+  const authToken = await auth.currentUser.getIdToken();
+
   return await axios.post(
     `${process.env.REACT_APP_API}/chat/group/create`,
     {
@@ -44,17 +48,14 @@ export const createGroupChat = async (
       groupAdmin: adminUserId,
     },
     {
-      headers: { authToken: user.token },
+      headers: { authToken: authToken },
     }
   );
 };
 
-export const removeUserFromGroup = async (
-  removeUserId,
-  userId,
-  chatId,
-  user
-) => {
+export const removeUserFromGroup = async (removeUserId, userId, chatId) => {
+  const authToken = await auth.currentUser.getIdToken();
+
   return await axios.put(
     `${process.env.REACT_APP_API}/chat/group/remove-user`,
     {
@@ -64,12 +65,14 @@ export const removeUserFromGroup = async (
     },
     {
       headers: {
-        authToken: user.token,
+        authToken: authToken,
       },
     }
   );
 };
-export const addUserToGroup = async (addUserId, userId, chatId, user) => {
+export const addUserToGroup = async (addUserId, userId, chatId) => {
+  const authToken = await auth.currentUser.getIdToken();
+
   return await axios.put(
     `${process.env.REACT_APP_API}/chat/group/add-user`,
     {
@@ -79,12 +82,14 @@ export const addUserToGroup = async (addUserId, userId, chatId, user) => {
     },
     {
       headers: {
-        authToken: user.token,
+        authToken: authToken,
       },
     }
   );
 };
-export const renameGroup = async (newGroupName, groupChatId, user) => {
+export const renameGroup = async (newGroupName, groupChatId) => {
+  const authToken = await auth.currentUser.getIdToken();
+
   return await axios.put(
     `${process.env.REACT_APP_API}/chat/group/rename-group`,
     {
@@ -93,17 +98,15 @@ export const renameGroup = async (newGroupName, groupChatId, user) => {
     },
     {
       headers: {
-        authToken: user.token,
+        authToken: authToken,
       },
     }
   );
 };
 
-export const updateGroupPicture = async (
-  newGroupPicture,
-  groupChatId,
-  user
-) => {
+export const updateGroupPicture = async (newGroupPicture, groupChatId) => {
+  const authToken = await auth.currentUser.getIdToken();
+
   return await axios.put(
     `${process.env.REACT_APP_API}/chat/group/update-group-picture`,
     {
@@ -112,7 +115,7 @@ export const updateGroupPicture = async (
     },
     {
       headers: {
-        authToken: user.token,
+        authToken: authToken,
       },
     }
   );

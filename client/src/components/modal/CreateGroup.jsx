@@ -27,7 +27,7 @@ const CreateGroup = ({
   const handleGroupPictureInput = async (event) => {
     // console.log(event.target.files[0]);
     try {
-      const response = await fileUploadAndResize(event.target.files[0], user);
+      const response = await fileUploadAndResize(event.target.files[0]);
       console.log(response.data.url);
       setGroupPicture(response.data.url);
     } catch (error) {
@@ -42,8 +42,7 @@ const CreateGroup = ({
       groupUserIds,
       groupName,
       user._id,
-      groupPicture,
-      user
+      groupPicture
     );
     setSelectedChat(response.data);
     socket.emit("new group", response.data);
@@ -65,7 +64,7 @@ const CreateGroup = ({
   };
 
   const loadUsers = async () => {
-    const response = await fetchUsers(searchInput, user);
+    const response = await fetchUsers(searchInput, user._id);
     const retrievedUsers = response.data;
     var optionsArray = [];
     if (retrievedUsers) {
@@ -214,7 +213,7 @@ const CreateGroup = ({
                 isAdmin={false}
                 isCurrentUserAdmin={true}
                 removeUserFromGroup={() =>
-                  removeUserFromGroup(JSON.parse(groupUser), user)
+                  removeUserFromGroup(JSON.parse(groupUser))
                 }
                 user={JSON.parse(groupUser)}
               />

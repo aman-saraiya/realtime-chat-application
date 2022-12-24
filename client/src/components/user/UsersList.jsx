@@ -8,7 +8,7 @@ const UsersList = ({ users, setFetchChatsAgain, setIsSearching }) => {
   const { setSelectedChat } = ChatsState();
   const { user } = UserState();
   const handleUserSelection = async (toUser) => {
-    const response = await createOrFetchPersonalChat(toUser, user);
+    const response = await createOrFetchPersonalChat(toUser, user._id);
     const chatDetails = response.data;
     setSelectedChat(chatDetails);
     setIsSearching(false);

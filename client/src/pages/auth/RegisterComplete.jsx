@@ -87,7 +87,7 @@ const RegisterComplete = () => {
         await updateProfile(registeredUser, {
           displayName: `${userDetails.firstName} ${userDetails.lastName}`,
         });
-        const response = await createOrUpdateUser(idTokenResult.token);
+        const response = await createOrUpdateUser();
         // const loggedInUser = {
         //   name: response.data.name,
         //   email: response.data.email,
