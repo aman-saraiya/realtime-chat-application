@@ -14,6 +14,7 @@ import AuthHOC from "./AuthHOC";
 import AppPreviewSection from "./AppPreviewSection";
 import FormSection from "./FormSection";
 import { UserState } from "../../components/context/UserProvider";
+import AppName from "./AppName";
 
 const RegisterComplete = () => {
   const { user } = UserState();
@@ -103,6 +104,7 @@ const RegisterComplete = () => {
       <AppPreviewSection />
       <FormSection>
         <form className="login-form">
+          <AppName />
           <div className="d-flex flex-column">
             <input
               type="text"

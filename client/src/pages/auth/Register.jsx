@@ -7,6 +7,7 @@ import AppPreviewSection from "./AppPreviewSection";
 import FormSection from "./FormSection";
 import { UserState } from "../../components/context/UserProvider";
 import { useNavigate } from "react-router-dom";
+import AppName from "./AppName";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -38,6 +39,7 @@ const Register = () => {
       <AppPreviewSection />
       <FormSection>
         <form className="login-form" onSubmit={handleSubmit}>
+          <AppName />
           <div className="d-flex flex-column">
             <input
               type="email"
@@ -56,6 +58,8 @@ const Register = () => {
                 display: "flex",
                 alignItems: "center",
                 padding: "0.5rem",
+                width: "40%",
+                justifyContent: "center",
                 backgroundColor: "#19bd06",
                 color: "#ffffff",
                 outline: "none",

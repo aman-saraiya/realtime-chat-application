@@ -14,7 +14,7 @@ import FormSection from "./FormSection";
 import AuthHOC from "./AuthHOC";
 import { UserState } from "../../components/context/UserProvider";
 import { useEffect } from "react";
-
+import AppName from "./AppName";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,6 +73,8 @@ const Login = () => {
       <AppPreviewSection />
       <FormSection>
         <form className="login-form">
+          <AppName />
+
           <div className="d-flex">
             <input
               type="email"
@@ -123,6 +125,8 @@ const Login = () => {
                 display: "flex",
                 alignItems: "center",
                 padding: "0.5rem",
+                width: "40%",
+                justifyContent: "center",
                 backgroundColor: "#19bd06",
                 color: "#ffffff",
                 outline: "none",
