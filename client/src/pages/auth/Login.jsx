@@ -73,8 +73,17 @@ const Login = () => {
       <AppPreviewSection />
       <FormSection>
         <form className="login-form">
-          <AppName />
-
+          {/* <AppName /> */}
+          <div
+            style={{
+              fontFamily: "serif",
+              marginBottom: "0.5rem",
+              fontSize: "1.2rem",
+              color: "#19bd06",
+            }}
+          >
+            Welcome,
+          </div>
           <div className="d-flex">
             <input
               type="email"
