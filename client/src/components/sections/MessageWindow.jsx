@@ -6,7 +6,7 @@ import SendMessage from "../forms/SendMessage";
 import MessageDisplay from "../message/MessageDisplay";
 import MessageHeader from "../navbar/MessageHeader";
 import { UserState } from "../context/UserProvider";
-
+const app_name = require("../../constants/app-name.png");
 const MessageWindow = ({
   setFetchChatsAgain,
   socket,
@@ -110,7 +110,24 @@ const MessageWindow = ({
     </>
   ) : (
     <div className="message_section_placeholder">
-      <div>Verbalize</div>
+      <div
+        className="d-flex align-items-center justify-content-center flex-column flex-grow-1"
+        // style={{ border: "1px solid red" }}
+      >
+        <img
+          src={app_name}
+          style={{
+            height: "20%",
+            width: "40%",
+            // border: "1px solid red",
+            paddingBottom: "0",
+            // backgroundColor: "#fef7e4"
+          }}
+        />
+        <div style={{ fontSize: "0.8rem", color: "#676b68" }}>
+          Select a chat to start messaging
+        </div>
+      </div>
     </div>
   );
 };

@@ -47,7 +47,7 @@ const App = () => {
                   </ProtectedRoute>
                   <div
                     className="d-flex justify-content-center align-items-center"
-                    style={{ fontSize: "0.6rem" }}
+                    style={{ fontSize: "0.6rem", marginTop: "0.1rem" }}
                   >
                     Made with{" "}
                     <HeartFilled

@@ -41,6 +41,7 @@ hr.hr-text::after {
   height: 92vh;
   width: calc(100vw - 8vh);
   min-height:calc(768px - 8vh) ;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 -5px 10px 0 rgba(0, 0, 0, 0.2);
 }
 .auth-HOC {
   display: flex;
@@ -263,6 +264,7 @@ hr.hr-text::after {
 .message_section_placeholder {
   height:100%;
   display: flex;
+  /* background-color: #fef7e4; */
   background-color: #ffffff;
   border-left: 0.2rem solid #dfdede;
 }
