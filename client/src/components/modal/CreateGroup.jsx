@@ -6,7 +6,10 @@ import { AutoComplete } from "antd";
 import { fetchUsers } from "../../utils/user";
 import UserCardModal from "../user/UserCardModal";
 import { UserState } from "../context/UserProvider";
-import { fileUploadAndResize } from "../../utils/fileResizeAndUpload";
+import {
+  deleteImage,
+  fileUploadAndResize,
+} from "../../utils/fileResizeAndUpload";
 const CreateGroup = ({
   isCreateGroupModalOpen,
   setIsCreateGroupModalOpen,
@@ -29,8 +32,13 @@ const CreateGroup = ({
   const handleGroupPictureInput = async (event) => {
     // console.log(event.target.files[0]);
     try {
-      const response = await fileUploadAndResize(event.target.files[0]);
+      var response = await fileUploadAndResize(event.target.files[0]);
       // console.log(response.data);
+      const imageIdToBeDeleted = groupPicture._id;
+      if (imageIdToBeDeleted != "default") {
+        response = await deleteImage(imageIdToBeDeleted);
+        console.log(response);
+      }
       setGroupPicture({ url: response.data.url, _id: response.data.public_id });
     } catch (error) {
       console.log(error);
@@ -52,11 +60,26 @@ const CreateGroup = ({
     setIsCreateGroupModalOpen(false);
     setGroupName("");
     setGroupUsers([]);
+    setGroupPicture({
+      url:
+        "https://res.cloudinary.com/dh94shztn/image/upload/v1671613414/MERN%20Chat%20App/groupIcon_zsoewt.png",
+      _id: "default",
+    });
   };
-  const exitCreateGroupModal = () => {
+  const exitCreateGroupModal = async () => {
     setIsCreateGroupModalOpen(false);
     setGroupName("");
     setGroupUsers([]);
+    const imageIdToBeDeleted = groupPicture._id;
+    if (imageIdToBeDeleted != "default") {
+      const response = await deleteImage(imageIdToBeDeleted);
+      console.log(response);
+    }
+    setGroupPicture({
+      url:
+        "https://res.cloudinary.com/dh94shztn/image/upload/v1671613414/MERN%20Chat%20App/groupIcon_zsoewt.png",
+      _id: "default",
+    });
   };
   const [options, setOptions] = useState([]);
   const [searchInput, setSearchInput] = useState("");
