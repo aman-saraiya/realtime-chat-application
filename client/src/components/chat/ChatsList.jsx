@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useLayoutEffect } from "react";
+import { UsergroupAddOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import { AutoSizer, List } from "react-virtualized";
 import { fetchChats } from "../../utils/chat";
@@ -43,7 +43,7 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
       </div>
     );
   };
-  return (
+  return chats.length ? (
     <div className="chats_users_list">
       <AutoSizer>
         {({ width, height }) => (
@@ -59,6 +59,31 @@ const ChatsList = ({ fetchChatsAgain, socket, notifications }) => {
           />
         )}
       </AutoSizer>
+    </div>
+  ) : (
+    <div
+      className="chats_users_list d-flex align-items-center justify-content-center flex-column"
+      style={{
+        textAlign: "center",
+        fontSize: "0.8rem",
+        color: "#676b68",
+      }}
+    >
+      <div>Search users to start a chat</div>
+      <div style={{ fontSize: "0.7rem" }}>or</div>
+      <div
+        style={{
+          alignItems: "center",
+
+          display: "flex",
+        }}
+      >
+        Click{" "}
+        <UsergroupAddOutlined
+          style={{ marginLeft: "0.2rem", marginRight: "0.2rem" }}
+        />{" "}
+        to create a new group
+      </div>
     </div>
   );
 };

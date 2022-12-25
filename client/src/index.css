@@ -47,7 +47,7 @@ hr.hr-text::after {
   flex-direction: row;
   background-color: var(--green100);
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 1rem);
   min-height: 768px;
 }
 .preview-section {

@@ -110,7 +110,7 @@ const MessageWindow = ({
     </>
   ) : (
     <div className="message_section_placeholder">
-      {/* {JSON.stringify(notifications)} */}
+      <div>Verbalize</div>
     </div>
   );
 };

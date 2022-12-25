@@ -11,7 +11,7 @@ import ProtectedRoute from "./components/routes/ProtectedRoute";
 import ChatsProvider from "./components/context/ChatsProvider";
 import AuthHOC from "./pages/auth/AuthHOC";
 import UserProvider from "./components/context/UserProvider";
-
+import { HeartFilled } from "@ant-design/icons";
 const { io } = require("socket.io-client");
 const socket = io(process.env.REACT_APP_BACKEND_SERVER_ENDPOINT);
 const App = () => {
@@ -45,6 +45,31 @@ const App = () => {
                       <Chats socket={socket} />
                     </ChatsProvider>
                   </ProtectedRoute>
+                  <div
+                    className="d-flex justify-content-center align-items-center"
+                    style={{ fontSize: "0.6rem" }}
+                  >
+                    Made with{" "}
+                    <HeartFilled
+                      style={{
+                        color: "#19bd06",
+                        fontSize: "0.6rem",
+                        marginLeft: "0.3rem",
+                        marginRight: "0.3rem",
+                      }}
+                    />{" "}
+                    by{" "}
+                    <span
+                      style={{
+                        color: "#19bd06",
+                        marginLeft: "0.3rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {" "}
+                      Aman
+                    </span>
+                  </div>
                 </div>
               </div>
             }
