@@ -58,13 +58,14 @@ const Login = () => {
 
   const handleGoogleLogin = async (event) => {
     event.preventDefault();
+    window.localStorage.setItem("userLoading", "true");
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
-
-      const idTokenResult = await result.user.getIdTokenResult();
+      const response = await createOrUpdateUser();
+      console.log(result);
     } catch (error) {
+      window.localStorage.setItem("userLoading", "false");
       console.log(error);
-      // toast.error(error.message);
     }
   };
   return (

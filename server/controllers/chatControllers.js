@@ -78,7 +78,7 @@ const createGroupChat = async (req, res) => {
   users.push(groupAdmin);
   try {
     let groupChat = {};
-    if (groupPicture) {
+    if (groupPicture.id != "default") {
       groupChat = await new Chat({
         isGroupChat: true,
         users: users,
