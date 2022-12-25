@@ -39,7 +39,7 @@ const Register = () => {
       <AppPreviewSection />
       <FormSection>
         <form className="login-form" onSubmit={handleSubmit}>
-          <AppName />
+          {/* <AppName /> */}
           <div className="d-flex flex-column">
             <input
               type="email"

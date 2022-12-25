@@ -104,7 +104,7 @@ const RegisterComplete = () => {
       <AppPreviewSection />
       <FormSection>
         <form className="login-form">
-          <AppName />
+          {/* <AppName /> */}
           <div className="d-flex flex-column">
             <input
               type="text"
