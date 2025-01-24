@@ -1,20 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Modal, AutoComplete } from "antd";
-import { ChatsState } from "../context/ChatsProvider";
+import React, { useEffect, useRef, useState } from "react";
+
+import { AutoComplete, Modal } from "antd";
+
+import { EditOutlined } from "@ant-design/icons";
+
 import {
-  removeUserFromGroup,
   addUserToGroup,
+  removeUserFromGroup,
   renameGroup,
   updateGroupPicture,
 } from "../../utils/chat";
-import { fetchUsers } from "../../utils/user";
-import UserCardModal from "../user/UserCardModal";
-import { UserState } from "../context/UserProvider";
-import { EditOutlined } from "@ant-design/icons";
 import {
   deleteImage,
   fileUploadAndResize,
 } from "../../utils/fileResizeAndUpload";
+import { fetchUsers } from "../../utils/user";
+import { ChatsState } from "../context/ChatsProvider";
+import { UserState } from "../context/UserProvider";
+import UserCardModal from "../user/UserCardModal";
+
 const GroupModal = ({ isGroupModalOpen, setIsGroupModalOpen, socket }) => {
   const { selectedChat, setSelectedChat } = ChatsState();
   //const user = JSON.parse(window.localStorage.getItem("user"));

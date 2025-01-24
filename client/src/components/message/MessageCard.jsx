@@ -1,6 +1,7 @@
 import React from "react";
-import { ChatsState } from "../context/ChatsProvider";
+
 import { UserState } from "../context/UserProvider";
+
 const MessageCard = ({ message, isGroupChat }) => {
   //const user = JSON.parse(window.localStorage.getItem("user"));
   const { user } = UserState();

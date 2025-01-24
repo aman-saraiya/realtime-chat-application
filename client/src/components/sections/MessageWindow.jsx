@@ -1,12 +1,12 @@
-import { notification } from "antd";
-import React, { useState, useRef } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 import { ChatsState } from "../context/ChatsProvider";
+import { UserState } from "../context/UserProvider";
 import SendMessage from "../forms/SendMessage";
 import MessageDisplay from "../message/MessageDisplay";
 import MessageHeader from "../navbar/MessageHeader";
-import { UserState } from "../context/UserProvider";
-const app_name = require("../../constants/app-name.png");
+
+const app_name = require("../../assets/app_name.png");
 const MessageWindow = ({
   setFetchChatsAgain,
   socket,
@@ -46,12 +46,12 @@ const MessageWindow = ({
   }, [selectedChat]);
   useEffect(() => {
     socket.on("message received", (newMessageReceived) => {
-      console.log("MESSAGE RECEIVED");
+      // console.log("MESSAGE RECEIVED");
 
       if (selectedChat && newMessageReceived.chat._id == selectedChat._id) {
         setMessages((prevState) => [...prevState, newMessageReceived]);
       } else {
-        console.log("Went to Notification");
+        // console.log("Went to Notification");
         var chatIndex = -1;
         // notifications.indexOf(newMessageReceived.chat._id);
         for (var i = 0; i < notifications.length; i++) {

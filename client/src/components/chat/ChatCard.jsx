@@ -1,6 +1,7 @@
 import React from "react";
-import { useEffect } from "react";
+
 import { UserState } from "../context/UserProvider";
+
 const ChatCard = ({ chat, notifications }) => {
   //const user = JSON.parse(window.localStorage.getItem("user"));
   const { user } = UserState();

@@ -1,7 +1,9 @@
-import React, { useState, useRef } from "react";
-import { UsergroupAddOutlined } from "@ant-design/icons";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import { AutoSizer, List } from "react-virtualized";
+
+import { UsergroupAddOutlined } from "@ant-design/icons";
+
 import { fetchChats } from "../../utils/chat";
 import { ChatsState } from "../context/ChatsProvider";
 import { UserState } from "../context/UserProvider";

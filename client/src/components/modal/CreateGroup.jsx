@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal } from "antd";
+
+import { AutoComplete, Modal } from "antd";
+
 import { createGroupChat } from "../../utils/chat";
-import { ChatsState } from "../context/ChatsProvider";
-import { AutoComplete } from "antd";
-import { fetchUsers } from "../../utils/user";
-import UserCardModal from "../user/UserCardModal";
-import { UserState } from "../context/UserProvider";
 import {
   deleteImage,
   fileUploadAndResize,
 } from "../../utils/fileResizeAndUpload";
+import { fetchUsers } from "../../utils/user";
+import { ChatsState } from "../context/ChatsProvider";
+import { UserState } from "../context/UserProvider";
+import UserCardModal from "../user/UserCardModal";
+
 const CreateGroup = ({
   isCreateGroupModalOpen,
   setIsCreateGroupModalOpen,

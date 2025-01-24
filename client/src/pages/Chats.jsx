@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
+
 import { ChatsState } from "../components/context/ChatsProvider";
+import { UserState } from "../components/context/UserProvider";
 import MessageWindow from "../components/sections/MessageWindow";
 import UserChats from "../components/sections/UserChats";
-import { UserState } from "../components/context/UserProvider";
 
 const Chats = ({ socket }) => {
   //const user = window.localStorage.getItem("user");
   const { user } = UserState();
   useEffect(() => {
     socket.on("connected", (userId) => {
-      console.log("Connected " + userId);
+      // console.log("Connected " + userId);
     });
 
     return () => socket.off("connected");

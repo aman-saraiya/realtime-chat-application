@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+
 import { fetchUsers } from "../../utils/user";
 import { UserState } from "../context/UserProvider";
 import UsersList from "../user/UsersList";

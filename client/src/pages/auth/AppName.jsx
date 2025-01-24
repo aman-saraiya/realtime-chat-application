@@ -1,5 +1,5 @@
 import React from "react";
-const app_name = require("../../constants/app-name.png");
+const app_name = require("../../assets/app_name.png");
 const AppName = () => {
   return (
     <div

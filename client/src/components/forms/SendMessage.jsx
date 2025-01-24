@@ -1,6 +1,7 @@
+import React, { useEffect, useState } from "react";
+
 import { SendOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
-import { useEffect } from "react";
+
 import { sendMessage } from "../../utils/message";
 import { ChatsState } from "../context/ChatsProvider";
 import { UserState } from "../context/UserProvider";

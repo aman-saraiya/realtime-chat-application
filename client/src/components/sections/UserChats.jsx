@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import ChatsHeader from "../navbar/ChatsHeader";
-import Search from "../forms/Search";
+import React, { useEffect, useState } from "react";
+
 import ChatsList from "../chat/ChatsList";
-import UsersList from "../user/UsersList";
+import Search from "../forms/Search";
+import ChatsHeader from "../navbar/ChatsHeader";
 
 const UserChats = ({
   fetchChatsAgain,

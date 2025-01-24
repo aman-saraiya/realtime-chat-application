@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+
+import { Virtuoso } from "react-virtuoso";
+
 import { fetchMessages } from "../../utils/message";
 import { ChatsState } from "../context/ChatsProvider";
 import MessageCard from "./MessageCard";
-import { useRef } from "react";
-import { message } from "antd";
-import { Virtuoso } from "react-virtuoso";
-import { UserState } from "../context/UserProvider";
+
 const MessageDisplay = ({
   socket,
   messages,
