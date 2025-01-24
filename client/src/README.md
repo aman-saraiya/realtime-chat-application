@@ -1,0 +1,1 @@
+The `src` folder contains all the source code for the application, including React components, utility functions, styles, and configuration files. Key files include `index.js` (entry point), `App.js` (main component), `index.css` (global styles), and `firebase.js` (Firebase configuration).
