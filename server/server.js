@@ -17,7 +17,7 @@ mongoose
   .catch((error) => console.log(`DB Connection Error ${error}`));
 
 //middleware
-app.use(cors());
+app.use(cors({ origin: process.env.CLIENT_URL }));
 
 // json() is a built-in middleware function in Express.
 // This method is used to parse the incoming requests with JSON payloads and
