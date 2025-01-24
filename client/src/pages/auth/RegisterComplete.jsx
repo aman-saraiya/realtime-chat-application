@@ -1,23 +1,47 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { createOrUpdateUser } from "../../utils/auth";
-import { useEffect } from "react";
-import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+
 import {
   signInWithEmailLink,
   updatePassword,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../../firebase";
-import AuthHOC from "./AuthHOC";
-import AppPreviewSection from "./AppPreviewSection";
-import FormSection from "./FormSection";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+
 import { UserState } from "../../components/context/UserProvider";
-import AppName from "./AppName";
+import { auth } from "../../firebase";
+import { createOrUpdateUser } from "../../utils/auth";
+import { getCurrentUser } from "../../utils/user";
+import AppPreviewSection from "./AppPreviewSection";
+import AuthHOC from "./AuthHOC";
+import FormSection from "./FormSection";
 
 const RegisterComplete = () => {
-  const { user } = UserState();
+  const { user, setUser } = UserState();
+  const getCurrentUserFromFireBase = async (registeredUser) => {
+    window.localStorage.setItem("userLoading", "true");
+    if (registeredUser) {
+      const idTokenResult = await registeredUser.getIdTokenResult();
+      getCurrentUser()
+        .then((res) => {
+          setUser({
+            name: res.data.name,
+            email: res.data.email,
+            profilePicture: res.data.profilePicture,
+            token: idTokenResult.token,
+            _id: res.data._id,
+          });
+        })
+        .catch((err) => {
+          window.localStorage.setItem("userLoading", "false");
+          console.log(err);
+        });
+    } else {
+      window.localStorage.setItem("userLoading", "false");
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -73,7 +97,6 @@ const RegisterComplete = () => {
   const handleRegistration = async (event) => {
     event.preventDefault();
     window.localStorage.setItem("userLoading", "true");
-    // setUserLoading(true);
     const isValidated = validateUserDetails();
     if (!isValidated) return;
 
@@ -83,15 +106,17 @@ const RegisterComplete = () => {
         userDetails.email,
         window.location.href
       );
-      if (result.userDetails.emailVerified) {
+      if (result.user.emailVerified) {
         window.localStorage.removeItem("emailForRegistration");
+        navigate("/chats");
         let registeredUser = auth.currentUser;
         await updatePassword(registeredUser, userDetails.password);
-        const idTokenResult = await registeredUser.getIdTokenResult();
         await updateProfile(registeredUser, {
           displayName: `${userDetails.firstName} ${userDetails.lastName}`,
         });
+
         const response = await createOrUpdateUser();
+        await getCurrentUserFromFireBase(registeredUser);
       }
     } catch (error) {
       window.localStorage.setItem("userLoading", "false");

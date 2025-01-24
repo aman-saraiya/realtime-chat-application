@@ -1,25 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import {
-  EyeOutlined,
   EyeInvisibleOutlined,
+  EyeOutlined,
   GoogleOutlined,
 } from "@ant-design/icons";
-import { toast } from "react-toastify";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+
+import { UserState } from "../../components/context/UserProvider";
 import { auth, googleAuthProvider } from "../../firebase";
 import { createOrUpdateUser } from "../../utils/auth";
 import AppPreviewSection from "./AppPreviewSection";
-import FormSection from "./FormSection";
 import AuthHOC from "./AuthHOC";
-import { UserState } from "../../components/context/UserProvider";
-import { useEffect } from "react";
-import AppName from "./AppName";
+import FormSection from "./FormSection";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { user, setUser, setUserLoading } = UserState();
+  const { user, setUser } = UserState();
   const navigate = useNavigate();
   const handlePasswordVisiblility = (event) => {
     event.preventDefault();
@@ -34,11 +36,12 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    window.localStorage.setItem("userLoading", "true");
+    // window.localStorage.setItem("userLoading", "true");
+
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      const idTokenResult = await result.user.getIdTokenResult();
-      const response = await createOrUpdateUser();
+      // const idTokenResult = await result.user.getIdTokenResult();
+      // const response = await createOrUpdateUser();
       // const loggedInUser = {
       //   name: response.data.name,
       //   email: response.data.email,
@@ -48,7 +51,7 @@ const Login = () => {
       // };
 
       // setUser(loggedInUser);
-      // navigate("/chats");
+      navigate("/chats");
     } catch (error) {
       window.localStorage.setItem("userLoading", "false");
       console.log(error);
@@ -59,14 +62,15 @@ const Login = () => {
   const handleGoogleLogin = async (event) => {
     event.preventDefault();
     window.localStorage.setItem("userLoading", "true");
+    window.localStorage.setItem("userCreating", "true");
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
       const response = await createOrUpdateUser();
-      console.log(result);
     } catch (error) {
       window.localStorage.setItem("userLoading", "false");
       console.log(error);
     }
+    window.localStorage.setItem("userCreating", "false");
   };
   return (
     <AuthHOC>

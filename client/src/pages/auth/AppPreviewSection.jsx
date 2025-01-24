@@ -1,8 +1,8 @@
 import React from "react";
 
-const chat_app = require("../../constants/Chat-app.png");
-const app_name = require("../../constants/app-name.png");
-const cartoon = require("../../constants/Image_Chat.png");
+const chat_app = require("../../assets/chat_app.png");
+const app_name = require("../../assets/app_name.png");
+const cartoon = require("../../assets/image_chat.png");
 const AppPreviewSection = () => {
   return (
     <div className="preview-section">
@@ -22,9 +22,10 @@ const AppPreviewSection = () => {
           />
         </div>
         <div
-          className="d-flex flex-column align-items-center flex-column justify-content-center"
+          className="d-flex flex-column align-items-center justify-content-center"
           style={{
             flex: 1,
+            height: "90%",
             // border: "1px solid red",
             // marginLeft: "8%",
           }}

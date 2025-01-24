@@ -1,19 +1,20 @@
-import { onAuthStateChanged, onIdTokenChanged } from "firebase/auth";
-import React, { createContext, useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+
+import { onAuthStateChanged } from "firebase/auth";
+
 import { auth } from "../../firebase";
 import { getCurrentUser } from "../../utils/user";
+
 const UserContext = createContext();
+
 const UserProvider = ({ children }) => {
-  console.log("UserProvider");
   const [user, setUser] = useState(null);
-  const [userLoading, setUserLoading] = useState(false);
 
   const getCurrentUserFromFireBase = async (registeredUser) => {
     window.localStorage.setItem("userLoading", "true");
     if (registeredUser) {
       const idTokenResult = await registeredUser.getIdTokenResult();
+      // console.log(`Creating User ${registeredUser}`);
       getCurrentUser()
         .then((res) => {
           setUser({
@@ -34,18 +35,30 @@ const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      window.localStorage.setItem("isAuthenticated", "false");
-      console.log("auth state changed");
-      console.log(currentUser);
-      getCurrentUserFromFireBase(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) await waitForUserCreating();
+      if (currentUser && currentUser.displayName) {
+        window.localStorage.setItem("isAuthenticated", "false");
+        getCurrentUserFromFireBase(currentUser);
+      }
     });
     return () => unsubscribe();
   }, []);
+
+  const waitForUserCreating = () => {
+    return new Promise((resolve) => {
+      const interval = setInterval(() => {
+        let userCreating = window.localStorage.getItem("userCreating");
+
+        if (userCreating === "false") {
+          clearInterval(interval); // Stop checking once it's falsy
+          resolve(); // Resolve the promise, so further code can run
+        }
+      }, 100); // Check every 100ms
+    });
+  };
   return (
-    <UserContext.Provider
-      value={{ user, setUser, userLoading, setUserLoading }}
-    >
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );
