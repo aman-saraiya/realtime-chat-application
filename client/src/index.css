@@ -53,6 +53,8 @@ hr.hr-text::after {
 }
 .preview-section {
   width: 60%;
+  display: flex;
+  flex-direction: column;
   /* border: 1px solid red; */
 }
 
