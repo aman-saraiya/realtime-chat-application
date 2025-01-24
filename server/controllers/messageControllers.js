@@ -1,5 +1,6 @@
 const Message = require("../models/messageModel");
 const Chat = require("../models/chatModel");
+
 const sendMessage = async (req, res) => {
   const { senderId, chatId, content } = req.body;
   if (!content || !chatId || !senderId) {
@@ -28,6 +29,7 @@ const sendMessage = async (req, res) => {
     console.log(error.message);
   }
 };
+
 const fetchMessages = async (req, res) => {
   const { chatId } = req.params;
   const limit = parseInt(req.query.limit);

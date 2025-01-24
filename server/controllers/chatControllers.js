@@ -23,6 +23,7 @@ const fetchChats = async (req, res) => {
     res.sendStatus(400);
   }
 };
+
 const createOrFetchPersonalChat = async (req, res) => {
   const { fromUser, toUser } = req.body;
 
@@ -66,6 +67,7 @@ const createOrFetchPersonalChat = async (req, res) => {
     }
   }
 };
+
 const createGroupChat = async (req, res) => {
   const { users, groupAdmin, chatName, groupPicture } = req.body;
   if (!users || !groupAdmin || !chatName) {
@@ -104,6 +106,7 @@ const createGroupChat = async (req, res) => {
     res.sendStatus(400);
   }
 };
+
 const addUserToGroup = async (req, res) => {
   const { newUser, loggedInUser, groupChatId } = req.body;
   console.log(newUser, loggedInUser, groupChatId);
@@ -142,6 +145,7 @@ const addUserToGroup = async (req, res) => {
     res.sendStatus(400);
   }
 };
+
 const removeUserFromGroup = async (req, res) => {
   const { removeUser, loggedInUser, groupChatId } = req.body;
   // console.log(removedUser, loggedInUser, groupChatId);
@@ -178,6 +182,7 @@ const removeUserFromGroup = async (req, res) => {
     res.sendStatus(400);
   }
 };
+
 const renameGroup = async (req, res) => {
   const { newName, groupChatId } = req.body;
   if (!newName || !groupChatId) {

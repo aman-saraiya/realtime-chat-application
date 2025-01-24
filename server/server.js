@@ -18,8 +18,10 @@ mongoose
 
 //middleware
 app.use(cors());
+
 // json() is a built-in middleware function in Express.
-// This method is used to parse the incoming requests with JSON payloads and is based upon the bodyparser.
+// This method is used to parse the incoming requests with JSON payloads and
+// is based upon the bodyparser.
 app.use(express.json({ limit: "50mb" }));
 
 readdirSync("./routes").map((route) =>
@@ -35,7 +37,7 @@ const server = app.listen(PORT, () => {
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.CLIENT_URL,
   },
 });
 
@@ -43,7 +45,6 @@ io.on("connection", (socket) => {
   console.log("Connected to server via socket.io.");
   socket.on("setup", (userData) => {
     const user = userData;
-    // const user = JSON.parse(userData);
     socket.join(user._id);
     socket.emit("connected", user._id);
   });
@@ -67,11 +68,12 @@ io.on("connection", (socket) => {
 
   socket.on("join chat", (room) => {
     socket.join(room);
-    console.log("user joined room " + room);
+    // console.log("user joined room " + room);
   });
+
   socket.on("leave chat", (room) => {
     socket.leave(room);
-    console.log("user left room " + room);
+    // console.log("user left room " + room);
   });
 
   socket.on("new group", (newGroupChatReceived) => {
@@ -93,10 +95,12 @@ io.on("connection", (socket) => {
       }
     }
   });
+
   socket.on("typing", (room) => {
     console.log(room);
     socket.to(room).emit("typing");
   });
+
   socket.on("stop typing", (room) => socket.to(room).emit("stop typing"));
 
   socket.on("terminate", (userData) => {
