@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import {
   EyeInvisibleOutlined,
   EyeOutlined,
   GoogleOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
-import { UserState } from "../../components/context/UserProvider";
-import { auth, googleAuthProvider } from "../../firebase";
-import { createOrUpdateUser } from "../../utils/auth";
-import AppPreviewSection from "./AppPreviewSection";
-import AuthHOC from "./AuthHOC";
-import FormSection from "./FormSection";
+import { UserState } from '../../components/context/UserProvider';
+import {
+  auth,
+  googleAuthProvider,
+} from '../../firebase';
+import { createOrUpdateUser } from '../../utils/auth';
+import AppPreviewSection from './AppPreviewSection';
+import AuthHOC from './AuthHOC';
+import FormSection from './FormSection';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -36,7 +45,7 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    // window.localStorage.setItem("userLoading", "true");
+    window.localStorage.setItem("userLoading", "true");
 
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);

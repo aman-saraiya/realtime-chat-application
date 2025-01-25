@@ -1,9 +1,14 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from 'firebase/auth';
 
-import { auth } from "../../firebase";
-import { getCurrentUser } from "../../utils/user";
+import { auth } from '../../firebase';
+import { getCurrentUser } from '../../utils/user';
 
 const UserContext = createContext();
 
@@ -50,7 +55,7 @@ const UserProvider = ({ children }) => {
       const interval = setInterval(() => {
         let userCreating = window.localStorage.getItem("userCreating");
 
-        if (userCreating === "false") {
+        if (!userCreating || userCreating === "false") {
           clearInterval(interval); // Stop checking once it's falsy
           resolve(); // Resolve the promise, so further code can run
         }
