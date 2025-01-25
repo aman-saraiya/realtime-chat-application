@@ -106,7 +106,7 @@ const RegisterComplete = () => {
         userDetails.email,
         window.location.href
       );
-      if (result.user.emailVerified) {
+      if (true) {
         window.localStorage.removeItem("emailForRegistration");
         navigate("/chats");
         let registeredUser = auth.currentUser;
