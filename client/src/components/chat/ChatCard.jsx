@@ -18,6 +18,17 @@ const ChatCard = ({ chat, notifications }) => {
       notifCount = notifications[i].count;
     }
   }
+  const getLastSender = (senderId) => {
+    if (senderId === user._id) {
+      return "You";
+    }
+    for (var i = 0; i < chat.users.length; i++) {
+      if (chat.users[i]._id === senderId) {
+        return chat.users[i].name;
+      }
+    }
+    return "Unknown";
+  };
 
   return (
     <>
@@ -41,9 +52,7 @@ const ChatCard = ({ chat, notifications }) => {
             }}
           >
             <span style={{ fontWeight: "bold", padding: 0, margin: 0 }}>
-              {chatWithUser._id !== chat.latestMessage.sender._id
-                ? "You"
-                : chatWithUser.name}
+              {getLastSender(chat.latestMessage.sender._id)}
             </span>
             {": "}
             {chat.latestMessage.content.slice(0, 60)}

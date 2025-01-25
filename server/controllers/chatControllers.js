@@ -10,12 +10,14 @@ const fetchChats = async (req, res) => {
   try {
     const chats = await Chat.find({ users: { $elemMatch: { $eq: userId } } })
       .populate("users")
-      .populate("latestMessage")
-      .populate("groupAdmin")
-      .sort({ updatedAt: -1 })
       .populate({
-        path: "latestMessage.sender",
-      });
+        path: "latestMessage",
+        populate: {
+          path: "sender",
+        },
+      })
+      .populate("groupAdmin")
+      .sort({ updatedAt: -1 });
 
     res.status(200).json(chats);
   } catch (error) {
