@@ -70,6 +70,12 @@ const SendMessage = ({
     setMessageContent("");
   }, [selectedChat]);
   const handleSendMessage = async () => {
+    if (
+      selectedChat._id.toString() == "679541f7e5832c1081da8197" ||
+      selectedChat._id.toString() == "679541d8e5832c1081da817f"
+    ) {
+      return;
+    }
     const response = await sendMessage(
       selectedChat._id,
       messageContent,
@@ -97,7 +103,14 @@ const SendMessage = ({
         onChange={handleInputChange}
         placeholder="Message..."
       />
-      <div className="send_button">
+      <div
+        className={
+          selectedChat._id.toString() == "679541f7e5832c1081da8197" ||
+          selectedChat._id.toString() == "679541d8e5832c1081da817f"
+            ? "send_button_deactivated"
+            : "send_button"
+        }
+      >
         <SendOutlined onClick={handleSendMessage} />
       </div>
     </div>

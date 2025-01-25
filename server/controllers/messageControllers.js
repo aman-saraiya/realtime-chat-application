@@ -3,7 +3,11 @@ const Chat = require("../models/chatModel");
 
 const sendMessage = async (req, res) => {
   const { senderId, chatId, content } = req.body;
-  if (!content || !chatId || !senderId) {
+  const restricted =
+    chatId &&
+    (chatId.toString() == "679541f7e5832c1081da8197" ||
+      chatId.toString() == "679541d8e5832c1081da817f");
+  if (!content || !chatId || !senderId || restricted) {
     console.log("Invalid data passed to the request");
     res.sendStatus(400);
   }
