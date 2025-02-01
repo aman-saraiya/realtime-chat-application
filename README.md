@@ -35,7 +35,9 @@ You may either register your own account or login with the following credentials
 
 ### Realtime Messaging and Typing Indicator
 
-[Demo](https://raw.githubusercontent.com/aman-saraiya/realtime-chat-application/refs/heads/master/screenshots/realtime_messaging_and_typing_indicator.mp4)
+<img src="./screenshots/realtime_messaging_and_typing_indicator.gif" height="500px">
+
+[Demo Video](https://raw.githubusercontent.com/aman-saraiya/realtime-chat-application/refs/heads/master/screenshots/realtime_messaging_and_typing_indicator.mp4)
 
 ### Collapsed View on Smaller Screen (Responsiveness)
 
